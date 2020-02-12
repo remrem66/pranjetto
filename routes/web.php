@@ -91,4 +91,9 @@ Route::get('/NewOnlineRoomReservationPaypal', 'HomeController@NewOnlineRoomReser
 
 
 
-
+//caching settings or configs
+Route::get('/cc', function() {
+    \Artisan::call('config:clear', []);
+    \Artisan::call('config:cache', []);
+    echo 'cached';
+});
