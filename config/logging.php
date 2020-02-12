@@ -34,6 +34,17 @@ return [
     */
 
     'channels' => [
+
+        'h_stack' => [
+            'driver' => 'stack',
+            'channels' => ['h_single'],
+        ],
+
+        'h_single' => [
+            'driver' => 'errorlog',
+            'level' => 'debug',
+        ],
+
         'stack' => [
             'driver' => 'stack',
             'channels' => ['daily'],
