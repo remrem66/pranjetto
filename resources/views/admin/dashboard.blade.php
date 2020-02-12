@@ -1,5 +1,5 @@
-@include('admin\header')
-@include('admin\navbar')
+@include('admin.header')
+@include('admin.navbar')
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -47,4 +47,4 @@
   </div>
 
 
-@include('admin\footer')
+@include('admin.footer')

@@ -1,5 +1,5 @@
-@include('mainpage\header')
-@include('mainpage\navbar')
+@include('mainpage.header')
+@include('mainpage.navbar')
 
 <div class="section big-55-height over-hide">
     <div class="parallax parallax-top" style="background-image: url('{{asset('mainpage/img/room.jpg')}}')"></div>
@@ -64,4 +64,4 @@
 	</div>
 </form>
 
-@include('mainpage\footer')
+@include('mainpage.footer')

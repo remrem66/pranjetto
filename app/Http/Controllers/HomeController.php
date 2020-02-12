@@ -83,7 +83,7 @@ class HomeController extends Controller
         
         $name = "Topaz Room";
 
-        return view('mainpage\rooms',compact('data','name'));
+        return view('mainpage.rooms',compact('data','name'));
     }
 
     public function Emerald()
@@ -147,7 +147,7 @@ class HomeController extends Controller
 
         $name = "Emerald Room";
 
-        return view('mainpage\rooms',compact('data','name'));
+        return view('mainpage.rooms',compact('data','name'));
     }
 
     public function Turquoise()
@@ -211,7 +211,7 @@ class HomeController extends Controller
 
         $name = "Turquoise Room";
 
-        return view('mainpage\rooms',compact('data','name'));
+        return view('mainpage.rooms',compact('data','name'));
     }
 
     public function Garnet()
@@ -275,7 +275,7 @@ class HomeController extends Controller
 
         $name = "Garnet Room";
 
-        return view('mainpage\rooms',compact('data','name'));
+        return view('mainpage.rooms',compact('data','name'));
     }
 
     public function Jade()
@@ -340,7 +340,7 @@ class HomeController extends Controller
         
         $name = "Jade Room";
 
-        return view('mainpage\rooms',compact('data','name'));
+        return view('mainpage.rooms',compact('data','name'));
     }
 
     public function Pearl()
@@ -405,7 +405,7 @@ class HomeController extends Controller
 
         $name = "Pearl Room";
 
-        return view('mainpage\rooms',compact('data','name'));
+        return view('mainpage.rooms',compact('data','name'));
     }
 
     public function Sapphire()
@@ -470,7 +470,7 @@ class HomeController extends Controller
 
         $name = "Sapphire Room";
 
-        return view('mainpage\rooms',compact('data','name'));
+        return view('mainpage.rooms',compact('data','name'));
     }
 
     public function RoomPreview($room_id){
@@ -484,29 +484,29 @@ class HomeController extends Controller
 
         
 
-        return view('mainpage\roompreview',compact('data','pictures'));
+        return view('mainpage.roompreview',compact('data','pictures'));
 
     }
 
     public function Index(){
 
-        return view('mainpage\index');
+        return view('mainpage.index');
     }
 
     public function About(){
 
-        return view('mainpage\about');
+        return view('mainpage.about');
     }
 
     public function login(){
 
-        return view('mainpage\login');
+        return view('mainpage.login');
 
     }
 
     public function register(){
 
-        return view('mainpage\register');
+        return view('mainpage.register');
 
     }
 
@@ -514,7 +514,7 @@ class HomeController extends Controller
 
         if($request['password'] != $request['confirm_pass']){
             $data['message'] = "Password and Confirm Password did not match!";
-            return view('mainpage\register', ['message'=> $data['message']]);
+            return view('mainpage.register', ['message'=> $data['message']]);
         }
         else{
             $data = DB::table('tbl_users')
@@ -531,7 +531,7 @@ class HomeController extends Controller
 
             if($flag != 0){
                 $data['message'] = "Username already exist.";
-                return view('mainpage\register', ['message'=> $data['message']]);
+                return view('mainpage.register', ['message'=> $data['message']]);
             }
             else{
                 $name = $request['fname']." ".$request['lname'];
@@ -546,7 +546,7 @@ class HomeController extends Controller
                 Tbl_Users::AddUser($user);
 
                 $data['message'] = "User successfully created.";
-                return view('mainpage\login', ['message'=> $data['message']]);
+                return view('mainpage.login', ['message'=> $data['message']]);
             }
         }
 
@@ -564,12 +564,12 @@ class HomeController extends Controller
 
         if($tbl_users == false || $tbl_users->username != $username || $tbl_users->password != $password ){
             $data['message'] = "Invalid username or password";
-            return view('mainpage\login',  ['message'=> $data['message']]);
+            return view('mainpage.login',  ['message'=> $data['message']]);
         }
         else{
             if($tbl_users->user_status == 0){
                 $data['message'] = "User disabled. Please contact administrator";
-                return view('mainpage\login',  ['message'=> $data['message']]);
+                return view('mainpage.login',  ['message'=> $data['message']]);
             }
             else{
                 $request->session()->put('user_id', $tbl_users->user_id); 
@@ -600,7 +600,7 @@ class HomeController extends Controller
                 ->where('user_id',session('user_id'))
                 ->first();
 
-        return view('mainpage\editprofile',compact('data'));
+        return view('mainpage.editprofile',compact('data'));
     }
 
     public function ProfileEdit(Request $request){
@@ -637,18 +637,18 @@ class HomeController extends Controller
 
         if($request['old_pass'] != $old_pass){
             $data['message'] = "Incorrect Old Password";
-            return view('mainpage\changepassword',  ['message'=> $data['message']]);
+            return view('mainpage.changepassword',  ['message'=> $data['message']]);
         }
         else{
             if($request['new_pass'] != $request['confirm_pass']){
                 $data['message'] = "Password and Confirm Password did not match";
-                return view('mainpage\changepassword',  ['message'=> $data['message']]);
+                return view('mainpage.changepassword',  ['message'=> $data['message']]);
             }
             else{
                 Tbl_Users::ChangePassword($request['new_pass'],session('user_id'));
 
                 $data['message'] = "Password successfully changed";
-                return view('mainpage\changepassword',  ['message'=> $data['message']]);
+                return view('mainpage.changepassword',  ['message'=> $data['message']]);
             }
         }
     }
@@ -931,7 +931,7 @@ class HomeController extends Controller
         $request->session()->put('check_in', $request['start']); 
         $request->session()->put('check_out', $request['end']);
         
-       return view('mainpage\AllRooms',compact('available','categories'));
+       return view('mainpage.AllRooms',compact('available','categories'));
     }
 
     public function Addoneday(Request $request){
@@ -1017,7 +1017,7 @@ class HomeController extends Controller
                     ->get();
             
 
-            return view('mainpage\AllRooms',compact('data'));
+            return view('mainpage.AllRooms',compact('data'));
         }
 
         public function NewOnlineRoomReservationPaypal(Request $request){

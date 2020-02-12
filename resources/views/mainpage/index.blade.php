@@ -1,5 +1,5 @@
-@include('mainpage\header')
-@include('mainpage\navbar')
+@include('mainpage.header')
+@include('mainpage.navbar')
 <style>
 #start1{
 	position: relative;
@@ -252,4 +252,4 @@
 	
 	
 	
-@include('mainpage\footer')
+@include('mainpage.footer')

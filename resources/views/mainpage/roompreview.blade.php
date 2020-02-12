@@ -1,5 +1,5 @@
-@include('mainpage\header')
-@include('mainpage\navbar')
+@include('mainpage.header')
+@include('mainpage.navbar')
 <style>
 #startDate{
 	position: relative;
@@ -272,4 +272,4 @@
             		</div>
 
 
-@include('mainpage\footer')
+@include('mainpage.footer')

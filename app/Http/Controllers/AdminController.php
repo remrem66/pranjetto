@@ -19,7 +19,7 @@ class AdminController extends Controller
 {
     public function login(){
 
-        return view('admin\login');
+        return view('admin.login');
     }
 
     public function AdminLogout(){
@@ -44,7 +44,7 @@ class AdminController extends Controller
 
         if($tbl_users == false || $tbl_users->username != $username || $tbl_users->password != $password){
             $data['message'] = "Invalid username or password";
-            return view('admin\login',  ['message'=> $data['message']]);
+            return view('admin.login',  ['message'=> $data['message']]);
         }
         else{
 
@@ -58,12 +58,12 @@ class AdminController extends Controller
 
     public function AdminDashboard(){
 
-        return view('admin\dashboard');
+        return view('admin.dashboard');
     }
 
     public function AddRoomView(){
 
-        return view('admin\AddRoom');
+        return view('admin.AddRoom');
     }
 
     public function AddRoom(Request $request){
@@ -99,7 +99,7 @@ class AdminController extends Controller
                 ->select('*')
                 ->get();
 
-        return view('admin\EditRooms',compact('data'));
+        return view('admin.EditRooms',compact('data'));
     }
 
     public function ViewRooms(){
@@ -108,7 +108,7 @@ class AdminController extends Controller
                 ->select('*')
                 ->get();
 
-        return view('admin\ViewRooms',compact('data'));
+        return view('admin.ViewRooms',compact('data'));
     }
 
     public function RoomStatusView(){
@@ -117,7 +117,7 @@ class AdminController extends Controller
                 ->select('*')
                 ->get();
 
-        return view('admin\RoomStatus',compact('data'));
+        return view('admin.RoomStatus',compact('data'));
     }
 
     public function ChangeRoomStatus(Request $request){
@@ -217,7 +217,7 @@ class AdminController extends Controller
                     ->where('online_reservation_tbl.reservation_status','!=',2)
                     ->get();
         
-        return view('admin\OnlineReservations',compact('data'));
+        return view('admin.OnlineReservations',compact('data'));
     }
 
     public function ConfirmInitial(Request $request){
@@ -260,7 +260,7 @@ class AdminController extends Controller
                 ->select('*')
                 ->get();
 
-        return view('admin\SalesReport',compact('data'));
+        return view('admin.SalesReport',compact('data'));
     }
 
     public function MainpageSetting(){
@@ -269,7 +269,7 @@ class AdminController extends Controller
                 ->select('*')
                 ->get();
 
-        return view('admin\RoomMainpageSetting',compact('data'));
+        return view('admin.RoomMainpageSetting',compact('data'));
     }
 
     public function UploadPicturesForMainpage(Request $request){
@@ -293,7 +293,7 @@ class AdminController extends Controller
                 ->select('*')
                 ->get();
         
-        return view('admin\EditUser',compact('data'));
+        return view('admin.EditUser',compact('data'));
     }
 
     public function ChangeUserStatus(Request $request){
@@ -309,7 +309,7 @@ class AdminController extends Controller
                 ->select('*')
                 ->get();
 
-        return view('admin\ViewUsers',compact('data'));
+        return view('admin.ViewUsers',compact('data'));
     }
 
     public function CancelReservation(Request $request){
@@ -321,7 +321,7 @@ class AdminController extends Controller
 
     public function AddAmenitiesView(){
 
-        return view('admin\AddAmenities');
+        return view('admin.AddAmenities');
     }
 
     public function AddAmenity(Request $request){
@@ -412,7 +412,7 @@ class AdminController extends Controller
                 ->select('*')
                 ->get();
 
-        return view('admin\EditAmenity',compact('data'));
+        return view('admin.EditAmenity',compact('data'));
     }
 
     public function DeleteAmenity(Request $request){
@@ -425,7 +425,7 @@ class AdminController extends Controller
                 ->select('*')
                 ->get();
 
-        return view('admin\AmenityStatus',compact('data'));
+        return view('admin.AmenityStatus',compact('data'));
     }
 
     public function ChangeAmenityStatus(Request $request){
@@ -438,7 +438,7 @@ class AdminController extends Controller
                 ->select('*')
                 ->get();
 
-        return view('admin\ViewAmenities',compact('data'));
+        return view('admin.ViewAmenities',compact('data'));
     }
 
     public function getSales($trigger = 0)

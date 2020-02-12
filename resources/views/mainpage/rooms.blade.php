@@ -1,5 +1,5 @@
-@include('mainpage\header')
-@include('mainpage\navbar')
+@include('mainpage.header')
+@include('mainpage.navbar')
 
 <div class="section big-55-height over-hide z-bigger">
 	
@@ -52,4 +52,4 @@
 		</div>		
     </div>
 
-@include('mainpage\footer')
+@include('mainpage.footer')
