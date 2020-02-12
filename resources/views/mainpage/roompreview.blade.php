@@ -140,9 +140,6 @@
 									<p><strong class="color-black">Swimming pool:</strong> Yes</p>	
 								</div>
 								<div class="col-lg-6">
-									<p><strong class="color-black">12-hr Rate: </strong>₱{{$data->twelvehr_price}}</p>	
-								</div>
-								<div class="col-lg-6">
 									<p><strong class="color-black">24-hr Rate:</strong>₱{{$data->twentyfourhr_price}}</p>	
 								</div>
 							</div>
