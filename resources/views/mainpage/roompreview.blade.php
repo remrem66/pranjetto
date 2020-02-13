@@ -200,6 +200,9 @@
 									@if(session('logged') == true)
 									<button class="btn booking-button roomonlinereserve">book now</button>
 									@endif
+									@if(session('more') == true)
+									<a href="{{route('MoreRooms')}}" class="btn booking-button">Reserve More</a>
+									@endif
 								</div>
 							</div>
 						</div>

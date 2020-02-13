@@ -52,11 +52,13 @@ class Online_Reservation_Tbl extends Model
 
     public static function CompletePayment($id,$price){
 
+   
         DB::table('online_reservation_tbl')
             ->where('reservation_id',$id)
             ->update([
                 'reservation_status' => 2,
-                'amount_paid' => $price
+                'amount_paid' => $price,
+                'total_price' => $price
             ]);
     }
 
@@ -75,5 +77,25 @@ class Online_Reservation_Tbl extends Model
                 'total_price' => $total
             ]);
 
+    }
+
+    public static function ChangeSched($data){
+
+        DB::table('online_reservation_tbl')
+            ->where('reservation_id',$data['reservation_id'])
+            ->update([
+                'total_price' => $data['total_price'],
+                'check_in' => $data['check_in'],
+                'check_out' => $data['check_out']
+            ]);
+    }
+
+    public static function StatusChange($id,$status){
+
+        DB::table('online_reservation_tbl')
+            ->where('reservation_id',$id)
+            ->update([
+                'reservation_status' => $status
+            ]);
     }
 }

@@ -31,6 +31,7 @@
                   <th>Total Price</th>
                   <th>Amount Paid</th>
                   <th>Balance</th>
+                  <th>Status</th>
                   <th>Action</th>
                 </tr>
                 </thead>
@@ -49,13 +50,25 @@
                     @endif
                   </td>
                   <td>
+                    @if($result->reservation_status == 1 || $result->reservation_status == 2)
+                      Pending
+                    @endif
+                    @if($result->reservation_status == 3)
+                      Checked-in
+                    @endif
+                    @if($result->reservation_status == 4)
+                      Checked-out
+                    @endif
+                    </td>
+                  <td>
                     @if($result->reservation_status == 0)
                     <button class="btn btn-info initialpaywalkin" id="{{$result->walkin_id}}-{{$result->total_price}}-{{$result->customer_name}}">Confirm Payment</button>
-                    <button class="btn btn-danger CancelReservation" id="{{$result->walkin_id}}">Cancel</button>
+                    <button class="btn btn-danger CancelReservationWalkin" id="{{$result->walkin_id}}">Cancel</button>
                     @endif
                     @if($result->reservation_status == 1)
                     <button class="btn btn-info completionofwalkin" id="{{$result->walkin_id}}-{{$result->total_price - $result->amount_paid}}-{{$result->customer_name}}" data-toggle="modal" data-target=".finalcheckoutmodal">Complete Balance</button>
                     <button class="btn btn-warning additionalamenitywalkin" id="{{$result->walkin_id}}-{{$result->total_price}}" data-toggle="modal" data-target=".addamenitymodal">Add Amenity</button>
+                    <button class="btn btn-danger CancelReservationWalkin" id="{{$result->walkin_id}}">Cancel</button>
                     @endif
                     
                 </td>

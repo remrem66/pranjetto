@@ -92,14 +92,14 @@
 											<div class="col-6">
 												<div class="form-item">
 													<span class="fontawesome-calendar"></span>
-													<input class="input-sm" type="text" autocomplete="off" id="start1" name="start" placeholder="check-in date" />
+													<input class="input-sm" type="text" autocomplete="off" id="start1" name="start" placeholder="check-in date" required />
 													<span class="date-text date-depart"></span>
 												</div>
 											</div>
 											<div class="col-6">
 												<div class="form-item">
 													<span class="fontawesome-calendar"></span>
-													<input class="input-sm" type="text" autocomplete="off" id="end1" name="end" placeholder="check-out date" disabled/>
+													<input class="input-sm" type="text" autocomplete="off" id="end1" name="end" placeholder="check-out date" required disabled/>
 													<span class="date-text date-return"></span>
 												</div>
 											</div>

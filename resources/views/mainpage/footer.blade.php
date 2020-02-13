@@ -243,8 +243,11 @@ $(function(){
 			},
 			dataType: 'HTML',
 			success: function(response){
-
-				Swal.fire({
+				if(response == 1){
+					alert("fail to process booking");
+				}
+				else{
+					Swal.fire({
                     title: "Success!",
                     text: "Please check your email for further instructions about your payment",
                     icon: 'success', 
@@ -253,6 +256,9 @@ $(function(){
                 .then(function(){
                     location.reload();
                 });
+				}
+
+				
 			}
 		})
 
@@ -301,7 +307,12 @@ $(function(){
 			},
 			dataType: 'HTML',
 			success: function(response){
+				if(response == 1){
+					alert("fail to process booking");
 
+				}
+				else{
+					
 				Swal.fire({
                     title: "Success!",
                     text: "Payment Successful!",
@@ -311,6 +322,8 @@ $(function(){
                 .then(function(){
                     location.reload();
                 });
+				}
+
 			}
 		})
 

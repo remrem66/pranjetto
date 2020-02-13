@@ -70,6 +70,7 @@ class HomeController extends Controller
                     ->select('*')
                     ->whereNotIn('room_id',$ids)
                     ->where('category','Topaz')
+                    ->where('slot','>',0)
                     ->where('status',1)
                     ->get();
         }
@@ -77,6 +78,7 @@ class HomeController extends Controller
             $data = DB::table('room_tbl')
                     ->select('*')
                     ->where('category','Topaz')
+                    ->where('slot','>',0)
                     ->where('status',1)
                     ->get();
         }
@@ -134,6 +136,7 @@ class HomeController extends Controller
                     ->select('*')
                     ->whereNotIn('room_id',$ids)
                     ->where('category','Emerald')
+                    ->where('slot','>',0)
                     ->where('status',1)
                     ->get();
         }
@@ -141,6 +144,7 @@ class HomeController extends Controller
             $data = DB::table('room_tbl')
                     ->select('*')
                     ->where('category','Emerald')
+                    ->where('slot','>',0)
                     ->where('status',1)
                     ->get();
         }
@@ -198,6 +202,7 @@ class HomeController extends Controller
                     ->select('*')
                     ->whereNotIn('room_id',$ids)
                     ->where('category','Turquoise')
+                    ->where('slot','>',0)
                     ->where('status',1)
                     ->get();
         }
@@ -205,6 +210,7 @@ class HomeController extends Controller
             $data = DB::table('room_tbl')
                     ->select('*')
                     ->where('category','Turquoise')
+                    ->where('slot','>',0)
                     ->where('status',1)
                     ->get();
         }
@@ -262,6 +268,7 @@ class HomeController extends Controller
                     ->select('*')
                     ->whereNotIn('room_id',$ids)
                     ->where('category','Garnet')
+                    ->where('slot','>',0)
                     ->where('status',1)
                     ->get();
         }
@@ -269,6 +276,7 @@ class HomeController extends Controller
             $data = DB::table('room_tbl')
                     ->select('*')
                     ->where('category','Garnet')
+                    ->where('slot','>',0)
                     ->where('status',1)
                     ->get();
         }
@@ -327,6 +335,7 @@ class HomeController extends Controller
                     ->select('*')
                     ->whereNotIn('room_id',$ids)
                     ->where('category','Jade')
+                    ->where('slot','>',0)
                     ->where('status',1)
                     ->get();
         }
@@ -334,6 +343,7 @@ class HomeController extends Controller
             $data = DB::table('room_tbl')
                     ->select('*')
                     ->where('category','Jade')
+                    ->where('slot','>',0)
                     ->where('status',1)
                     ->get();
         }
@@ -391,6 +401,7 @@ class HomeController extends Controller
                     ->select('*')
                     ->whereNotIn('room_id',$ids)
                     ->where('category','Pearl')
+                    ->where('slot','>',0)
                     ->where('status',1)
                     ->get();
         }
@@ -398,6 +409,7 @@ class HomeController extends Controller
             $data = DB::table('room_tbl')
                     ->select('*')
                     ->where('category','Pearl')
+                    ->where('slot','>',0)
                     ->where('status',1)
                     ->get();
         }
@@ -456,6 +468,7 @@ class HomeController extends Controller
                     ->select('*')
                     ->whereNotIn('room_id',$ids)
                     ->where('category','Sapphire')
+                    ->where('slot','>',0)
                     ->where('status',1)
                     ->get();
         }
@@ -463,6 +476,7 @@ class HomeController extends Controller
             $data = DB::table('room_tbl')
                     ->select('*')
                     ->where('category','Sapphire')
+                    ->where('slot','>',0)
                     ->where('status',1)
                     ->get();
         }
@@ -511,6 +525,11 @@ class HomeController extends Controller
     }
 
     public function UserAuthentication (Request $request){
+
+        $request->validate([
+            'password' => 'required|min:8',
+            
+        ]);
 
         if($request['password'] != $request['confirm_pass']){
             $data['message'] = "Password and Confirm Password did not match!";
@@ -850,10 +869,17 @@ class HomeController extends Controller
             'total_price' => $request->total_price
         ];
         
-       
+        if(!empty($check)){
+            return 1;
+        }
+        else{
+            $request->session()->put('more', true);
+
+            Room_Tbl::DeductSlot($request->room_id,$request->quantity);
+            Online_Reservation_Tbl::NewOnlineRoomReservation($data);
+            \Mail::to($email)->send(new SendMail($details));
+        }
         
-        Online_Reservation_Tbl::NewOnlineRoomReservation($data);
-         \Mail::to($email)->send(new SendMail($details));
     }
 
     public function AllRooms(Request $request){
@@ -900,6 +926,8 @@ class HomeController extends Controller
 
         $data = DB::table('room_tbl')
                 ->whereNotIn('room_id',$ids)
+                ->where('status',1)
+                ->where('slot','>',0)
                 ->select('*')
                 ->get();
 
@@ -950,10 +978,103 @@ class HomeController extends Controller
        return view('mainpage.AllRooms',compact('available','categories'));
     }
 
+    public function MoreRooms(Request $request){
+
+        $end_date = date("Y-m-d",strtotime(session('check_out')));
+        $start_date = date("Y-m-d",strtotime(session('check_in')));
+
+        $arrayDates = [];
+
+        $diff = abs(strtotime($end_date) - strtotime($start_date));
+            $years = floor($diff / (365*60*60*24));
+            $months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
+            $days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
+            if($days > 1){
+
+                $date = $start_date;
+                array_push($arrayDates,$date);
+                while(0 == 0)
+                    if($date == $end_date){
+                        array_pop($arrayDates);
+                        break;
+                    }
+                    else{
+                        $date = date("Y-m-d",strtotime($date . "+1 days"));
+                        array_push($arrayDates,$date);
+                    }
+                }
+            
+            else{
+                array_push($arrayDates,$start_date);
+            }
+            
+            $getid = DB::table('online_reservation_tbl')
+                ->whereIn('check_in',$arrayDates)
+                ->where('reservation_status','!=',2)
+                ->select('room_id')
+                ->get();
+
+            $ids = [];
+    
+            foreach($getid as $id){
+                array_push($ids,$id->room_id);
+            }
+
+        $data = DB::table('room_tbl')
+                ->whereNotIn('room_id',$ids)
+                ->where('status',1)
+                ->where('slot','>',0)
+                ->select('*')
+                ->get();
+
+        
+        $available = [
+            'Topaz' => 0,
+            'Emerald' => 0,
+            'Turquoise' => 0,
+            'Garnet' => 0,
+            'Jade' => 0,
+            'Pearl' => 0,
+            'Sapphire' => 0
+        ];
+
+        $categories = DB::table('room_mainpage_tbl')
+                    ->select('*')
+                    ->get();
+
+        foreach($data as $result){
+            if($result->category == "Topaz"){
+                $available['Topaz'] = $available['Topaz'] + 1;
+            }
+            if($result->category == "Emerald"){
+                $available['Emerald'] = $available['Emerald'] + 1;
+            }
+            if($result->category == "Turquoise"){
+                $available['Turquoise'] = $available['Turquoise'] + 1;
+            }
+            if($result->category == "Garnet"){
+                $available['Garnet'] = $available['Garnet'] + 1;
+            }
+            if($result->category == "Jade"){
+                $available['Jade'] = $available['Jade'] + 1;
+            }
+            if($result->category == "Pearl"){
+                $available['Pearl'] = $available['Pearl'] + 1;
+            }
+            if($result->category == "Sapphire"){
+                $available['Sapphire'] = $available['Sapphire'] + 1;
+            }
+        }
+
+    
+        
+       return view('mainpage.AllRooms',compact('available','categories'));
+    }
+
     public function viewReservations()
     {
         $userId = session('user_id');
-        $userReservations = Online_Reservation_Tbl::where('user_id', $userId)->where('reservation_status','!=',2)->get();
+        $userReservations = Online_Reservation_Tbl::where('user_id', $userId)->where('reservation_status',0)->get();
         foreach ($userReservations as $key => $value) {
             $value->room_details = Room_Tbl::where('room_id', $value->room_id)->first();
             $value->user_details = Tbl_Users::where('user_id', $value->user_id)->first();
@@ -1098,22 +1219,44 @@ class HomeController extends Controller
 
         $details[0]['total_price'] = $request->total_price;
 
+        if(empty($request->extra_mattress)){
+            $mattress = 0;
+        }
+        else{
+            $mattress = $request->extra_mattress;
+        }
         
         $email = $request->email;
 
-        
+        $reservation_code = $this->IDGenerator();
+
         $data = [
             'user_id' => $request->user_id,
             'room_id' => $request->room_id,
             'no_of_persons' => $request->persons,
+            'quantity' => $request->quantity,
+            'extra_mattress' => $mattress,
+            'reservation_code' => $reservation_code,
             'check_in' => $request->check_in,
             'check_out' => $request->check_out,
             'total_price' => $request->total_price
         ];
-        
-        
-        Online_Reservation_Tbl::NewOnlineRoomReservation($data);
-         
+        $check = DB::table('online_reservation_tbl')
+                    ->where('room_id',$request->room_id)
+                    ->where('check_in',$request->check_in)
+                    ->where('status',0)
+                    ->select('room_id','check_in')
+                    ->get();
+
+        if(!empty($check)){
+            return 1;
+        }
+        else{
+            Room_Tbl::DeductSlot($request->room_id,$request->quantity);
+            Online_Reservation_Tbl::NewOnlineRoomReservation($data);
+        }
+                    
+    
     }
 
     public function Amenities(){
@@ -1138,9 +1281,18 @@ class HomeController extends Controller
         $numbers = '0123456789';
         $letters = 'abcdefghijklmnopqrstuvwxyz';
 
-        $bloodbag_id = substr(str_shuffle($letters), 0, 3).substr(str_shuffle($numbers), 0, 3);
+        $id = substr(str_shuffle($letters), 0, 3).substr(str_shuffle($numbers), 0, 3);
 
-        return $bloodbag_id;
+        return $id;
+    }
+
+    public function galleryview(){
+
+        $data = DB::table('gallery_tbl')
+                ->select('*')
+                ->get();
+
+        return view('mainpage.gallery',compact('data'));
     }
     
 }

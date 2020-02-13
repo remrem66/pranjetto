@@ -30,6 +30,7 @@
                   <th>Category</th>
                   <th>Capacity</th>
                   <th>Price</th>
+                  <th>Slot</th>
                   <th>Action</th>
                 </tr>
                 </thead>
@@ -42,8 +43,9 @@
                   <td>{{$result->category}}</td>
                   <td>{{$result->capacity}}</td>
                   <td>{{$result->twentyfourhr_price}}</td>
+                  <td>{{$result->slot}}</td>
                   <td>
-                    <button class="btn btn-primary roomwalkin" id="{{$result->room_id}}-{{$result->capacity}}-{{$result->twentyfourhr_price}}" data-toggle="modal" data-target=".newroomwalkinmodal">Add Reservation </button>
+                    <button class="btn btn-primary roomwalkin" id="{{$result->room_id}}-{{$result->capacity}}-{{$result->twentyfourhr_price}}-{{$result->slot}}" data-toggle="modal" data-target=".newroomwalkinmodal">Add Reservation </button>
                   </td>
                 </tr>
                 @endforeach
@@ -76,13 +78,13 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-form-label col-md-2 col-sm-2 ">Contact Number</label>
+                                <label class="col-form-label col-md-2 col-sm-2 ">Contact #</label>
                                 <div class="col-md-10 col-sm-10 ">
                                     <input type="text" name="contact_num" class="form-control" value="">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-form-label col-md-2 col-sm-2 ">Number of persons</label>
+                                <label class="col-form-label col-md-2 col-sm-2 ">Pax</label>
                                 <div class="col-md-10 col-sm-10 ">
                                     <select name="number_of_persons" id="number_of_persons" class="form-control">
                                         
@@ -111,6 +113,14 @@
                                 <label class="col-form-label col-md-2 col-sm-2 ">Check-out Date</label>
                                 <div class="col-md-10 col-sm-10 ">
                                     <input type="text" name="check_out" id="checkout_datepicker" class="form-control" value="" disabled="disabled">
+                                </div> 
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-2 col-sm-2 ">Quantity</label>
+                                <div class="col-md-10 col-sm-10 ">
+                                    <select name="quantity" id="quantity" class="form-control" disabled required>
+                                        
+                                    </select>
                                 </div> 
                             </div>
                             <br>

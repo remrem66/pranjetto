@@ -147,6 +147,12 @@
                   <p>Uploaded Receipts</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="{{route('Reschedule')}}" class="nav-link">
+                  <i class="fas fa-clock nav-icon"></i>
+                  <p>Reschedule</p>
+                </a>
+              </li>
             </ul>
           </li>
           <li class="nav-item has-treeview">
@@ -171,6 +177,14 @@
                 </a>
               </li>
             </ul>
+          </li>
+          <li class="nav-item has-treeview menu">
+            <a href="{{route('GalleryManagement')}}" class="nav-link">
+              <i class="nav-icon fas fa-camera-retro"></i>
+              <p>
+                Gallery Management
+              </p>
+            </a>
           </li>
           <li class="nav-item has-treeview menu">
             <a href="{{route('SalesReports')}}" class="nav-link">

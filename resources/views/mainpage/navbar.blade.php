@@ -21,16 +21,7 @@
 					<a class="curent-page" href="{{route('index')}}">home</a>
 				</li>
 				<li>
-					<a href="#">rooms</a>
-					<ul>
-						<li><a href="{{route('Topaz')}}">Topaz</a></li>
-						<li><a href="{{route('Emerald')}}">Emerald</a></li>
-						<li><a href="{{route('Turquoise')}}">Turquoise</a></li>
-						<li><a href="{{route('Garnet')}}">Garnet</a></li>
-						<li><a href="{{route('Jade')}}">Jade</a></li>
-						<li><a href="{{route('Pearl')}}">Pearl</a></li>
-						<li><a href="{{route('Sapphire')}}">Sapphire</a></li>
-					</ul>
+					<a href="{{route('galleryview')}}">Gallery</a>
 				</li>
 				<li>
 					<a href="{{route('about')}}">about us</a>

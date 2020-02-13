@@ -56,7 +56,7 @@
                         </div>
                         <div class="col-md-6">
                             <label for="exampleInputEmail1">Room Name</label>
-                            <input type="text" name="room_name" class="form-control" value="{{old('room_name')}} required>
+                            <input type="text" name="room_name" class="form-control" value="{{old('room_name')}}" required>
                         </div>
                     </div>
                     <div class="row">
@@ -74,7 +74,7 @@
                         </div>
                         <div class="col-md-6">
                             <label for="exampleInputEmail1">Price</label>
-                            <input type="text" name="24hr_price" class="form-control" value="{{old('24hr_price')}} required>
+                            <input type="text" name="24hr_price" class="form-control" value="{{old('24hr_price')}}" required>
                         </div>
                     </div>
                     <div class="row">
@@ -95,7 +95,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <label for="exampleInputEmail1">Description</label>
-                            <textarea name="description" class="form-control" value="{{old('description')}} required></textarea>
+                            <textarea name="description" class="form-control" value="{{old('description')}}" required></textarea>
                         </div>
                     </div>
                 </div>

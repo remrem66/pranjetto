@@ -81,4 +81,18 @@ class Room_Tbl extends Model
             ->where('room_id',$room_id)
             ->delete();
     }
+
+    public static function DeductSlot($id,$quantity){
+
+        DB::table('room_tbl')
+            ->where('room_id',$id)
+            ->decrement('slot',$quantity);
+    }
+
+    public static function IncreaseSlot($id,$quantity){
+
+        DB::table('room_tbl')
+            ->where('room_id',$id)
+            ->increment('slot',$quantity);
+    }
 }

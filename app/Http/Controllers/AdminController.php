@@ -10,7 +10,9 @@ use App\Sales_Tbl;
 use App\Online_Reservation_Tbl;
 use App\Walkin_Reservation_Tbl;
 use App\Room_Mainpage_Tbl;
+use App\Gallery_Tbl;
 use App\Tbl_Users;
+use \App\Mail\CancelMail;
 use DB;
 use Auth;
 use Redirect;
@@ -228,7 +230,6 @@ class AdminController extends Controller
                     ->join('tbl_users','online_reservation_tbl.user_id','=','tbl_users.user_id')
                     ->join('room_tbl','room_tbl.room_id','=','online_reservation_tbl.room_id')
                     ->select('room_tbl.room_name','room_tbl.room_num','online_reservation_tbl.*','tbl_users.name')
-                    ->where('online_reservation_tbl.reservation_status','!=',2)
                     ->get();
         
         return view('admin.OnlineReservations',compact('data'));
@@ -256,20 +257,20 @@ class AdminController extends Controller
         
         $reservation_id = $request->reservation_id;
         $price = $request->price;
-        
+
+        $data = DB::table('online_reservation_tbl')
+                    ->where('reservation_id',$reservation_id)
+                    ->select('total_price','amount_paid','quantity','room_id')
+                    ->first();
+       
         if($request->discount == 1){
 
-            $data = DB::table('online_reservation_tbl')
-                    ->where('reservation_id',$reservation_id)
-                    ->select('total_price','amount_paid')
-                    ->first();
-            
             $price = ($data->total_price * 0.9) - $data->amount_paid;
         }
 
         
-
-        Online_Reservation_Tbl::CompletePayment($reservation_id,$price);
+        Room_Tbl::IncreaseSlot($data->room_id,$data->quantity);
+        Online_Reservation_Tbl::CompletePayment($reservation_id,$data->total_price);
 
         $description = "Payment of balance of customer ".$request->name;
 
@@ -291,13 +292,13 @@ class AdminController extends Controller
 
             $data = DB::table('walkin_reservation_tbl')
                     ->where('walkin_id',$walkin_id)
-                    ->select('total_price','amount_paid')
+                    ->select('total_price','amount_paid','quantity','room_id')
                     ->first();
             
             $price = ($data->total_price * 0.9) - $data->amount_paid;
         }
 
-    
+        Room_Tbl::IncreaseSlot($data->room_id,$data->quantity);
         Walkin_Reservation_Tbl::CompletePayment($walkin_id,$price);
 
         $description = "Payment of balance of customer ".$request->name;
@@ -370,9 +371,50 @@ class AdminController extends Controller
 
     public function CancelReservation(Request $request){
 
+    
+
+        $data = DB::table('online_reservation_tbl')
+                    ->join('tbl_users','online_reservation_tbl.user_id','=','tbl_users.user_id')
+                    ->select('online_reservation_tbl.*','tbl_users.name','tbl_users.email')
+                    ->where('online_reservation_tbl.reservation_id',$request->reservation_id)
+                    ->first();
+
+        $details = [
+            'date' => date("F d, Y",strtotime($data->check_in)),
+            'total_bill' => $data->total_price,
+            'amount_paid' => $data->amount_paid,
+            'customer' => $data->name,
+            'reference_number' => $data->reservation_code
+        ];
+
         $reservation_id = $request->reservation_id;
 
+        
+        \Mail::to($data->email)->send(new CancelMail($details));
         Online_Reservation_Tbl::CancelReservation($reservation_id);
+    }
+
+    public function CancelReservationWalkin(Request $request){
+
+
+        $data = DB::table('walkin_reservation_tbl')
+                    ->select('*')
+                    ->where('walkin_id',$request->walkin_id)
+                    ->first();
+
+        $details = [
+            'date' => date("F d, Y",strtotime($data->check_in)),
+            'total_bill' => $data->total_price,
+            'amount_paid' => $data->amount_paid,
+            'customer' => $data->customer_name,
+            'reference_number' => $data->reservation_code
+        ];
+
+        $walkin_id = $request->walkin_id;
+
+        
+        \Mail::to($data->email)->send(new CancelMail($details));
+        Walkin_Reservation_Tbl::CancelReservation($walkin_id);
     }
 
     public function AddAmenitiesView(){
@@ -587,6 +629,7 @@ class AdminController extends Controller
 
         $data = DB::table('room_tbl')
                 ->where('status',1)
+                ->where('slot','>',0)
                 ->select('*')
                 ->get();
 
@@ -851,6 +894,10 @@ class AdminController extends Controller
             
             $price = $prc * $days;
 
+            $price = $price * $request->quantity;
+
+            
+
             $extra_person = $request->extra_person;
 
 
@@ -866,6 +913,7 @@ class AdminController extends Controller
             }
 
             $extra = $extra_person * $dta;
+            
 
             $price = $price + $extra;
 
@@ -877,12 +925,22 @@ class AdminController extends Controller
 
     public function AddRoomWalkIn(Request $request){
 
-        
+        $reservation_code = $this->IDGenerator();
+
+        if(empty($request['extra_mattress'])){
+            $mattress = 0;
+        }
+        else{
+            $mattress = $request['extra_mattress']; 
+        }
         $data = [
             'customer_name' => $request['customer_name'],
             'email' => $request['email_address'],
             'contact_num' => $request['contact_num'],
             'room_id' => $request['room_id'],
+            'reservation_code' => $reservation_code,
+            'quantity' => $request['quantity'],
+            'extra_mattress' => $mattress,
             'no_of_persons' => $request['number_of_persons'],
             'check_in' => date("Y-m-d",strtotime($request['check_in'])),
             'check_out' => date("Y-m-d",strtotime($request['check_out'])),
@@ -890,8 +948,18 @@ class AdminController extends Controller
             'reservation_status' => 0
         ];
 
-        
+        Room_Tbl::DeductSlot($request['room_id'],$request['quantity']);
         Walkin_Reservation_Tbl::AddRoomWalkIn($data);
+    }
+
+    public function IDGenerator(){
+
+        $numbers = '0123456789';
+        $letters = 'abcdefghijklmnopqrstuvwxyz';
+
+        $id = substr(str_shuffle($letters), 0, 3).substr(str_shuffle($numbers), 0, 3);
+
+        return $id;
     }
 
     public function AddAdditional(Request $request){
@@ -985,5 +1053,217 @@ class AdminController extends Controller
         return view('admin.UploadedReceipts',compact('data'));
     }
     
+    public function Reschedule(){
+
+        $data = DB::table('online_reservation_tbl')
+                    ->join('tbl_users','online_reservation_tbl.user_id','=','tbl_users.user_id')
+                    ->join('room_tbl','room_tbl.room_id','=','online_reservation_tbl.room_id')
+                    ->select('room_tbl.room_name','room_tbl.room_num','online_reservation_tbl.*','tbl_users.name')
+                    ->where('online_reservation_tbl.reservation_status','!=',2)
+                    ->get();
+
+        $data1 = DB::table('walkin_reservation_tbl')
+                    ->join('room_tbl','room_tbl.room_id','=','walkin_reservation_tbl.room_id')
+                    ->select('room_tbl.room_name','room_tbl.room_num','walkin_reservation_tbl.*')
+                    ->where('walkin_reservation_tbl.reservation_status','!=',2)
+                    ->get();
+        
+        return view('admin.Reschedule',compact('data','data1'));
+    }
+
+    public function changeprcwithqty(Request $request){
+
+        if(empty($request->extra_person) || $request->extra_person == 0){
+
+            $end_date = date("Y-m-d",strtotime($request->end_date));
+            $start_date = date("Y-m-d",strtotime($request->start_date));
+
+            $diff = abs(strtotime($end_date) - strtotime($start_date));
+
+            $years = floor($diff / (365*60*60*24));
+            $months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
+            $days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
+
+            $prc = $request->fix_price;
+
+            $price = $prc * $days;
+
+            $price = $price * $request->quantity;
+
+        }
+        else{
+
+            $end_date = date("Y-m-d",strtotime($request->end_date));
+            $start_date = date("Y-m-d",strtotime($request->start_date));
+
+            $diff = abs(strtotime($end_date) - strtotime($start_date));
+
+            $years = floor($diff / (365*60*60*24));
+            $months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
+            $days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
+            
+            $prc = $request->fix_price;
+            
+            $price = $prc * $days;
+
+        
+            $extra_person = $request->extra_person;
+
+            
+
+            $price_setting = DB::table('settings_tbl')
+                    ->where('setting_id',1)
+                    ->select('price')
+                    ->get();
+        
+        
+            foreach($price_setting as $setprice){
+            
+                $dta = $setprice->price;
+            }
+
+            $price = $price * $request->quantity;
+
+            $extra = $extra_person * $dta;
+
+            $price = $price + $extra;
+
+        }
+        
+        return $price;
+    }
+
+    public function OnlineChangeSched(Request $request){
+
+        $price = DB::table('room_tbl')
+                    ->where('room_id',$request->room_id)
+                    ->select('twentyfourhr_price')
+                    ->first();
+
+        $details = DB::table('online_reservation_tbl')
+                    ->where('reservation_id',$request->reservation_id)
+                    ->select('quantity','extra_mattress')
+                    ->first();
+        
+        $end_date = date("Y-m-d",strtotime($request->check_out));
+        $start_date = date("Y-m-d",strtotime($request->check_in));
+        $diff = abs(strtotime($end_date) - strtotime($start_date));
+        $years = floor($diff / (365*60*60*24));
+        $months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
+        $days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
+        
+        $prc = $price->twentyfourhr_price;
+        
+        $price = $prc * $days;
+        $price = $price * $details->quantity;
+
+        if($details->extra_mattress > 0){
+
+            $price_setting = DB::table('settings_tbl')
+                    ->where('setting_id',1)
+                    ->select('price')
+                    ->first();
+        
+            $xtra = $price_setting->price;
+            $extra = $xtra * $details->extra_mattress;
+        }
+        else{
+            $extra = 0;
+        }
+    
+        $price = $price + $extra;
+
+        $change = [
+            'reservation_id' => $request->reservation_id,
+            'total_price' => $price,
+            'check_in' => $start_date,
+            'check_out' => $end_date
+        ];
+        
+        Online_Reservation_Tbl::ChangeSched($change);
+        
+    }
+
+    public function WalkinChangeSched(Request $request){
+        
+        
+        $price = DB::table('room_tbl')
+                    ->where('room_id',$request->room_id)
+                    ->select('twentyfourhr_price')
+                    ->first();
+
+        $details = DB::table('walkin_reservation_tbl')
+                    ->where('walkin_id',$request->walkin_id)
+                    ->select('quantity','extra_mattress')
+                    ->first();
+        
+        
+        $end_date = date("Y-m-d",strtotime($request->check_out));
+        $start_date = date("Y-m-d",strtotime($request->check_in));
+        $diff = abs(strtotime($end_date) - strtotime($start_date));
+        $years = floor($diff / (365*60*60*24));
+        $months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
+        $days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
+        
+        $prc = $price->twentyfourhr_price;
+        
+        $price = $prc * $days;
+        $price = $price * $details->quantity;
+
+        if($details->extra_mattress > 0){
+
+            $price_setting = DB::table('settings_tbl')
+                    ->where('setting_id',1)
+                    ->select('price')
+                    ->first();
+        
+            $xtra = $price_setting->price;
+            $extra = $xtra * $details->extra_mattress;
+        }
+        else{
+            $extra = 0;
+        }
+    
+        $price = $price + $extra;
+
+        $change = [
+            'walkin_id' => $request->walkin_id,
+            'total_price' => $price,
+            'check_in' => $start_date,
+            'check_out' => $end_date
+        ];
+        
+        Walkin_Reservation_Tbl::ChangeSched($change);
+        
+    }
+
+    public function OnlineStatusChange(Request $request){
+
+        Online_Reservation_Tbl::StatusChange($request->reservation_id,$request->status);
+    }
+
+    public function GalleryManagement(){
+
+        $data = DB::table('gallery_tbl')
+                ->select('*')
+                ->get();
+
+        return view('admin.ViewGallery',compact('data'));
+    }
+
+    public function Uploadtogallery(Request $request){
+
+        $image = $request->file('image');
+        $image_name = $image->getClientOriginalName();
+        $image->move('gallery', $image_name);
+
+        Gallery_Tbl::AddImage($image_name);
+
+    }
+
+    public function Deletetogallery(Request $request){
+
+        Gallery_Tbl::DeleteImage($request->gallery_id);
+    }
 
 }

@@ -30,12 +30,22 @@ class Walkin_Reservation_Tbl extends Model
                 'email' => $data['email'],
                 'contact_num' => $data['contact_num'],
                 'room_id' => $data['room_id'],
+                'reservation_code' => $data['reservation_code'],
+                'quantity' => $data['quantity'],
+                'extra_mattress' => $data['extra_mattress'],
                 'no_of_persons' => $data['no_of_persons'],
                 'check_in' => $data['check_in'],
                 'check_out' => $data['check_out'],
                 'total_price' => $data['total_price'],
                 'reservation_status' => 0
             ]);
+    }
+
+    public static function CancelReservation($walkin_id){
+
+        DB::table('walkin_reservation_tbl')
+            ->where('walkin_id',$walkin_id)
+            ->delete();
     }
 
     public static function ConfirmInitial($id,$price){
@@ -66,5 +76,16 @@ class Walkin_Reservation_Tbl extends Model
                 'reservation_status' => 2,
                 'amount_paid' => $price
             ]);
+        }
+
+        public static function ChangeSched($data){
+
+            DB::table('walkin_reservation_tbl')
+                ->where('walkin_id',$data['walkin_id'])
+                ->update([
+                    'total_price' => $data['total_price'],
+                    'check_in' => $data['check_in'],
+                    'check_out' => $data['check_out']
+                ]);
         }
 }

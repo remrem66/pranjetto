@@ -57,6 +57,7 @@ Route::get('/ChangeUserStatus', 'AdminController@ChangeUserStatus')->name('Chang
 Route::get('/ViewUsers', 'AdminController@ViewUsers')->name('ViewUsers');
 Route::get('/ViewAmenities', 'AdminController@ViewAmenities')->name('ViewAmenities');
 Route::get('/CancelReservation', 'AdminController@CancelReservation')->name('CancelReservation');
+Route::get('/CancelReservationWalkin', 'AdminController@CancelReservationWalkin')->name('CancelReservationWalkin');
 Route::get('/AddAmenities', 'AdminController@AddAmenitiesView')->name('AddAmenitiesView');
 Route::post('/AddAmenity', 'AdminController@AddAmenity')->name('AddAmenity');
 Route::get('/DeleteRoom', 'AdminController@DeleteRoom')->name('DeleteRoom');
@@ -68,6 +69,14 @@ Route::get('/disabledcheckoutdates', 'AdminController@disabledcheckoutdates')->n
 Route::get('/changeenddate', 'AdminController@changeenddate')->name('changeenddate');
 Route::get('/getextrapersonprice', 'AdminController@getextrapersonprice')->name('getextrapersonprice');
 Route::post('/AddRoomWalkIn', 'AdminController@AddRoomWalkIn')->name('AddRoomWalkIn');
+Route::post('/Uploadtogallery', 'AdminController@Uploadtogallery')->name('Uploadtogallery');
+Route::get('/Reschedule', 'AdminController@Reschedule')->name('Reschedule');
+Route::get('/OnlineChangeSched', 'AdminController@OnlineChangeSched')->name('OnlineChangeSched');
+Route::get('/WalkinChangeSched', 'AdminController@WalkinChangeSched')->name('WalkinChangeSched');
+Route::get('/changeprcwithqty', 'AdminController@changeprcwithqty')->name('changeprcwithqty');
+Route::get('/OnlineStatusChange', 'AdminController@OnlineStatusChange')->name('OnlineStatusChange');
+Route::get('/GalleryManagement', 'AdminController@GalleryManagement')->name('GalleryManagement');
+Route::get('/Deletetogallery', 'AdminController@Deletetogallery')->name('Deletetogallery');
 
 
 Route::get('/Topaz', 'HomeController@Topaz')->name('Topaz');
@@ -99,6 +108,8 @@ Route::get('/Addoneday', 'HomeController@Addoneday')->name('Addoneday');
 Route::get('/Amenities', 'HomeController@Amenities')->name('Amenities');
 Route::get('/NewOnlineRoomReservationPaypal', 'HomeController@NewOnlineRoomReservationPaypal')->name('NewOnlineRoomReservationPaypal');
 Route::get('/reservation', 'HomeController@viewReservations')->name('reservations');
+Route::get('/galleryview', 'HomeController@galleryview')->name('galleryview');
+Route::get('/MoreRooms', 'HomeController@MoreRooms')->name('MoreRooms');
 Route::get('/viewReservationDetails/{id}', 'HomeController@viewReservationDetails')->name('viewReservationDetails');
 Route::post('/reservationUpload', 'HomeController@reservationUpload')->name('reservationUpload');
 
