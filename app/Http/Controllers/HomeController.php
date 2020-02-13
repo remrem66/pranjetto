@@ -955,7 +955,7 @@ class HomeController extends Controller
         $data->room_details = Room_Tbl::where('room_id', $data->room_id)->first();
         $data->user_details = Tbl_Users::where('user_id', $data->user_id)->first();
         
-        return view('mainpage\reservationdetailsview', compact('data'));
+        return view('mainpage.reservationdetailsview', compact('data'));
     }
 
     public function reservationUpload(Request $request)
