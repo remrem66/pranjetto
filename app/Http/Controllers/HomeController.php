@@ -868,8 +868,15 @@ class HomeController extends Controller
             'check_out' => $request->check_out,
             'total_price' => $request->total_price
         ];
-        
-        if(!empty($check)){
+
+        $check = DB::table('online_reservation_tbl')
+                    ->where('room_id',$request->room_id)
+                    ->where('check_in',$request->check_in)
+                    ->where('reservation_status',0)
+                    ->select('room_id','check_in')
+                    ->get();
+
+        if(count($check) > 0){
             return 1;
         }
         else{
@@ -1244,11 +1251,11 @@ class HomeController extends Controller
         $check = DB::table('online_reservation_tbl')
                     ->where('room_id',$request->room_id)
                     ->where('check_in',$request->check_in)
-                    ->where('status',0)
+                    ->where('reservation_status',0)
                     ->select('room_id','check_in')
                     ->get();
 
-        if(!empty($check)){
+        if(count($check) > 0){
             return 1;
         }
         else{
