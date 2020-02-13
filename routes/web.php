@@ -37,7 +37,15 @@ Route::post('/PostRoom', 'AdminController@AddRoom')->name('AddRoom');
 Route::post('/EditRoom', 'AdminController@EditRoom')->name('EditRoom');
 Route::post('/UploadPictures', 'AdminController@UploadPictures')->name('UploadPictures');
 Route::get('/ConfirmInitial', 'AdminController@ConfirmInitial')->name('ConfirmInitial');
+Route::get('/ConfirmInitialWalkin', 'AdminController@ConfirmInitialWalkin')->name('ConfirmInitialWalkin');
 Route::get('/CompletePayment', 'AdminController@CompletePayment')->name('CompletePayment');
+Route::get('/CompletePaymentWalkin', 'AdminController@CompletePaymentWalkin')->name('CompletePaymentWalkin');
+Route::get('/AddAdditional', 'AdminController@AddAdditional')->name('AddAdditional');
+Route::get('/AddAdditionalwalkin', 'AdminController@AddAdditionalwalkin')->name('AddAdditionalwalkin');
+Route::get('/CheckTotalBalance', 'AdminController@CheckTotalBalance')->name('CheckTotalBalance');
+Route::get('/CheckTotalBalanceWalkin', 'AdminController@CheckTotalBalanceWalkin')->name('CheckTotalBalanceWalkin');
+Route::get('/WalkInReservations', 'AdminController@WalkInReservations')->name('WalkInReservations');
+Route::get('/UploadedReceipts', 'AdminController@UploadedReceipts')->name('UploadedReceipts');
 
 Route::get('/SalesReports', 'AdminController@SalesReports')->name('SalesReports');
 Route::get('/getSales/{trigger}', 'AdminController@getSales');
@@ -54,8 +62,12 @@ Route::post('/AddAmenity', 'AdminController@AddAmenity')->name('AddAmenity');
 Route::get('/DeleteRoom', 'AdminController@DeleteRoom')->name('DeleteRoom');
 Route::get('/DeleteAmenity', 'AdminController@DeleteAmenity')->name('DeleteAmenity');
 Route::get('/EditAmenityView', 'AdminController@EditAmenityView')->name('EditAmenityView');
-
-
+Route::get('/WalkInView', 'AdminController@WalkInView')->name('WalkInView');
+Route::get('/disableddates', 'AdminController@disableddates')->name('disableddates');
+Route::get('/disabledcheckoutdates', 'AdminController@disabledcheckoutdates')->name('disabledcheckoutdates');
+Route::get('/changeenddate', 'AdminController@changeenddate')->name('changeenddate');
+Route::get('/getextrapersonprice', 'AdminController@getextrapersonprice')->name('getextrapersonprice');
+Route::post('/AddRoomWalkIn', 'AdminController@AddRoomWalkIn')->name('AddRoomWalkIn');
 
 
 Route::get('/Topaz', 'HomeController@Topaz')->name('Topaz');
@@ -84,6 +96,7 @@ Route::get('/NewOnlineRoomReservation', 'HomeController@NewOnlineRoomReservation
 Route::post('/CheckAvailability', 'HomeController@CheckAvailability')->name('CheckAvailability');
 Route::post('/AllRooms', 'HomeController@AllRooms')->name('AllRooms');
 Route::get('/Addoneday', 'HomeController@Addoneday')->name('Addoneday');
+Route::get('/Amenities', 'HomeController@Amenities')->name('Amenities');
 Route::get('/NewOnlineRoomReservationPaypal', 'HomeController@NewOnlineRoomReservationPaypal')->name('NewOnlineRoomReservationPaypal');
 Route::get('/reservation', 'HomeController@viewReservations')->name('reservations');
 Route::get('/viewReservationDetails/{id}', 'HomeController@viewReservationDetails')->name('viewReservationDetails');

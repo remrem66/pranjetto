@@ -123,10 +123,28 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
+            <li class="nav-item">
+                <a href="{{route('WalkInView')}}" class="nav-link">
+                  <i class="fas fa-walking nav-icon"></i>
+                  <p>New Walk in</p>
+                </a>
+              </li>
               <li class="nav-item">
                 <a href="{{route('OnlineReservations')}}" class="nav-link">
                   <i class="fas fa-calendar-check nav-icon"></i>
                   <p>Online Reservations</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('WalkInReservations')}}" class="nav-link">
+                  <i class="fas fa-hiking nav-icon"></i>
+                  <p>Walk-in Reservations</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('UploadedReceipts')}}" class="nav-link">
+                  <i class="fas fa-file-invoice nav-icon"></i>
+                  <p>Uploaded Receipts</p>
                 </a>
               </li>
             </ul>

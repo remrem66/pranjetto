@@ -69,14 +69,21 @@
 							<i class="fa fa-star-o"></i>
 							<i class="fa fa-star-o"></i>
 							<i class="fa fa-star-o"></i>
+							
 						</div>
 						
 					</div>
-					
+					@if(session('logged') != true)
+					<div class="col-6 col-sm-4 col-lg-2">
+						<a href="{{route('login')}}" class="btn booking-button">book now</a>
+					</div>
+					@endif
+					@if(session('logged') == true)
 					<div class="col-12 mt-3 parallax-fade-top">
 						<div class="booking-hero-wrap">
 							<div class="row justify-content-center">
-							
+								
+								
 								<div class="col-5 no-mob">
 								
 									<div class="input-daterange input-group">
@@ -108,7 +115,7 @@
 							</div>
 						</div>
 					</div>
-					
+					@endif
 				</div>
 			</div>
 		</div>

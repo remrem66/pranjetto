@@ -7,7 +7,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Online Reservations</h1>
+            <h1>Walkin Reservations</h1>
           </div>
         </div>
       </div>
@@ -38,7 +38,7 @@
                 @foreach($data as $result)
                 <tr>
                   <td>{{$result->room_name}} {{$result->room_num}}</td>
-                  <td>{{$result->name}}</td>
+                  <td>{{$result->customer_name}}</td>
                   <td>{{$result->no_of_persons}}</td>
                   <td>{{date("M-d-Y",strtotime($result->check_in))}} - {{date("M-d-Y",strtotime($result->check_out))}}</td>
                   <td>{{$result->total_price}}</td>
@@ -50,12 +50,12 @@
                   </td>
                   <td>
                     @if($result->reservation_status == 0)
-                    <button class="btn btn-info initialpay" id="{{$result->reservation_id}}-{{$result->total_price}}-{{$result->name}}">Confirm Payment</button>
-                    <button class="btn btn-danger CancelReservation" id="{{$result->reservation_id}}">Cancel</button>
+                    <button class="btn btn-info initialpaywalkin" id="{{$result->walkin_id}}-{{$result->total_price}}-{{$result->customer_name}}">Confirm Payment</button>
+                    <button class="btn btn-danger CancelReservation" id="{{$result->walkin_id}}">Cancel</button>
                     @endif
                     @if($result->reservation_status == 1)
-                    <button class="btn btn-info completionofblance" id="{{$result->reservation_id}}-{{$result->total_price - $result->amount_paid}}-{{$result->name}}" data-toggle="modal" data-target=".finalcheckoutmodal">Complete Balance</button>
-                    <button class="btn btn-warning additionalamenity" id="{{$result->reservation_id}}-{{$result->total_price}}" data-toggle="modal" data-target=".addamenitymodal">Add Amenity</button>
+                    <button class="btn btn-info completionofwalkin" id="{{$result->walkin_id}}-{{$result->total_price - $result->amount_paid}}-{{$result->customer_name}}" data-toggle="modal" data-target=".finalcheckoutmodal">Complete Balance</button>
+                    <button class="btn btn-warning additionalamenitywalkin" id="{{$result->walkin_id}}-{{$result->total_price}}" data-toggle="modal" data-target=".addamenitymodal">Add Amenity</button>
                     @endif
                     
                 </td>
@@ -80,19 +80,19 @@
                               <label class="col-form-label col-md-6 col-sm-6 ">Senior Discount?</label>
                               <div class="col-md-6 col-sm-6 ">
                                 <div style="margin-top: 7px;">
-                                    <input type="radio" name="discount" id="discount" value="1"> Yes
-                                    <input type="radio" name="discount" id="discount1" value="0"> No
+                                    <input type="radio" name="discount" id="disc" value="1"> Yes
+                                    <input type="radio" name="discount" id="disc1" value="0"> No
                                 </div>
                               </div>
                           </div>
                           <div class="form-group row">
                               <label class="col-form-label col-md-6 col-sm-6 ">Total balance:</label>
                               <div class="col-md-6 col-sm-6 ">
-                                <h5 id="total_balance" style="margin-top: 8px;"> </h5>
+                                <h5 id="total_balance_walkin" style="margin-top: 8px;"> </h5>
                               </div>
                           </div>
                           
-                                  <input type="hidden" id="reservation_id" class="form-control" >
+                                  <input type="hidden" id="walkin_id" class="form-control" >
                                   <input type="hidden" id="price" class="form-control" >
                                   <input type="hidden" id="name" class="form-control">
 
@@ -100,7 +100,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary closeModal" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="Sbmtfinalcheckout">Save changes</button>
+                        <button type="button" class="btn btn-primary" id="Sbmtfinalcheckoutwalkin">Save changes</button>
                     </div>
                 </div>
             </div>
@@ -122,7 +122,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary closeModal" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="Sbmtadditional">Save changes</button>
+                        <button type="button" class="btn btn-primary" id="Sbmtadditionalwalkin">Save changes</button>
                     </div>
                 </div>
             </div>

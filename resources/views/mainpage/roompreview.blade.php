@@ -170,8 +170,16 @@
 									<div class="row">
 										<div class="col-12 pt-4">
 											<select class="wide" id="no_of_persons">
-												<option data-display="# of persons"></option>
+												<option value="0" data-display="# of persons"></option>
 												@for($x = 0; $x < $data->capacity; $x++)
+												<option value="{{$x+1}}">{{$x+1}}</option>
+												@endfor
+											</select>
+										</div>
+										<div class="col-12 pt-4">
+											<select class="wide" id="quantity">
+												<option value="0" data-display="Quantity"></option>
+												@for($x = 0; $x < $data->slot; $x++)
 												<option value="{{$x+1}}">{{$x+1}}</option>
 												@endfor
 											</select>
@@ -251,6 +259,12 @@
 												<input type="hidden" id="user_id" value="{{session('user_id')}}">
 												<input type="hidden" id="email" value="{{session('email')}}">
 											</div>
+											<label class="col-form-label col-md-2 col-sm-2 ">Quantity</label>
+                                    		<div class="col-md-4 col-sm-4 ">
+                                        		<h5 id="qty">  </h5>
+											</div>
+										</div>
+										<div class="form-group row">
 											<label class="col-form-label col-md-2 col-sm-2 ">Total Price</label>
                                     		<div class="col-md-4 col-sm-4 ">
                                         		<h5 id="tot_price">  </h5>

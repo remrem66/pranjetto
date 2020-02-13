@@ -37,6 +37,7 @@ class Room_Tbl extends Model
                 'capacity' => $data['capacity'],
                 'twentyfourhr_price' => $data['24hr_price'],
                 'description' => $data['description'],
+                'slot' => $data['slot'],
                 'main_pic' => $data['main_pic']
             ]);
     }
@@ -58,7 +59,7 @@ class Room_Tbl extends Model
                 'room_name' => $data['room_name'],
                 'category' => $data['category'],
                 'capacity' => $data['capacity'],
-                'twelvehr_price' => $data['12hr_price'],
+                'slot' => $data['slot'],
                 'twentyfourhr_price' => $data['24hr_price'],
                 'description' => $data['description'],
                 'main_pic' => $data['main_pic']

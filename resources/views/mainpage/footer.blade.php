@@ -176,17 +176,22 @@ $(function(){
 		var persons = $('#no_of_persons').val();
 		var room_id = $('#room_id').val();
 		var fix_price = $('#fix_price').val();
+		var quantity = $('#quantity').val();
 		var start_date = $('#startDate').val();
 		var end_date = $('#endDate').val();
 		var extra_mattress = $('#extra_mattress').val();
 		
-		if(start_date != "" && end_date != ""){
+		if(start_date == "" || end_date == "" || persons == 0 || quantity == 0 || extra_mattress < 0){
+			alert("please fill out necessary details");
+		}
+		else{
 			$.ajax({
                 url: '{{route("GetRoomTotalPrice")}}',
                 type: 'GET',
                 data: {
                     room_id: room_id,
 					fix_price: fix_price,
+					quantity: quantity,
                     start_date: start_date,
                     end_date: end_date,
                     extra_mattress: extra_mattress
@@ -201,11 +206,9 @@ $(function(){
 			document.getElementById("totalperson").innerHTML = persons;
 			document.getElementById("out_check").innerHTML = end_date;
 			document.getElementById("in_check").innerHTML = start_date;
+			document.getElementById("qty").innerHTML = quantity;
 			document.getElementById("mattress_extra").innerHTML = extra_mattress;
 			$('#exampleModal').modal('show')
-		}
-		else{
-			alert("please fill out necessary details");
 		}
 		
 	});
@@ -214,6 +217,8 @@ $(function(){
 
 		var room_id = $('#room_id').val();
 		var total_price = $('#total_price').val();
+		var quantity = $('#quantity').val();
+		var extra_mattress = $('#extra_mattress').val();
 		var user_id = $('#user_id').val();
 		var persons = $('#no_of_persons').val();
 		var check_in = $('#startDate').val();
@@ -229,6 +234,8 @@ $(function(){
 				room_id: room_id,
 				total_price: total_price,
 				user_id: user_id,
+				quantity: quantity,
+				extra_mattress: extra_mattress,
 				persons: persons,
 				check_in: check_in,
 				check_out: check_out,
@@ -271,6 +278,8 @@ $(function(){
         var room_id = $('#room_id').val();
 		var total_price = $('#total_price').val();
 		var user_id = $('#user_id').val();
+		var quantity = $('#quantity').val();
+		var extra_mattress = $('#extra_mattress').val();
 		var persons = $('#no_of_persons').val();
 		var check_in = $('#startDate').val();
 		var check_out = $('#endDate').val();
@@ -283,6 +292,8 @@ $(function(){
 				room_id: room_id,
 				total_price: total_price,
 				user_id: user_id,
+				quantity: quantity,
+				extra_mattress: extra_mattress,
 				persons: persons,
 				check_in: check_in,
 				check_out: check_out,

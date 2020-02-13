@@ -35,6 +35,9 @@
 				<li>
 					<a href="{{route('about')}}">about us</a>
 				</li>
+				<li>
+					<a href="{{route('Amenities')}}">amenities</a>
+				</li>
 				@if(session('logged') == true)
 				<li>
 					<a href="{{route('reservations')}}">Your Reservation</a>

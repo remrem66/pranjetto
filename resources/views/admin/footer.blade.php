@@ -46,13 +46,14 @@
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset('admin/dist/js/demo.js')}}"></script>
 <!-- DataTables -->
-<!-- <script src="{{asset('admin/plugins/datatables/jquery.dataTables.js')}}"></script>
-<script src="{{asset('admin/plugins/datatables-bs4/js/dataTables.bootstrap4.js')}}"></script> -->
+<script src="{{asset('admin/plugins/datatables/jquery.dataTables.js')}}"></script>
+<script src="{{asset('admin/plugins/datatables-bs4/js/dataTables.bootstrap4.js')}}"></script>
 
 <script src="{{asset('js/dataTables.bootstrap4.min.js')}}"></script>
 <script src="{{asset('js/datatables.min.js')}}"></script>
 <!-- Sweet Alert -->
 <script src="{{asset('admin/sweetalert/sweetalert2.all.min.js')}}"></script>
+<script src="{{asset('admin/jquery-ui/jquery-ui.min.js')}}"></script>
 <!-- bs-custom-file-input -->
 <script src="{{asset('admin/plugins/bs-custom-file-input/bs-custom-file-input.min.js')}}"></script>
 
@@ -65,6 +66,8 @@ $('#room').DataTable({
     dom: 'Bfrtip',
     buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
 });
+
+$('#walkin').DataTable();
 
 var sales =  $('#sales').DataTable({
 
@@ -231,7 +234,7 @@ $("#btnMonthly").on('click', function() {
         document.getElementById("room_name").value = response.room_name;
         document.getElementById("category").value = response.category;
         document.getElementById("capacity").value = response.capacity;
-        document.getElementById("12hr_price").value = response.twelvehr_price;
+        document.getElementById("slot").value = response.slot;
         document.getElementById("24hr_price").value = response.twentyfourhr_price;
         document.getElementById("description").value = response.description;
         document.getElementById("room_id").value = response.room_id;
@@ -360,46 +363,83 @@ $("#btnMonthly").on('click', function() {
 
   $('.completionofblance').click(function(e){
 
-    Swal.fire({
-        title: 'Are you sure?',
-        text: "You want to complete payment?",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes!'
-      }).then((result) => {
-        if (result.value) {
           var data = $(this).attr("id");
           data = data.split("-");
         
           var reservation_id = data[0];
           var price = data[1];
           var name = data[2];
-        
-          $.ajax({
-            url: '{{route("CompletePayment")}}',
-            type: 'GET',
-            data: {
-              reservation_id: reservation_id,
-              price: price,
-              name: name
-            },
-            dataType: 'HTML',
-            success: function(response){
-              Swal.fire({
-                title: "Successfully Confirmed!",
-                icon: 'success', 
-                type: "success"
-              })
-              .then(function(){
-                  location.reload();
-              });
-            }
-          })
-        }
-      })
+
+          $('#reservation_id').val(reservation_id);
+          $('#price').val(price);
+          $('#name').val(name);
+         
     })
+
+    $('.completionofwalkin').click(function(e){
+
+      var data = $(this).attr("id");
+      data = data.split("-");
+
+      var walkin_id = data[0];
+      var price = data[1];
+      var name = data[2];
+
+      $('#walkin_id').val(walkin_id);
+      $('#price').val(price);
+      $('#name').val(name);
+
+  })
+
+    $('#Sbmtfinalcheckout').click(function(e){
+
+          var reservation_id = $('#reservation_id').val();
+          var price = $('#price').val();
+          var name = $('#name').val();
+          var discount = $("input[name='discount']:checked").val();
+
+          if(!discount){
+            alert("please select if there is a discount or none");
+          }
+          else{
+            Swal.fire({
+              title: 'Are you sure?',
+              text: "You want to complete this transaction?",
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Yes!'
+            })
+              .then((result) => {
+              if (result.value) {
+                $.ajax({
+                  url: '{{route("CompletePayment")}}',
+                  type: 'GET',
+                  data: {
+                    reservation_id: reservation_id,
+                    price: price,
+                    name: name,
+                    discount: discount
+                  },
+                  dataType: 'HTML',
+                  success: function(response){
+                    Swal.fire({
+                      title: "Success!",
+                      icon: 'success', 
+                      type: "success"
+                    })
+                    .then(function(){
+                        location.reload();
+                    });
+                  }
+                })
+              } 
+            })  
+          }
+    })
+
+
 
     $('.picsamainpage').click(function(e){
 
@@ -407,6 +447,11 @@ $("#btnMonthly").on('click', function() {
 
         document.getElementById("picsamain").value = id;
       
+    });
+
+    $('.newroomwalkinmodal').on('hidden.bs.modal',function(e){
+
+      location.reload();
     });
 
     $('.SavePictureMainpage').click(function(e){
@@ -761,8 +806,498 @@ $("#btnMonthly").on('click', function() {
         }
       })
     }
+  });
+
+   $('.roomwalkin').click(function(e){
+
+    var data = $(this).attr("id");
+    data = data.split("-");
+    var room_id = data[0];
+    var capacity = data[1];
+    var price = data[2];
+    var x = 1;
+    
+    for(x; x <= capacity; x++){
+        $('#number_of_persons').append($('<option>', {
+            value: x,
+            text: x
+        }));
+    }
+
+    document.getElementById("total_price").innerHTML = "₱" + price;
+    document.getElementById("tot_price").value = price;
+    document.getElementById("fix_price").value = price;
+    document.getElementById("capacity").value = capacity;
+    document.getElementById("room_id").value = room_id;
+  });
+
+  $(function(){
+
+    $('.roomwalkin').click(function(e){
+
+      var data = $(this).attr("id");
+      data = data.split("-");
+      var room_id = data[0];
+    
+      $.ajax({
+          url: '{{route("disableddates")}}',
+          type: 'GET',
+          data: {
+              room_id: room_id
+          },
+          dataType: 'HTML',
+          success: function(response){
+            
+            var array = response;
+
+            $( "#checkin_datepicker" ).datepicker({
+                minDate: new Date(),
+                beforeShowDay: function(date){
+                    var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
+                    return [ array.indexOf(string) == -1 ]
+                }
+            });
+        }
+    })
+
+  });
+
+});
+
+$('#checkin_datepicker').change(function(e){
+
+        var room_id = $('#room_id').val(); 
+        var check_in =  $('#checkin_datepicker').val(); 
+        
+        
+
+        $.ajax({
+                url: '{{route("disabledcheckoutdates")}}',
+                type: 'GET',
+                data: {
+                    room_id: room_id,
+                    check_in: check_in,
+                },
+                dataType: 'HTML',
+                success: function(response){
+
+                    var array = response;
+                    
+
+                    $('#checkout_datepicker').prop("disabled", false);
+                    
+                    $('#checkout_datepicker').datepicker({
+                        minDate: check_in,
+                        beforeShowDay: function(date){
+                            var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
+                            return [ array.indexOf(string) == -1 ]
+                        }
+                    })
+                }
+            })
+    })
+
+    $('#checkout_datepicker').change(function(e){
+
+      var extra_person = $('#extra_person').val();
+      var categ = $('#categ').val();
+      var fix_price = $('#fix_price').val();
+      var start_date =  $('#checkin_datepicker').val(); 
+      var end_date =  $('#checkout_datepicker').val();
+
+      $.ajax({
+          url: '{{route("changeenddate")}}',
+          type: 'GET',
+          data: {
+              extra_person: extra_person,
+              fix_price: fix_price,
+              start_date: start_date,
+              end_date: end_date
+          },
+          dataType: 'HTML',
+          success: function(response){
+              document.getElementById("total_price").innerHTML = "₱" + response;
+              document.getElementById("tot_price").value = response;
+          }
+      })
   })
 
+  $('#extra_person').change(function(e){
+
+    var extra_person = $('#extra_person').val();
+
+    var fix_price = $('#fix_price').val();
+    var start_date =  $('#checkin_datepicker').val(); 
+    var end_date =  $('#checkout_datepicker').val(); 
+
+$.ajax({
+    url: '{{route("getextrapersonprice")}}',
+    type: 'GET',
+    data: {
+        extra_person: extra_person,
+        fix_price: fix_price,
+        start_date: start_date,
+        end_date: end_date
+    },
+    dataType: 'HTML',
+    success: function(response){
+
+        document.getElementById("total_price").innerHTML = "₱" + response;
+        document.getElementById("tot_price").value = response;
+    }
+    
+  })
+});
+
+ $('#number_of_persons').change(function(e){
+
+var capacity = $('#capacity').val()
+var persons = $('#number_of_persons').val()
+
+if(persons == capacity){
+    $('#extra_person').prop("disabled", false);
+}
+else{
+    $('#extra_person').prop("disabled", true);
+}
+})
+
+$("#SbmtRoomWalkIn").click(function(e){
+
+e.preventDefault();
+
+var form = $('form')[0]; // You need to use standard javascript object here
+var formData = new FormData(form);
+Swal.fire({
+    title: 'Are you sure?',
+    text: "You want to execute this action?",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, save changes!'
+})
+.then((result) => {
+    if(result.value){
+        $.ajax({
+            url: '{{route("AddRoomWalkIn")}}',
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            dataType: 'HTML',
+            success: function(response){
+                Swal.fire({
+                    title: "Successfuly Executed!",
+                    icon: 'success', 
+                    type: "success"
+                })
+                .then(function(){
+                    location.reload();
+                });
+            }
+        })
+    }
+})
+});
+
+$('.additionalamenity').click(function(e){
+
+  var data = $(this).attr("id");
+  data = data.split("-");
+  var reservation_id = data[0];
+  var total_price = data[1];
+  $('#reservation_id').val(reservation_id);
+  $('#price').val(total_price);
+          
+  
+});
+
+$('.additionalamenitywalkin').click(function(e){
+
+var data = $(this).attr("id");
+data = data.split("-");
+var walkin_id = data[0];
+var total_price = data[1];
+$('#walkin_id').val(walkin_id);
+
+
+$('#price').val(total_price);
+        
+
+});
+
+$('#Sbmtadditional').click(function(e){
+
+  var reservation_id = $('#reservation_id').val();
+  var total_price = $('#price').val();
+          
+  var amenity = $('#amenities_total').val();
+  
+  if(amenity < 0){
+    alert("Please input a valid amount");
+  }
+  else{
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You want to execute this action?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes!'
+      }).then((result) => {
+        if (result.value) {
+          $.ajax({
+            url: '{{route("AddAdditional")}}',
+            type: 'GET',
+            data: {
+              reservation_id: reservation_id,
+              amenity: amenity,
+              total_price: total_price
+            },
+            dataType: 'HTML',
+            success: function(response){
+              Swal.fire({
+                title: "Success!",
+                icon: 'success', 
+                type: "success"
+              })
+              .then(function(){
+                  location.reload();
+              });
+            }
+          })
+        }
+      })
+  }
+});
+
+$('#Sbmtadditionalwalkin').click(function(e){
+
+var walkin_id = $('#walkin_id').val();
+var total_price = $('#price').val();
+
+
+var amenity = $('#amenities_total').val();
+
+if(amenity < 0){
+  alert("Please input a valid amount");
+}
+else{
+  Swal.fire({
+      title: 'Are you sure?',
+      text: "You want to execute this action?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes!'
+    }).then((result) => {
+      if (result.value) {
+        $.ajax({
+          url: '{{route("AddAdditionalwalkin")}}',
+          type: 'GET',
+          data: {
+            walkin_id: walkin_id,
+            amenity: amenity,
+            total_price: total_price
+          },
+          dataType: 'HTML',
+          success: function(response){
+            Swal.fire({
+              title: "Success!",
+              icon: 'success', 
+              type: "success"
+            })
+            .then(function(){
+                location.reload();
+            });
+          }
+        })
+      }
+    })
+}
+});
+
+$('#discount').click(function(e){
+
+  var test = $('#discount').val();
+  var reservation_id = $('#reservation_id').val();
+
+  $.ajax({
+    url: '{{route("CheckTotalBalance")}}',
+    type: 'GET',
+    data: {
+      test: test,
+      reservation_id: reservation_id
+    },
+    dataType: 'HTML',
+    success: function(response){
+      document.getElementById("total_balance").innerHTML = "₱" + response;
+    }
+  })
+
+});
+
+$('#discount1').click(function(e){
+
+  var test = $('#discount1').val();
+  var reservation_id = $('#reservation_id').val();
+
+  $.ajax({
+    url: '{{route("CheckTotalBalance")}}',
+    type: 'GET',
+    data: {
+      test: test,
+      reservation_id: reservation_id
+    },
+    dataType: 'HTML',
+    success: function(response){
+      
+      document.getElementById("total_balance").innerHTML = "₱" + response;
+    }
+  })
+});
+
+$('#disc').click(function(e){
+
+var test = $('#disc').val();
+var walkin_id = $('#walkin_id').val();
+
+
+
+$.ajax({
+  url: '{{route("CheckTotalBalanceWalkin")}}',
+  type: 'GET',
+  data: {
+    test: test,
+    walkin_id: walkin_id
+  },
+  dataType: 'HTML',
+  success: function(response){
+    document.getElementById("total_balance_walkin").innerHTML = "₱" + response;
+  }
+})
+
+});
+
+$('#disc1').click(function(e){
+
+var test = $('#disc1').val();
+var walkin_id = $('#walkin_id').val();
+
+$.ajax({
+  url: '{{route("CheckTotalBalanceWalkin")}}',
+  type: 'GET',
+  data: {
+    test: test,
+    walkin_id: walkin_id
+  },
+  dataType: 'HTML',
+  success: function(response){
+    
+    document.getElementById("total_balance_walkin").innerHTML = "₱" + response;
+  }
+})
+});
+
+$('.initialpaywalkin').click(function(e){
+
+Swal.fire({
+    title: 'Are you sure?',
+    text: "You want to confirm initial payment?",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes!'
+  }).then((result) => {
+    if (result.value) {
+      var data = $(this).attr("id");
+      data = data.split("-");
+
+      var walkin_id = data[0];
+      var price = data[1];
+      var name = data[2];
+
+      $.ajax({
+        url: '{{route("ConfirmInitialWalkin")}}',
+        type: 'GET',
+        data: {
+          walkin_id: walkin_id,
+          price: price,
+          name: name
+        },
+        dataType: 'HTML',
+        success: function(response){
+          Swal.fire({
+            title: "Successfully Confirmed!",
+            icon: 'success', 
+            type: "success"
+          })
+          .then(function(){
+              location.reload();
+          });
+        }
+      })
+    }
+  })
+})
+
+$('#Sbmtfinalcheckoutwalkin').click(function(e){
+
+          var walkin_id = $('#walkin_id').val();
+          var price = $('#price').val();
+          var name = $('#name').val();
+          var discount = $("input[name='discount']:checked").val();
+
+          if(!discount){
+            alert("please select if there is a discount or none");
+          }
+          else{
+            Swal.fire({
+              title: 'Are you sure?',
+              text: "You want to complete this transaction?",
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Yes!'
+            })
+              .then((result) => {
+              if (result.value) {
+                $.ajax({
+                  url: '{{route("CompletePaymentWalkin")}}',
+                  type: 'GET',
+                  data: {
+                    walkin_id: walkin_id,
+                    price: price,
+                    name: name,
+                    discount: discount
+                  },
+                  dataType: 'HTML',
+                  success: function(response){
+                    Swal.fire({
+                      title: "Success!",
+                      icon: 'success', 
+                      type: "success"
+                    })
+                    .then(function(){
+                        location.reload();
+                    });
+                  }
+                })
+              } 
+            })  
+          }
+    })
+
+
+$("#pop").on("click", function() {
+   $('#imagepreview').attr('src', $('#imageresource').attr('src')); // here asign the image to the modal when the user click the enlarge link
+   $('#imagemodal').modal('show'); // imagemodal is the id attribute assigned to the bootstrap modal, then i use the show function
+});
 </script>
 </body>
 </html>

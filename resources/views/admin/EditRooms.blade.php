@@ -29,8 +29,8 @@
                   <th>Name</th>
                   <th>Category</th>
                   <th>Capacity</th>
-                  <th>12-Hour Price</th>
-                  <th>24-Hour Price</th>
+                  <th>Slot</th>
+                  <th>Price</th>
                   <th>Action</th>
                 </tr>
                 </thead>
@@ -42,7 +42,7 @@
                   <td>{{$result->room_name}}</td>
                   <td>{{$result->category}}</td>
                   <td>{{$result->capacity}}</td>
-                  <td>{{$result->twelvehr_price}}</td>
+                  <td>{{$result->slot}}</td>
                   <td>{{$result->twentyfourhr_price}}</td>
                   <td>
                     <button class="btn btn-info RoomEdit" id="{{$result->room_id}}" data-toggle="modal" data-target="#EditRoom">Edit</button>
@@ -109,13 +109,13 @@
                                         </select>
                                     </div>
                                     <div class="col-md-6">
-                                        <label for="exampleInputEmail1">12-Hour Price</label>
-                                        <input type="text" name="12hr_price" id="12hr_price" class="form-control">
+                                        <label for="exampleInputEmail1">Slot</label>
+                                        <input type="text" name="slot" id="slot" class="form-control">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <label for="exampleInputEmail1">24-hour Price</label>
+                                        <label for="exampleInputEmail1">Price</label>
                                         <input type="text" name="24hr_price" id="24hr_price" class="form-control">
                                     </div>
                                     <div class="col-md-6">

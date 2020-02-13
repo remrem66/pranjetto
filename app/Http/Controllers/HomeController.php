@@ -765,6 +765,8 @@ class HomeController extends Controller
                 $prc = $request->fix_price;
     
                 $price = $prc * $days;
+
+                $price = $price * $request->quantity;
     
             }
             else{
@@ -792,7 +794,7 @@ class HomeController extends Controller
                     $dta = $setprice->price;
                 }
 
-                
+                $price = $price * $request->quantity;
 
                 $extra = $extra_mattress * $dta;
                 
@@ -803,6 +805,7 @@ class HomeController extends Controller
             }
         }
 
+        
         return $price;
 
     }
@@ -824,19 +827,30 @@ class HomeController extends Controller
 
         $details[0]['total_price'] = $request->total_price;
 
-        
+        if(empty($request->extra_mattress)){
+            $mattress = 0;
+        }
+        else{
+            $mattress = $request->extra_mattress;
+        }
+
         $email = $request->email;
 
-        
+        $reservation_code = $this->IDGenerator();
+
         $data = [
             'user_id' => $request->user_id,
             'room_id' => $request->room_id,
             'no_of_persons' => $request->persons,
+            'quantity' => $request->quantity,
+            'extra_mattress' => $mattress,
+            'reservation_code' => $reservation_code,
             'check_in' => $request->check_in,
             'check_out' => $request->check_out,
             'total_price' => $request->total_price
         ];
         
+       dd($data);
         
         Online_Reservation_Tbl::NewOnlineRoomReservation($data);
          \Mail::to($email)->send(new SendMail($details));
@@ -939,7 +953,7 @@ class HomeController extends Controller
     public function viewReservations()
     {
         $userId = session('user_id');
-        $userReservations = Online_Reservation_Tbl::where('user_id', $userId)->get();
+        $userReservations = Online_Reservation_Tbl::where('user_id', $userId)->where('reservation_status','!=',2)->get();
         foreach ($userReservations as $key => $value) {
             $value->room_details = Room_Tbl::where('room_id', $value->room_id)->first();
             $value->user_details = Tbl_Users::where('user_id', $value->user_id)->first();
@@ -1100,6 +1114,33 @@ class HomeController extends Controller
         
         Online_Reservation_Tbl::NewOnlineRoomReservation($data);
          
-        }
+    }
+
+    public function Amenities(){
+
+        $data = DB::table('amenity_tbl')
+                ->where('status',1)
+                ->select('*')
+                ->get();
+        
+        return view('mainpage.amenities',compact('data'));
+    }
+
+    public function GenerateBloodBagID(){
+
+        $bloodbag_id = $this->IDGenerator();
+
+        
+    }
+
+    public function IDGenerator(){
+
+        $numbers = '0123456789';
+        $letters = 'abcdefghijklmnopqrstuvwxyz';
+
+        $bloodbag_id = substr(str_shuffle($letters), 0, 3).substr(str_shuffle($numbers), 0, 3);
+
+        return $bloodbag_id;
+    }
     
 }
