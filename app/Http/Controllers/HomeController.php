@@ -850,7 +850,7 @@ class HomeController extends Controller
             'total_price' => $request->total_price
         ];
         
-       dd($data);
+       
         
         Online_Reservation_Tbl::NewOnlineRoomReservation($data);
          \Mail::to($email)->send(new SendMail($details));
