@@ -37,7 +37,7 @@
 				</li>
 				@if(session('logged') == true)
 				<li>
-					<a href="">Your Reservation</a>
+					<a href="{{route('reservations')}}">Your Reservation</a>
 				</li>
 				@endif
 				@if(session('logged') != true)

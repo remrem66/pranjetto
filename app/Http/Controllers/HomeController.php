@@ -930,8 +930,55 @@ class HomeController extends Controller
 
         $request->session()->put('check_in', $request['start']); 
         $request->session()->put('check_out', $request['end']);
+
+        
         
        return view('mainpage.AllRooms',compact('available','categories'));
+    }
+
+    public function viewReservations()
+    {
+        $userId = session('user_id');
+        $userReservations = Online_Reservation_Tbl::where('user_id', $userId)->get();
+        foreach ($userReservations as $key => $value) {
+            $value->room_details = Room_Tbl::where('room_id', $value->room_id)->first();
+            $value->user_details = Tbl_Users::where('user_id', $value->user_id)->first();
+        }
+
+        return view('mainpage.reservationpreview', compact('userReservations'));
+    }
+
+    public function viewReservationDetails($id)
+    {
+        $userId = session('user_id');
+        $data = Online_Reservation_Tbl::where('reservation_id', $id)->first();
+        $data->room_details = Room_Tbl::where('room_id', $data->room_id)->first();
+        $data->user_details = Tbl_Users::where('user_id', $data->user_id)->first();
+        
+        return view('mainpage\reservationdetailsview', compact('data'));
+    }
+
+    public function reservationUpload(Request $request)
+    {
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $name = time().'.'.$image->getClientOriginalExtension();
+            $destinationPath = public_path('/images');
+            $image->move($destinationPath, $name);
+            
+
+            $data = Online_Reservation_Tbl::where('reservation_id', $request->reservation_id)->first();
+
+            DB::table('online_reservation_tbl')
+            ->where('reservation_id',$request->reservation_id)
+            ->update([
+                'receipt_image' => $name
+            ]);
+            $data->room_details = Room_Tbl::where('room_id', $data->room_id)->first();
+            $data->user_details = Tbl_Users::where('user_id', $data->user_id)->first();
+        
+            return back()->with('success','Image Upload successfully');
+        }
     }
 
     public function Addoneday(Request $request){

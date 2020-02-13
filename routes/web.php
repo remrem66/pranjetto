@@ -85,7 +85,9 @@ Route::post('/CheckAvailability', 'HomeController@CheckAvailability')->name('Che
 Route::post('/AllRooms', 'HomeController@AllRooms')->name('AllRooms');
 Route::get('/Addoneday', 'HomeController@Addoneday')->name('Addoneday');
 Route::get('/NewOnlineRoomReservationPaypal', 'HomeController@NewOnlineRoomReservationPaypal')->name('NewOnlineRoomReservationPaypal');
-
+Route::get('/reservation', 'HomeController@viewReservations')->name('reservations');
+Route::get('/viewReservationDetails/{id}', 'HomeController@viewReservationDetails')->name('viewReservationDetails');
+Route::post('/reservationUpload', 'HomeController@reservationUpload')->name('reservationUpload');
 
 
 

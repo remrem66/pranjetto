@@ -122,6 +122,7 @@ $(function(){
 		var room_id = $('#room_id').val();
 		var check_in = $('#startDate').val();
 		
+		
 		$.ajax({
             url: '{{route("disableforcheckout")}}',
             type: 'GET',
@@ -133,6 +134,7 @@ $(function(){
             success: function(response){
 
 				$('#endDate').prop("disabled", false);
+				
 				
 				var DatesforDisable = [];
 					
@@ -195,13 +197,17 @@ $(function(){
                     document.getElementById("tot_price").innerHTML = "₱" + response;
                     document.getElementById("total_price").value = response;
                 }
-			})
+			});
+			document.getElementById("totalperson").innerHTML = persons;
+			document.getElementById("out_check").innerHTML = end_date;
+			document.getElementById("in_check").innerHTML = start_date;
+			document.getElementById("mattress_extra").innerHTML = extra_mattress;
+			$('#exampleModal').modal('show')
 		}
-		document.getElementById("totalperson").innerHTML = persons;
-		document.getElementById("out_check").innerHTML = end_date;
-		document.getElementById("in_check").innerHTML = start_date;
-		document.getElementById("mattress_extra").innerHTML = extra_mattress;
-		$('#exampleModal').modal('show')
+		else{
+			alert("please fill out necessary details");
+		}
+		
 	});
 
 	$('#sbmtOnlineReservation').click(function(e){
