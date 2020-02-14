@@ -37,7 +37,7 @@
                         </div>
                         <div class="col-md-6">
                             <label for="exampleInputEmail1">Floor</label>
-                            <input type="text" name="floor" class="form-control" value="{{old('floor')}}" required>
+                            <input type="number" name="floor" class="form-control" value="{{old('floor')}}" required>
                         </div>
                     </div>
                     <div class="row">
@@ -74,7 +74,7 @@
                         </div>
                         <div class="col-md-6">
                             <label for="exampleInputEmail1">Price</label>
-                            <input type="text" name="24hr_price" class="form-control" value="{{old('24hr_price')}}" required>
+                            <input type="text" name="number" class="form-control" value="{{old('24hr_price')}}" required>
                         </div>
                     </div>
                     <div class="row">
@@ -89,7 +89,7 @@
                         </div>
                         <div class="col-md-6">
                             <label for="exampleInputFile">Slot</label>
-                            <input type="text" name="slot" class="form-control" value="{{old('slot')}}" required>
+                            <input type="number" name="slot" class="form-control" value="{{old('slot')}}" required>
                         </div>
                     </div>
                     <div class="row">
