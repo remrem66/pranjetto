@@ -29,6 +29,7 @@
                   <th>Customer Name</th>
                   <th># of pax</th>
                   <th>Date of Reservation</th>
+                  <th>Quantity</th>
                   <th>Total Price</th>
                   <th>Amount Paid</th>
                   <th>Balance</th>
@@ -44,6 +45,7 @@
                   <td>{{$result->name}}</td>
                   <td>{{$result->no_of_persons}}</td>
                   <td>{{date("m-d-y",strtotime($result->check_in))}} - {{date("m-d-y",strtotime($result->check_out))}}</td>
+                  <td>{{$result->quantity}}</td>
                   <td>{{$result->total_price}}</td>
                   <td>{{$result->amount_paid}}</td>
                   <td>
