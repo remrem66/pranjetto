@@ -30,7 +30,6 @@ class Room_Tbl extends Model
 
         DB::table('room_tbl')
             ->insert([
-                'room_num' => $data['room_num'],
                 'floor' => $data['floor'],
                 'room_name' => $data['room_name'],
                 'category' =>$data['category'],

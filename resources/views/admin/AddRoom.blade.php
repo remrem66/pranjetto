@@ -71,7 +71,7 @@
                         
                         <div class="col-md-6">
                             <label for="exampleInputEmail1">Price</label>
-                            <input type="text" name="number" class="form-control" value="{{old('24hr_price')}}" required>
+                            <input type="number" name="24hr_price" class="form-control" value="{{old('24hr_price')}}" required>
                             
                         </div>
                         <div class="col-md-6">

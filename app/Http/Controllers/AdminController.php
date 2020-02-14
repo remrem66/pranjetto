@@ -72,7 +72,6 @@ class AdminController extends Controller
     public function AddRoom(Request $request){
 
         $request->validate([
-            'room_num' => 'unique:room_tbl,room_num|required|max:255',
             'floor' => 'required',
             'room_name' => 'required|unique:room_tbl,room_name',
             'category' => 'required',
