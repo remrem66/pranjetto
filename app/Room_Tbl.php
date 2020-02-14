@@ -33,7 +33,7 @@ class Room_Tbl extends Model
                 'room_num' => $data['room_num'],
                 'floor' => $data['floor'],
                 'room_name' => $data['room_name'],
-                'category' ->$data['category'],
+                'category' =>$data['category'],
                 'capacity' => $data['capacity'],
                 'twentyfourhr_price' => $data['24hr_price'],
                 'description' => $data['description'],
