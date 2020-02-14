@@ -1449,7 +1449,7 @@ $.ajax({
 })
 })
 
-$('#re_checkin').change(function(e){
+    $('#re_checkin').change(function(e){
 
 var room_id = $('#room_id').val(); 
 var check_in =  $('#re_checkin').val(); 

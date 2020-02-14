@@ -73,13 +73,13 @@ class AdminController extends Controller
 
         $request->validate([
             'room_num' => 'unique:room_tbl,room_num|required|max:255',
-            'floor' => 'required|regex:^[1-9][0-9]+|not_in:0',
+            'floor' => 'required',
             'room_name' => 'required|unique:room_tbl,room_name',
             'category' => 'required',
             'capacity' => 'required',
-            '24hr_price' => 'required|regex:^[1-9][0-9]+|not_in:0',
+            '24hr_price' => 'required',
             'description' => 'required',
-            'slot' => 'required|regex:^[1-9][0-9]+|not_in:0',
+            'slot' => 'required',
             'main_pic' => 'required'
         ]);
 
