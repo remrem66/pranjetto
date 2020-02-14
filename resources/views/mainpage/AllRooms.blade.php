@@ -57,13 +57,19 @@
 									{{$available['Sapphire']}}
 								@endif
 							</p>
+							@if(session('logged') != true)
+							<a class="mt-1 btn btn-primary" href="{{route('login')}}">View Rooms </a>
+							@endif
+							@if(session('logged') == true)
 							<a class="mt-1 btn btn-primary" href="{{route($category->category)}}">View Rooms </a>
+							@endif
 							<div class="room-icons mt-4 pt-4">
 								<img src="mainpage/img/4.svg" alt="">
 								<img src="mainpage/img/2.svg" alt="">
 								<img src="mainpage/img/6.svg" alt="">
 								<img src="mainpage/img/1.svg" alt="">
 							</div>
+							
 						</div>
 					</div>
 				</div>

@@ -228,7 +228,7 @@ class AdminController extends Controller
         $data = DB::table('online_reservation_tbl')
                     ->join('tbl_users','online_reservation_tbl.user_id','=','tbl_users.user_id')
                     ->join('room_tbl','room_tbl.room_id','=','online_reservation_tbl.room_id')
-                    ->select('room_tbl.room_name','room_tbl.room_num','online_reservation_tbl.*','tbl_users.name')
+                    ->select('room_tbl.room_name','online_reservation_tbl.*','tbl_users.name')
                     ->get();
         
         return view('admin.OnlineReservations',compact('data'));
@@ -1017,7 +1017,7 @@ class AdminController extends Controller
 
         $data = DB::table('walkin_reservation_tbl')
                     ->join('room_tbl','room_tbl.room_id','=','walkin_reservation_tbl.room_id')
-                    ->select('room_tbl.room_name','room_tbl.room_num','walkin_reservation_tbl.*')
+                    ->select('room_tbl.room_name','walkin_reservation_tbl.*')
                     ->where('walkin_reservation_tbl.reservation_status','!=',2)
                     ->get();
         

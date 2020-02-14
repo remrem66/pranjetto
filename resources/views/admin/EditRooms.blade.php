@@ -24,7 +24,7 @@
               <table id="room" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                  <th>Room Number</th>
+                  <!-- <th>Room Number</th> -->
                   <th>Floor</th>
                   <th>Name</th>
                   <th>Category</th>
@@ -37,7 +37,6 @@
                 <tbody>
                 @foreach($data as $result)
                 <tr>
-                  <td>{{$result->room_num}}</td>
                   <td>{{$result->floor}}</td>
                   <td>{{$result->room_name}}</td>
                   <td>{{$result->category}}</td>

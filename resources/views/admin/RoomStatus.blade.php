@@ -24,12 +24,12 @@
               <table id="room" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                  <th>Room Number</th>
+                  <!-- <th>Room Number</th> -->
                   <th>Floor</th>
                   <th>Name</th>
                   <th>Category</th>
                   <th>Capacity</th>
-                  <th>12-Hour Price</th>
+                  <!-- <th>12-Hour Price<twelvehr></th> -->
                   <th>24-Hour Price</th>
                   <th>Action</th>
                 </tr>
@@ -37,12 +37,10 @@
                 <tbody>
                 @foreach($data as $result)
                 <tr>
-                  <td>{{$result->room_num}}</td>
                   <td>{{$result->floor}}</td>
                   <td>{{$result->room_name}}</td>
                   <td>{{$result->category}}</td>
                   <td>{{$result->capacity}}</td>
-                  <td>{{$result->twelvehr_price}}</td>
                   <td>{{$result->twentyfourhr_price}}</td>
                   <td>
                     @if($result->status == 1)

@@ -73,12 +73,9 @@
 						</div>
 						
 					</div>
-					@if(session('logged') != true)
-					<div class="col-6 col-sm-4 col-lg-2">
-						<a href="{{route('login')}}" class="btn booking-button">book now</a>
-					</div>
-					@endif
-					@if(session('logged') == true)
+					
+					
+					
 					<div class="col-12 mt-3 parallax-fade-top">
 						<div class="booking-hero-wrap">
 							<div class="row justify-content-center">
@@ -92,14 +89,15 @@
 											<div class="col-6">
 												<div class="form-item">
 													<span class="fontawesome-calendar"></span>
-													<input class="input-sm" type="text" autocomplete="off" id="start1" name="start" placeholder="check-in date" required />
+													<input class="input-sm" type="text" autocomplete="off" id="start1" name="start" placeholder="check-in date" value="{{session('check_in')}}"
+													required />
 													<span class="date-text date-depart"></span>
 												</div>
 											</div>
 											<div class="col-6">
 												<div class="form-item">
 													<span class="fontawesome-calendar"></span>
-													<input class="input-sm" type="text" autocomplete="off" id="end1" name="end" placeholder="check-out date" required disabled/>
+													<input class="input-sm" type="text" autocomplete="off" id="end1" name="end" placeholder="check-out date" value="{{session('check_out')}}" required disabled />
 													<span class="date-text date-return"></span>
 												</div>
 											</div>
@@ -115,7 +113,7 @@
 							</div>
 						</div>
 					</div>
-					@endif
+					
 				</div>
 			</div>
 		</div>
