@@ -24,6 +24,7 @@
               <table id="room" class="table table-bordered table-striped">
                 <thead>
                 <tr>
+                  <th>Reservation Code</th>
                   <th>Room Description</th>
                   <th>Customer Name</th>
                   <th># of pax</th>
@@ -38,6 +39,7 @@
                 <tbody>
                 @foreach($data as $result)
                 <tr>
+                  <td>{{$result->reservation_code}}</td>
                   <td>{{$result->room_name}} {{$result->room_num}}</td>
                   <td>{{$result->name}}</td>
                   <td>{{$result->no_of_persons}}</td>

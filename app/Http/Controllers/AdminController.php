@@ -287,13 +287,15 @@ class AdminController extends Controller
         
         $walkin_id = $request->walkin_id;
         $price = $request->price;
-        
-        if($request->discount == 1){
 
-            $data = DB::table('walkin_reservation_tbl')
+        $data = DB::table('walkin_reservation_tbl')
                     ->where('walkin_id',$walkin_id)
                     ->select('total_price','amount_paid','quantity','room_id')
                     ->first();
+                    
+        if($request->discount == 1){
+
+            
             
             $price = ($data->total_price * 0.9) - $data->amount_paid;
         }
