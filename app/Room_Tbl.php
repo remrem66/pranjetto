@@ -53,7 +53,7 @@ class Room_Tbl extends Model
         DB::table('room_tbl')
             ->where('room_id',$data['room_id'])
             ->update([
-                'room_num' => $data['room_num'],
+                
                 'floor' => $data['floor'],
                 'room_name' => $data['room_name'],
                 'category' => $data['category'],

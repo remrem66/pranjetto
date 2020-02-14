@@ -34,7 +34,7 @@
 						<img src="images/{{$category->picture}}" alt="">
 						<div class="room-box-in">
 							<h5 class="">{{$category->category}}</h5>
-							<p class="mt-3">Number of rooms: 
+							<p class="mt-3">Available rooms: 
 								@if($category->category == "Topaz")
 									{{$available['Topaz']}}
 								@endif

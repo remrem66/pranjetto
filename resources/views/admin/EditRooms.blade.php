@@ -66,16 +66,22 @@
                             <form method="POST" id="edit_room_form">
                             @csrf
                                 <div class="row">
-                                    <div class="col-md-6">
-                                        <label for="exampleInputEmail1">Room Number</label>
-                                        <input type="text" name="room_num" id="room_num" class="form-control">
-                                    </div>
+                                
                                     <div class="col-md-6">
                                         <label for="exampleInputEmail1">Floor</label>
                                         <input type="text" name="floor" id="floor" class="form-control">
                                     </div>
+
+                                    <div class="col-md-6">
+                                        <label for="exampleInputEmail1">Room Name</label>
+                                        <input type="text" name="room_name" id="room_name" class="form-control">
+                                    </div>
+
+                                    
                                 </div>
                                 <div class="row">
+                                    
+                                    
                                     <div class="col-md-6">
                                         <label for="exampleInputEmail1">Category</label>
                                         <select name="category" id="category" class="form-control">
@@ -89,12 +95,7 @@
                                             <option value="Sapphire"> Sapphire </option>
                                         </select>
                                     </div>
-                                    <div class="col-md-6">
-                                        <label for="exampleInputEmail1">Room Name</label>
-                                        <input type="text" name="room_name" id="room_name" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="row">
+
                                     <div class="col-md-6">
                                         <label for="exampleInputEmail1">Capacity</label>
                                         <select name="capacity" id="capacity" class="form-control">
@@ -107,16 +108,21 @@
                                             <option value="7"> 7 </option>
                                         </select>
                                     </div>
+                                </div>
+                                <div class="row">
+                                    
                                     <div class="col-md-6">
                                         <label for="exampleInputEmail1">Slot</label>
                                         <input type="text" name="slot" id="slot" class="form-control">
                                     </div>
-                                </div>
-                                <div class="row">
+
                                     <div class="col-md-6">
                                         <label for="exampleInputEmail1">Price</label>
                                         <input type="text" name="24hr_price" id="24hr_price" class="form-control">
                                     </div>
+                                </div>
+                                <div class="row">
+                                    
                                     <div class="col-md-6">
                                         <label for="exampleInputFile">Main Picture</label>
                                         <div class="input-group">

@@ -35,7 +35,7 @@
                 <tbody>
                 @foreach($data as $result)
                 <tr>
-                  <td>{{$result->room_name}} {{$result->room_num}}</td>
+                  <td>{{$result->room_name}}</td>
                   <td>{{$result->name}}</td>
                   <td>{{$result->reservation_code}}</td>
                   <td>{{date("M-d-Y",strtotime($result->check_in))}} - {{date("M-d-Y",strtotime($result->check_out))}}</td>

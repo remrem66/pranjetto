@@ -29,7 +29,6 @@
                   <th>Email</th>
                   <th>Contact Number</th>
                   <th>Room Name</th>
-                  <th>Room Number</th>
                   <th>Room Capacity</th>
                   <th>24-Hour Price</th>
                   <th>View Details</th>
@@ -43,7 +42,6 @@
                   <td>{{$result->user_details->email}}</td>
                   <td>{{$result->user_details->contact_num}}</td>
                   <td>{{$result->room_details->room_name}}</td>
-                  <td>{{$result->room_details->room_num}}</td>
                   <td>{{$result->no_of_persons}}</td>
                   <td>{{$result->total_price}}</td>
                   <td><a href="{{route('viewReservationDetails',$result->reservation_id)}}"><button type="button" class=" btn btn-primary">View</button></a></td>

@@ -229,7 +229,6 @@ $("#btnMonthly").on('click', function() {
       },
       dataType: 'JSON',
       success: function(response){
-        document.getElementById("room_num").value = response.room_num;
         document.getElementById("floor").value = response.floor;
         document.getElementById("room_name").value = response.room_name;
         document.getElementById("category").value = response.category;

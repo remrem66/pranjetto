@@ -33,7 +33,7 @@
                 <tbody>
                 @foreach($data as $result)
                 <tr>
-                  <td>{{$result->room_name}} {{$result->room_num}}</td>
+                  <td>{{$result->room_name}} </td>
                   <td>{{$result->name}}</td>
                   <td>{{$result->no_of_persons}}</td>
                   <td>{{date("M-d-Y",strtotime($result->check_in))}} - {{date("M-d-Y",strtotime($result->check_out))}}</td>
@@ -97,7 +97,7 @@
                 <tbody>
                 @foreach($data1 as $result1)
                 <tr>
-                  <td>{{$result1->room_name}} {{$result1->room_num}}</td>
+                  <td>{{$result1->room_name}} </td>
                   <td>{{$result1->customer_name}}</td>
                   <td>{{$result1->no_of_persons}}</td>
                   <td>{{date("M-d-Y",strtotime($result1->check_in))}} - {{date("M-d-Y",strtotime($result1->check_out))}}</td>
