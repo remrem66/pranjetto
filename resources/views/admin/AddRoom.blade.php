@@ -32,12 +32,12 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6">
-                            <label for="exampleInputEmail1">Room Number</label>
-                            <input type="text" name="room_num" class="form-control" value="{{old('room_num')}}" required>
-                        </div>
-                        <div class="col-md-6">
                             <label for="exampleInputEmail1">Floor</label>
                             <input type="number" name="floor" class="form-control" value="{{old('floor')}}" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="exampleInputEmail1">Room Name</label>
+                            <input type="text" name="room_name" class="form-control" value="{{old('room_name')}}" required>
                         </div>
                     </div>
                     <div class="row">
@@ -55,12 +55,6 @@
                             </select>
                         </div>
                         <div class="col-md-6">
-                            <label for="exampleInputEmail1">Room Name</label>
-                            <input type="text" name="room_name" class="form-control" value="{{old('room_name')}}" required>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
                             <label for="exampleInputEmail1">Capacity</label>
                             <select name="capacity" class="form-control" required>
                                 <option> </option>
@@ -72,12 +66,14 @@
                                 <option value="7"> 7 </option>
                             </select>
                         </div>
+                    </div>
+                    <div class="row">
+                        
                         <div class="col-md-6">
                             <label for="exampleInputEmail1">Price</label>
                             <input type="text" name="number" class="form-control" value="{{old('24hr_price')}}" required>
+                            
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="col-md-6">
                             <label for="exampleInputFile">Main Picture</label>
                             <div class="input-group">
@@ -87,17 +83,18 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col-md-6">
                             <label for="exampleInputFile">Slot</label>
                             <input type="number" name="slot" class="form-control" value="{{old('slot')}}" required>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <label for="exampleInputEmail1">Description</label>
                             <textarea name="description" class="form-control" value="{{old('description')}}" required></textarea>
                         </div>
                     </div>
+                    
                 </div>
                 <div class="card-footer">
                   <button type="submit" class="btn btn-primary">Submit</button>
