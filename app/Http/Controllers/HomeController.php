@@ -977,8 +977,8 @@ class HomeController extends Controller
             }
         }
 
-        $request->session('check_in'); 
-        $request->session('check_out');
+        $request->session()->put('check_in', $request['start']); 
+        $request->session()->put('check_out', $request['end']);
 
         
         

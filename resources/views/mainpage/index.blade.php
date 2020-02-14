@@ -89,8 +89,7 @@
 											<div class="col-6">
 												<div class="form-item">
 													<span class="fontawesome-calendar"></span>
-													<input class="input-sm" type="text" autocomplete="off" id="start1" name="start" placeholder="check-in date" value="{{session('check_in')}}"
-													required />
+													<input class="input-sm" type="text" autocomplete="off" id="start1" name="start" placeholder="check-in date" value="{{session('check_in')}}" required />	
 													<span class="date-text date-depart"></span>
 												</div>
 											</div>
