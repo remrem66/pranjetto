@@ -829,65 +829,10 @@ class HomeController extends Controller
 
     }
 
-    public function NewOnlineRoomReservation(Request $request){
-
-        $accnt = DB::table('bank_accounts_tbl')
-                    ->select('*')
-                    ->get();
-        
-        $details =[[]];
-        $x = 0;
-
-        foreach($accnt as $account){
-
-            $details[$x]['bank_name'] = $account->bank_name;
-            $details[$x]['account_num'] = $account->account_num;
-        }
-
-        $details[0]['total_price'] = $request->total_price;
-
-        if(empty($request->extra_mattress)){
-            $mattress = 0;
-        }
-        else{
-            $mattress = $request->extra_mattress;
-        }
-
-        $email = $request->email;
-
-        $reservation_code = $this->IDGenerator();
-
-        $data = [
-            'user_id' => $request->user_id,
-            'room_id' => $request->room_id,
-            'no_of_persons' => $request->persons,
-            'quantity' => $request->quantity,
-            'extra_mattress' => $mattress,
-            'reservation_code' => $reservation_code,
-            'check_in' => $request->check_in,
-            'check_out' => $request->check_out,
-            'total_price' => $request->total_price
-        ];
-
-        $check = DB::table('online_reservation_tbl')
-                    ->where('room_id',$request->room_id)
-                    ->where('check_in',$request->check_in)
-                    ->where('reservation_status',0)
-                    ->select('room_id','check_in')
-                    ->get();
-
-        if(count($check) > 0){
-            return 1;
-        }
-        else{
-            $request->session()->put('more', true);
-
-            Room_Tbl::DeductSlot($request->room_id,$request->quantity);
-            Online_Reservation_Tbl::NewOnlineRoomReservation($data);
-            \Mail::to($email)->send(new SendMail($details));
-        }
-        
-    }
+    public function NewOnlineRoomReservation(Request $request){          
+        $accnt = DB::table('bank_accounts_tbl') ->select('*')                     ->get();                  $details =[[]];         $x = 0;          foreach($accnt as $account){              $details[$x]['bank_name'] = $account->bank_name;             $details[$x]['account_num'] = $account->account_num;         }          $details[0]['total_price'] = $request->total_price;          if(empty($request->extra_mattress)){             $mattress = 0;         }         else{             $mattress = $request->extra_mattress;         }          $email = $request->email;          $reservation_code = $this->IDGenerator();   
+    $details[0]['code'] = $reservation_code;
+     $data = [             'user_id' => $request->user_id,             'room_id' => $request->room_id,             'no_of_persons' => $request->persons,             'quantity' => $request->quantity,             'extra_mattress' => $mattress,             'reservation_code' => $reservation_code,             'check_in' => $request->check_in,             'check_out' => $request->check_out,             'total_price' => $request->total_price         ];          $check = DB::table('online_reservation_tbl')                     ->where('room_id',$request->room_id)                     ->where('check_in',$request->check_in)                     ->where('reservation_status',0)                     ->select('room_id','check_in')                     ->get();          if(count($check) > 0){             return 1;         }         else{             $request->session()->put('more', true);              Room_Tbl::DeductSlot($request->room_id,$request->quantity);             Online_Reservation_Tbl::NewOnlineRoomReservation($data);             \Mail::to($email)->send(new SendMail($details));         }              }
 
     public function AllRooms(Request $request){
         $end_date = date("Y-m-d",strtotime($request['end']));
@@ -1236,6 +1181,7 @@ class HomeController extends Controller
 
         $reservation_code = $this->IDGenerator();
 
+$details[0]['code'] = $reservation_code;
         $data = [
             'user_id' => $request->user_id,
             'room_id' => $request->room_id,
