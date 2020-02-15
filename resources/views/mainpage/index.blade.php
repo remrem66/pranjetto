@@ -229,7 +229,7 @@
 					<div class="row justify-content-center">
 						<div class="col-10 col-xl-8 text-center">
 							<h3 class="text-center">Sea view suite</h3>
-							<p class="text-center mt-4">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et.</p>
+							
 							
 						</div>	
 					</div>
