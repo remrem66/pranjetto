@@ -224,12 +224,12 @@
 					</div>
 				</div>
 			</div>
-			<div class="row mx-0">
+			<!-- <div class="row mx-0">
 				<div class="col-xl-6 px-0 mt-4 mt-xl-0 pb-5 pb-xl-0 align-self-center">
 					<div class="row justify-content-center">
 						<div class="col-10 col-xl-8 text-center">
 							<h3 class="text-center">Sea view suite</h3>
-							
+							<p class="text-center mt-4"></p>
 							
 						</div>	
 					</div>
@@ -240,7 +240,7 @@
 						
 					</div>
 				</div>
-			</div>
+			</div> -->
 		</div>
 	</div>
 	
