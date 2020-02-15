@@ -890,100 +890,99 @@ class HomeController extends Controller
     }
 
     public function AllRooms(Request $request){
-
         $end_date = date("Y-m-d",strtotime($request['end']));
         $start_date = date("Y-m-d",strtotime($request['start']));
-
-        $arrayDates = [];
-
-        $diff = abs(strtotime($end_date) - strtotime($start_date));
-            $years = floor($diff / (365*60*60*24));
-            $months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
-            $days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
-            if($days > 1){
-
-                $date = $start_date;
-                array_push($arrayDates,$date);
-                while(0 == 0)
-                    if($date == $end_date){
-                        array_pop($arrayDates);
-                        break;
-                    }
-                    else{
-                        $date = date("Y-m-d",strtotime($date . "+1 days"));
-                        array_push($arrayDates,$date);
-                    }
-                }
-            
-            else{
-                array_push($arrayDates,$start_date);
-            }
-            
-            $getid = DB::table('online_reservation_tbl')
-                ->whereIn('check_in',$arrayDates)
-                ->where('reservation_status','!=',2)
-                ->select('room_id')
-                ->get();
-
-            $ids = [];
     
-            foreach($getid as $id){
-                array_push($ids,$id->room_id);
-            }
-
-        $data = DB::table('room_tbl')
-                ->whereNotIn('room_id',$ids)
-                ->where('status',1)
-                ->where('slot','>',0)
-                ->select('*')
-                ->get();
-
+            $arrayDates = [];
+    
+            $diff = abs(strtotime($end_date) - strtotime($start_date));
+                $years = floor($diff / (365*60*60*24));
+                $months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
+                $days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
+                if($days > 1){
+    
+                    $date = $start_date;
+                    array_push($arrayDates,$date);
+                    while(0 == 0)
+                        if($date == $end_date){
+                            array_pop($arrayDates);
+                            break;
+                        }
+                        else{
+                            $date = date("Y-m-d",strtotime($date . "+1 days"));
+                            array_push($arrayDates,$date);
+                        }
+                    }
+                
+                else{
+                    array_push($arrayDates,$start_date);
+                }
+                
+                $getid = DB::table('online_reservation_tbl')
+                    ->whereIn('check_in',$arrayDates)
+                    ->where('reservation_status','!=',2)
+                    ->select('room_id')
+                    ->get();
+    
+                $ids = [];
         
-        $available = [
-            'Topaz' => 0,
-            'Emerald' => 0,
-            'Turquoise' => 0,
-            'Garnet' => 0,
-            'Jade' => 0,
-            'Pearl' => 0,
-            'Sapphire' => 0
-        ];
-
-        $categories = DB::table('room_mainpage_tbl')
+                foreach($getid as $id){
+                    array_push($ids,$id->room_id);
+                }
+    
+            $data = DB::table('room_tbl')
+                    ->whereNotIn('room_id',$ids)
+                    ->where('status',1)
+                    ->where('slot','>',0)
                     ->select('*')
                     ->get();
-
-        foreach($data as $result){
-            if($result->category == "Topaz"){
-                $available['Topaz'] = $available['Topaz'] + 1;
+    
+            
+            $available = [
+                'Topaz' => 0,
+                'Emerald' => 0,
+                'Turquoise' => 0,
+                'Garnet' => 0,
+                'Jade' => 0,
+                'Pearl' => 0,
+                'Sapphire' => 0
+            ];
+    
+            $categories = DB::table('room_mainpage_tbl')
+                        ->select('*')
+                        ->get();
+    
+            foreach($data as $result){
+                if($result->category == "Topaz"){
+                    $available['Topaz'] = $available['Topaz'] + $result->slot;
+                }
+                if($result->category == "Emerald"){
+                    $available['Emerald'] = $available['Emerald'] + $result->slot;
+                }
+                if($result->category == "Turquoise"){
+                    $available['Turquoise'] = $available['Turquoise'] + $result->slot;
+                }
+                if($result->category == "Garnet"){
+                    $available['Garnet'] = $available['Garnet'] + $result->slot;
+                }
+                if($result->category == "Jade"){
+                    $available['Jade'] = $available['Jade'] + $result->slot;
+                }
+                if($result->category == "Pearl"){
+                    $available['Pearl'] = $available['Pearl'] + $result->slot;
+                }
+                if($result->category == "Sapphire"){
+                    $available['Sapphire'] = $available['Sapphire'] + $result->slot;
+                }
             }
-            if($result->category == "Emerald"){
-                $available['Emerald'] = $available['Emerald'] + 1;
-            }
-            if($result->category == "Turquoise"){
-                $available['Turquoise'] = $available['Turquoise'] + 1;
-            }
-            if($result->category == "Garnet"){
-                $available['Garnet'] = $available['Garnet'] + 1;
-            }
-            if($result->category == "Jade"){
-                $available['Jade'] = $available['Jade'] + 1;
-            }
-            if($result->category == "Pearl"){
-                $available['Pearl'] = $available['Pearl'] + 1;
-            }
-            if($result->category == "Sapphire"){
-                $available['Sapphire'] = $available['Sapphire'] + 1;
-            }
+    
+            $request->session()->put('check_in', $request['start']); 
+            $request->session()->put('check_out', $request['end']);
+    
+            
+            
+           return view('mainpage.AllRooms',compact('available','categories'));
         }
-
-        $request->session()->put('check_in', $request['start']); 
-        $request->session()->put('check_out', $request['end']);
-
-        
-        
-       return view('mainpage.AllRooms',compact('available','categories'));
-    }
 
     public function MoreRooms(Request $request){
 
