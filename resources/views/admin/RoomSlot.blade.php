@@ -42,9 +42,9 @@
                   <td>{{$result->slot}}</td>
                   <td>{{$result->twentyfourhr_price}}</td>
                   <td>
-                    <button class="btn btn-primary IncUpdateSlot" id="{{$result->room_id}}" data-toggle="modal" data-target="#IncreaseSlot">Increase Slot</button>
+                    <button class="btn btn-primary IncUpdateSlot" id="{{$result->room_id}}" >Increase Slot</button>
                     <button class="btn btn-warning ManUpdateSlot" id="{{$result->room_id}}" data-toggle="modal" data-target="#ManualInputSlot">Manually Input SLot</button>
-                    <button class="btn btn-danger DecUpdateSlot" id="{{$result->room_id}}" data-toggle="modal" data-target="#DecreaseSlot">Decrease Slot</button>
+                    <button class="btn btn-danger DecUpdateSlot" id="{{$result->room_id}}">Decrease Slot</button>
                    
                 </td>
                 </tr>
@@ -55,32 +55,7 @@
           </div>
         </div>
       </div>
-      <div class="modal fade" id="IncreaseSlot">
-                <div class="modal-dialog modal-sm">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title">Increase Slot</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                        <div class="form-group row">
-                              <label class="col-form-label col-md-6 col-sm-6 ">Slot: </label>
-                              <div class="col-md-6 col-sm-6 ">
-                                  <input type="text" id="inc_slot" class="form-control">
-                                  <input type="hidden" id="inc_room_id" class="form-control">
-                              </div>
-                          </div>
-                            
-                        </div>
-                        <div class="modal-footer justify-content-between">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary SaveIncrease">Save changes</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      
             <div class="modal fade" id="ManualInputSlot">
                 <div class="modal-dialog modal-sm">
                     <div class="modal-content">
@@ -106,31 +81,7 @@
                     </div>
                 </div>
             </div>
-            <div class="modal fade" id="DecreaseSlot">
-                <div class="modal-dialog modal-sm">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title">Decrease Slot</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                        <div class="form-group row">
-                              <label class="col-form-label col-md-6 col-sm-6 ">Slot: </label>
-                              <div class="col-md-6 col-sm-6 ">
-                                  <input type="text" id="dec_slot" class="form-control">
-                                  <input type="hidden" id="dec_room_id" class="form-control">
-                              </div>
-                          </div>
-                        </div>
-                        <div class="modal-footer justify-content-between">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary SaveDecrease">Save changes</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+           
     </section>
   </div>
 

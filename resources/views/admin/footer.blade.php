@@ -1719,28 +1719,7 @@ $('.Savetogallery').click(function(e){
   $('.IncUpdateSlot').click(function(e){
 
     var room_id = $(this).attr("id");
-
-    $('#inc_room_id').val(room_id);
-  });
-
-  $('.ManUpdateSlot').click(function(e){
-
-var room_id = $(this).attr("id");
-
-$('#man_room_id').val(room_id);
-});
-
-$('.DecUpdateSlot').click(function(e){
-
-var room_id = $(this).attr("id");
-
-$('#dec_room_id').val(room_id);
-});
-
-  $('.SaveIncrease').click(function(e){
-
-    var room_id = $('#inc_room_id').val();
-    var slot = $('#inc_slot').val();
+    var slot = 1;
 
     Swal.fire({
         title: 'Are you sure?',
@@ -1775,49 +1754,16 @@ $('#dec_room_id').val(room_id);
       })
   });
 
-  $('.SaveManual').click(function(e){
+  $('.ManUpdateSlot').click(function(e){
 
-var room_id = $('#man_room_id').val();
-var slot = $('#man_slot').val();
-
-Swal.fire({
-    title: 'Are you sure?',
-    text: "You want to execute this action?",
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Yes!'
-  }).then((result) => {
-    if (result.value) {
-      $.ajax({
-        url: '{{route("ManualSlot")}}',
-        type: 'GET',
-        data: {
-          room_id: room_id,
-          slot: slot
-        },
-        dataType: 'HTML',
-        success: function(response){
-          Swal.fire({
-            title: "Successfuly Executed!",
-            icon: 'success', 
-            type: "success"
-          })
-          .then(function(){
-              location.reload();
-          });
-        }
-      })
-    }
-  })
+var room_id = $(this).attr("id");
+$('#man_room_id').val(room_id);
 });
 
-$('.SaveDecrease').click(function(e){
+$('.DecUpdateSlot').click(function(e){
 
-var room_id = $('#dec_room_id').val();
-var slot = $('#dec_slot').val();
-
+var room_id = $(this).attr("id");
+var slot = 1;
 Swal.fire({
     title: 'Are you sure?',
     text: "You want to execute this action?",
@@ -1849,6 +1795,59 @@ Swal.fire({
       })
     }
   })
+});
+
+  
+
+  $('.SaveManual').click(function(e){
+
+var room_id = $('#man_room_id').val();
+var slot = $('#man_slot').val();
+
+if(slot < 0){
+  alert("please input a valid quantity");
+}
+else{
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "You want to execute this action?",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes!'
+  }).then((result) => {
+    if (result.value) {
+      $.ajax({
+        url: '{{route("ManualSlot")}}',
+        type: 'GET',
+        data: {
+          room_id: room_id,
+          slot: slot
+        },
+        dataType: 'HTML',
+        success: function(response){
+          Swal.fire({
+            title: "Successfuly Executed!",
+            icon: 'success', 
+            type: "success"
+          })
+          .then(function(){
+              location.reload();
+          });
+        }
+      })
+    }
+  })
+}
+});
+
+$('.SaveDecrease').click(function(e){
+
+var room_id = $('#dec_room_id').val();
+var slot = $('#dec_slot').val();
+
+
 });
 
 
