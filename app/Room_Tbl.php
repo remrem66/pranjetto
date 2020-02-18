@@ -30,7 +30,6 @@ class Room_Tbl extends Model
 
         DB::table('room_tbl')
             ->insert([
-                'floor' => $data['floor'],
                 'category' =>$data['category'],
                 'capacity' => $data['capacity'],
                 'twentyfourhr_price' => $data['24hr_price'],
@@ -52,8 +51,6 @@ class Room_Tbl extends Model
         DB::table('room_tbl')
             ->where('room_id',$data['room_id'])
             ->update([
-                
-                'floor' => $data['floor'],
                 'category' => $data['category'],
                 'capacity' => $data['capacity'],
                 'twentyfourhr_price' => $data['24hr_price'],

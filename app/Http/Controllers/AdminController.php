@@ -72,7 +72,6 @@ class AdminController extends Controller
     public function AddRoom(Request $request){
 
         $request->validate([
-            'floor' => 'required',
             'category' => 'required|unique:room_tbl,category',
             'capacity' => 'required',
             '24hr_price' => 'required',
@@ -86,7 +85,7 @@ class AdminController extends Controller
         $image->move('images', $image_name);
 
         $data = [
-            'floor' => $request['floor'],
+            
             'category' =>$request['category'],
             'capacity' => $request['capacity'],
             '24hr_price' => $request['24hr_price'],

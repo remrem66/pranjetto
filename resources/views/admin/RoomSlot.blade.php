@@ -25,7 +25,7 @@
                 <thead>
                 <tr>
                   <!-- <th>Room Number</th> -->
-                  <th>Floor</th>
+                  
                   <th>Category</th>
                   <th>Capacity</th>
                   <th>Slot</th>
@@ -36,7 +36,7 @@
                 <tbody>
                 @foreach($data as $result)
                 <tr>
-                  <td>{{$result->floor}}</td>
+                  
                   <td>{{$result->category}}</td>
                   <td>{{$result->capacity}}</td>
                   <td>{{$result->slot}}</td>

@@ -25,7 +25,7 @@
                 <thead>
                 <tr>
                   <!-- <th>Room Number</th> -->
-                  <th>Floor</th>
+                  
                   <th>Category</th>
                   <th>Capacity</th>
                   <th>Slot</th>
@@ -36,7 +36,7 @@
                 <tbody>
                 @foreach($data as $result)
                 <tr>
-                  <td>{{$result->floor}}</td>
+                  
                   <td>{{$result->category}}</td>
                   <td>{{$result->capacity}}</td>
                   <td>{{$result->slot}}</td>
@@ -65,19 +65,11 @@
                             @csrf
                                 <div class="row">
                                 
-                                    <div class="col-md-6">
-                                        <label for="exampleInputEmail1">Floor</label>
-                                        <input type="text" name="floor" id="floor" class="form-control">
-                                    </div>
 
                                     <div class="col-md-6">
                                         <label for="exampleInputEmail1">Category</label>
                                         <input type="text" name="category" id="category" class="form-control">
                                     </div>
-
-                                    
-                                </div>
-                                <div class="row">
                                     <div class="col-md-6">
                                         <label for="exampleInputEmail1">Capacity</label>
                                         <select name="capacity" id="capacity" class="form-control">
@@ -90,14 +82,15 @@
                                             <option value="7"> 7 </option>
                                         </select>
                                     </div>
+                                    
+                                </div>
+                                <div class="row">
+                                    
                                     <div class="col-md-6">
                                         <label for="exampleInputEmail1">Price</label>
                                         <input type="text" name="24hr_price" id="24hr_price" class="form-control">
                                     </div>
-                                </div>
-                                <div class="row">
-                                    
-                                <div class="col-md-6">
+                                    <div class="col-md-6">
                                         <label for="exampleInputFile">Main Picture</label>
                                         <div class="input-group">
                                             <div class="custom-file">
@@ -106,6 +99,10 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="row">
+                                    
+                                
                                     
                                 </div>
                                 
