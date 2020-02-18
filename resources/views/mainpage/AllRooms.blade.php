@@ -31,37 +31,17 @@
 							<i class="fa fa-star"></i>
 							<i class="fa fa-star-o"></i>
 						</div>
-						<img src="images/{{$category->picture}}" alt="">
+						<img src="images/{{$category->main_pic}}" alt="">
 						<div class="room-box-in">
 							<h5 class="">{{$category->category}}</h5>
 							<p class="mt-3">Available rooms: 
-								@if($category->category == "Topaz")
-									{{$available['Topaz']}}
-								@endif
-								@if($category->category == "Emerald")
-									{{$available['Emerald']}}
-								@endif
-								@if($category->category == "Turquoise")
-									{{$available['Turquoise']}}
-								@endif
-								@if($category->category == "Garnet")
-									{{$available['Garnet']}}
-								@endif
-								@if($category->category == "Jade")
-									{{$available['Jade']}}
-								@endif
-								@if($category->category == "Pearl")
-									{{$available['Pearl']}}
-								@endif
-								@if($category->category == "Sapphire")
-									{{$available['Sapphire']}}
-								@endif
+								{{$category->slot}}
 							</p>
 							@if(session('logged') != true)
-							<a class="mt-1 btn btn-primary" href="{{route('login')}}">View Rooms </a>
+							<a class="mt-1 btn btn-primary" href="{{route('login')}}">Login </a>
 							@endif
 							@if(session('logged') == true)
-							<a class="mt-1 btn btn-primary" href="{{route($category->category)}}">View Rooms </a>
+							<a class="mt-1 btn btn-primary" href="{{route('RoomPreview',$category->room_id)}}">Book now (₱{{$category->twentyfourhr_price}}) </a>
 							@endif
 							<div class="room-icons mt-4 pt-4">
 								<img src="mainpage/img/4.svg" alt="">

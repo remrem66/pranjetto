@@ -26,7 +26,7 @@
                 <tr>
                   <!-- <th>Room Number</th> -->
                   <th>Floor</th>
-                  <th>Name</th>
+                 
                   <th>Category</th>
                   <th>Capacity</th>
                   <th>24-Hour Price</th>
@@ -36,7 +36,6 @@
                 @foreach($data as $result)
                 <tr>
                   <td>{{$result->floor}}</td>
-                  <td>{{$result->room_name}}</td>
                   <td>{{$result->category}}</td>
                   <td>{{$result->capacity}}</td>
                   <td>{{$result->twentyfourhr_price}}</td>

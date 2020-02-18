@@ -26,7 +26,6 @@
                 <tr>
                   <!-- <th>Room Number</th> -->
                   <th>Floor</th>
-                  <th>Name</th>
                   <th>Category</th>
                   <th>Capacity</th>
                   <th>Slot</th>
@@ -38,7 +37,6 @@
                 @foreach($data as $result)
                 <tr>
                   <td>{{$result->floor}}</td>
-                  <td>{{$result->room_name}}</td>
                   <td>{{$result->category}}</td>
                   <td>{{$result->capacity}}</td>
                   <td>{{$result->slot}}</td>
@@ -73,29 +71,13 @@
                                     </div>
 
                                     <div class="col-md-6">
-                                        <label for="exampleInputEmail1">Room Name</label>
-                                        <input type="text" name="room_name" id="room_name" class="form-control">
+                                        <label for="exampleInputEmail1">Category</label>
+                                        <input type="text" name="category" id="category" class="form-control">
                                     </div>
 
                                     
                                 </div>
                                 <div class="row">
-                                    
-                                    
-                                    <div class="col-md-6">
-                                        <label for="exampleInputEmail1">Category</label>
-                                        <select name="category" id="category" class="form-control">
-                                            <option> </option>
-                                            <option value="Topaz"> Topaz </option>
-                                            <option value="Emerald"> Emerald </option>
-                                            <option value="Turquoise"> Turquoise </option>
-                                            <option value="Garnet"> Garnet </option>
-                                            <option value="Jade"> Jade </option>
-                                            <option value="Pearl"> Pearl </option>
-                                            <option value="Sapphire"> Sapphire </option>
-                                        </select>
-                                    </div>
-
                                     <div class="col-md-6">
                                         <label for="exampleInputEmail1">Capacity</label>
                                         <select name="capacity" id="capacity" class="form-control">
@@ -108,14 +90,6 @@
                                             <option value="7"> 7 </option>
                                         </select>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    
-                                    <div class="col-md-6">
-                                        <label for="exampleInputEmail1">Slot</label>
-                                        <input type="text" name="slot" id="slot" class="form-control">
-                                    </div>
-
                                     <div class="col-md-6">
                                         <label for="exampleInputEmail1">Price</label>
                                         <input type="text" name="24hr_price" id="24hr_price" class="form-control">
@@ -123,7 +97,7 @@
                                 </div>
                                 <div class="row">
                                     
-                                    <div class="col-md-6">
+                                <div class="col-md-6">
                                         <label for="exampleInputFile">Main Picture</label>
                                         <div class="input-group">
                                             <div class="custom-file">
@@ -132,7 +106,9 @@
                                             </div>
                                         </div>
                                     </div>
+                                    
                                 </div>
+                                
                                 <div class="row">
                                     <div class="col-md-12">
                                         <label for="exampleInputEmail1">Description</label>

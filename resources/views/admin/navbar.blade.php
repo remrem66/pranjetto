@@ -66,6 +66,12 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="{{route('RoomSlotView')}}" class="nav-link">
+                  <i class="fab fa-get-pocket nav-icon"></i>
+                  <p>Update Room Slots</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="{{route('ViewRooms')}}" class="nav-link">
                   <i class="fas fa-person-booth nav-icon"></i>
                   <p>View Rooms</p>

@@ -77,6 +77,10 @@ Route::get('/changeprcwithqty', 'AdminController@changeprcwithqty')->name('chang
 Route::get('/OnlineStatusChange', 'AdminController@OnlineStatusChange')->name('OnlineStatusChange');
 Route::get('/GalleryManagement', 'AdminController@GalleryManagement')->name('GalleryManagement');
 Route::get('/Deletetogallery', 'AdminController@Deletetogallery')->name('Deletetogallery');
+Route::get('/IncreaseSlot', 'AdminController@IncreaseSlot')->name('IncreaseSlot');
+Route::get('/DecreaseSlot', 'AdminController@DecreaseSlot')->name('DecreaseSlot');
+Route::get('/ManualSlot', 'AdminController@ManualSlot')->name('ManualSlot');
+Route::get('/RoomSlotView', 'AdminController@RoomSlotView')->name('RoomSlotView');
 
 
 Route::get('/Topaz', 'HomeController@Topaz')->name('Topaz');

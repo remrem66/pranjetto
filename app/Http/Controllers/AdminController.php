@@ -73,8 +73,7 @@ class AdminController extends Controller
 
         $request->validate([
             'floor' => 'required',
-            'room_name' => 'required|unique:room_tbl,room_name',
-            'category' => 'required',
+            'category' => 'required|unique:room_tbl,category',
             'capacity' => 'required',
             '24hr_price' => 'required',
             'description' => 'required',
@@ -88,7 +87,6 @@ class AdminController extends Controller
 
         $data = [
             'floor' => $request['floor'],
-            'room_name' => $request['room_name'],
             'category' =>$request['category'],
             'capacity' => $request['capacity'],
             '24hr_price' => $request['24hr_price'],
@@ -134,6 +132,15 @@ class AdminController extends Controller
         return view('admin.RoomStatus',compact('data'));
     }
 
+    public function RoomSlotView(){
+
+        $data = DB::table('room_tbl')
+                ->select('*')
+                ->get();
+
+        return view('admin.RoomSlot',compact('data'));
+    }
+
     public function ChangeRoomStatus(Request $request){
 
         Room_Tbl::ChangeRoomStatus($request->status,$request->room_id);
@@ -165,12 +172,9 @@ class AdminController extends Controller
 
             $data = [
                 'room_id' => $request['room_id'],
-                
                 'floor' => $request['floor'],
-                'room_name' => $request['room_name'],
                 'category' => $request['category'],
                 'capacity' => $request['capacity'],
-                'slot' => $request['slot'],
                 '24hr_price' => $request['24hr_price'],
                 'description' => $request['description'],
                 'main_pic' => $image
@@ -187,12 +191,9 @@ class AdminController extends Controller
 
             $data = [
                 'room_id' => $request['room_id'],
-                
                 'floor' => $request['floor'],
-                'room_name' => $request['room_name'],
                 'category' => $request['category'],
                 'capacity' => $request['capacity'],
-                'slot' => $request['slot'],
                 '24hr_price' => $request['24hr_price'],
                 'description' => $request['description'],
                 'main_pic' => $image_name
@@ -227,7 +228,7 @@ class AdminController extends Controller
         $data = DB::table('online_reservation_tbl')
                     ->join('tbl_users','online_reservation_tbl.user_id','=','tbl_users.user_id')
                     ->join('room_tbl','room_tbl.room_id','=','online_reservation_tbl.room_id')
-                    ->select('room_tbl.room_name','online_reservation_tbl.*','tbl_users.name')
+                    ->select('room_tbl.category','online_reservation_tbl.*','tbl_users.name')
                     ->get();
         
         return view('admin.OnlineReservations',compact('data'));
@@ -1016,7 +1017,7 @@ class AdminController extends Controller
 
         $data = DB::table('walkin_reservation_tbl')
                     ->join('room_tbl','room_tbl.room_id','=','walkin_reservation_tbl.room_id')
-                    ->select('room_tbl.room_name','walkin_reservation_tbl.*')
+                    ->select('room_tbl.category','walkin_reservation_tbl.*')
                     ->where('walkin_reservation_tbl.reservation_status','!=',2)
                     ->get();
         
@@ -1264,6 +1265,21 @@ class AdminController extends Controller
     public function Deletetogallery(Request $request){
 
         Gallery_Tbl::DeleteImage($request->gallery_id);
+    }
+
+    public function IncreaseSlot(Request $request){
+
+        Room_Tbl::IncreaseSlot($request->room_id,$request->slot);
+    }
+
+    public function DecreaseSlot(Request $request){
+
+        Room_Tbl::DeductSlot($request->room_id,$request->slot);
+    }
+
+    public function ManualSlot(Request $request){
+
+        Room_Tbl::ManualSlot($request->room_id,$request->slot);
     }
 
 }

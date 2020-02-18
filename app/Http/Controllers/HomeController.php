@@ -830,9 +830,52 @@ class HomeController extends Controller
     }
 
     public function NewOnlineRoomReservation(Request $request){          
-        $accnt = DB::table('bank_accounts_tbl') ->select('*')                     ->get();                  $details =[[]];         $x = 0;          foreach($accnt as $account){              $details[$x]['bank_name'] = $account->bank_name;             $details[$x]['account_num'] = $account->account_num;         }          $details[0]['total_price'] = $request->total_price;          if(empty($request->extra_mattress)){             $mattress = 0;         }         else{             $mattress = $request->extra_mattress;         }          $email = $request->email;          $reservation_code = $this->IDGenerator();   
-    $details[0]['code'] = $reservation_code;
-     $data = [             'user_id' => $request->user_id,             'room_id' => $request->room_id,             'no_of_persons' => $request->persons,             'quantity' => $request->quantity,             'extra_mattress' => $mattress,             'reservation_code' => $reservation_code,             'check_in' => $request->check_in,             'check_out' => $request->check_out,             'total_price' => $request->total_price         ];          $check = DB::table('online_reservation_tbl')                     ->where('room_id',$request->room_id)                     ->where('check_in',$request->check_in)                     ->where('reservation_status',0)                     ->select('room_id','check_in')                     ->get();          if(count($check) > 0){             return 1;         }         else{             $request->session()->put('more', true);              Room_Tbl::DeductSlot($request->room_id,$request->quantity);             Online_Reservation_Tbl::NewOnlineRoomReservation($data);             \Mail::to($email)->send(new SendMail($details));         }              }
+        $accnt = DB::table('bank_accounts_tbl') ->select('*')                     
+                        ->get();                  
+        $details =[[]];         $x = 0;          
+        foreach($accnt as $account){              
+            $details[$x]['bank_name'] = $account->bank_name;             
+            $details[$x]['account_num'] = $account->account_num;         
+        }          
+        $details[0]['total_price'] = $request->total_price; 
+
+            if(empty($request->extra_mattress)){             
+                $mattress = 0;         
+            }         
+            else{             
+                $mattress = $request->extra_mattress;         
+            }  
+
+            $email = $request->email;          
+            $reservation_code = $this->IDGenerator();   
+        $details[0]['code'] = $reservation_code;
+     $data = [
+         'user_id' => $request->user_id,
+         'room_id' => $request->room_id,
+         'no_of_persons' => $request->persons,
+         'quantity' => $request->quantity,             
+         'extra_mattress' => $mattress,             
+         'reservation_code' => $reservation_code,             
+         'check_in' => $request->check_in,             
+         'check_out' => $request->check_out,             
+         'total_price' => $request->total_price         
+        ];          
+        $check = DB::table('online_reservation_tbl')                     
+                ->where('room_id',$request->room_id)                     
+                ->where('check_in',$request->check_in)                     
+                ->where('reservation_status',0)                     
+                ->select('room_id','check_in')                     
+                ->get();          
+        if(count($check) > 0){             
+            return 1;         
+        }         
+        else{             
+            $request->session()->put('more', true);              
+            Room_Tbl::DeductSlot($request->room_id,$request->quantity);             
+            Online_Reservation_Tbl::NewOnlineRoomReservation($data);             
+            \Mail::to($email)->send(new SendMail($details));         
+        }              
+    }
 
     public function AllRooms(Request $request){
         $end_date = date("Y-m-d",strtotime($request['end']));
@@ -875,58 +918,19 @@ class HomeController extends Controller
                     array_push($ids,$id->room_id);
                 }
     
-            $data = DB::table('room_tbl')
+            $categories = DB::table('room_tbl')
                     ->whereNotIn('room_id',$ids)
                     ->where('status',1)
                     ->where('slot','>',0)
                     ->select('*')
                     ->get();
     
-            
-            $available = [
-                'Topaz' => 0,
-                'Emerald' => 0,
-                'Turquoise' => 0,
-                'Garnet' => 0,
-                'Jade' => 0,
-                'Pearl' => 0,
-                'Sapphire' => 0
-            ];
-    
-            $categories = DB::table('room_mainpage_tbl')
-                        ->select('*')
-                        ->get();
-    
-            foreach($data as $result){
-                if($result->category == "Topaz"){
-                    $available['Topaz'] = $available['Topaz'] + $result->slot;
-                }
-                if($result->category == "Emerald"){
-                    $available['Emerald'] = $available['Emerald'] + $result->slot;
-                }
-                if($result->category == "Turquoise"){
-                    $available['Turquoise'] = $available['Turquoise'] + $result->slot;
-                }
-                if($result->category == "Garnet"){
-                    $available['Garnet'] = $available['Garnet'] + $result->slot;
-                }
-                if($result->category == "Jade"){
-                    $available['Jade'] = $available['Jade'] + $result->slot;
-                }
-                if($result->category == "Pearl"){
-                    $available['Pearl'] = $available['Pearl'] + $result->slot;
-                }
-                if($result->category == "Sapphire"){
-                    $available['Sapphire'] = $available['Sapphire'] + $result->slot;
-                }
-            }
-    
             $request->session()->put('check_in', $request['start']); 
             $request->session()->put('check_out', $request['end']);
     
             
             
-           return view('mainpage.AllRooms',compact('available','categories'));
+           return view('mainpage.AllRooms',compact('categories'));
         }
 
     public function MoreRooms(Request $request){

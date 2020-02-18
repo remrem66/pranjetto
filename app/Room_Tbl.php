@@ -31,7 +31,6 @@ class Room_Tbl extends Model
         DB::table('room_tbl')
             ->insert([
                 'floor' => $data['floor'],
-                'room_name' => $data['room_name'],
                 'category' =>$data['category'],
                 'capacity' => $data['capacity'],
                 'twentyfourhr_price' => $data['24hr_price'],
@@ -55,10 +54,8 @@ class Room_Tbl extends Model
             ->update([
                 
                 'floor' => $data['floor'],
-                'room_name' => $data['room_name'],
                 'category' => $data['category'],
                 'capacity' => $data['capacity'],
-                'slot' => $data['slot'],
                 'twentyfourhr_price' => $data['24hr_price'],
                 'description' => $data['description'],
                 'main_pic' => $data['main_pic']
@@ -93,5 +90,14 @@ class Room_Tbl extends Model
         DB::table('room_tbl')
             ->where('room_id',$id)
             ->increment('slot',$quantity);
+    }
+
+    public static function ManualSlot($id,$quantity){
+
+        DB::table('room_tbl')
+            ->where('room_id',$id)
+            ->update([
+                'slot' => $quantity
+                ]);
     }
 }
