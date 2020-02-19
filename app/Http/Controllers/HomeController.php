@@ -975,53 +975,12 @@ class HomeController extends Controller
                 array_push($ids,$id->room_id);
             }
 
-        $data = DB::table('room_tbl')
+        $categories = DB::table('room_tbl')
                 ->whereNotIn('room_id',$ids)
                 ->where('status',1)
                 ->where('slot','>',0)
                 ->select('*')
-                ->get();
-
-        
-        $available = [
-            'Topaz' => 0,
-            'Emerald' => 0,
-            'Turquoise' => 0,
-            'Garnet' => 0,
-            'Jade' => 0,
-            'Pearl' => 0,
-            'Sapphire' => 0
-        ];
-
-        $categories = DB::table('room_mainpage_tbl')
-                    ->select('*')
-                    ->get();
-
-        foreach($data as $result){
-            if($result->category == "Topaz"){
-                $available['Topaz'] = $available['Topaz'] + 1;
-            }
-            if($result->category == "Emerald"){
-                $available['Emerald'] = $available['Emerald'] + 1;
-            }
-            if($result->category == "Turquoise"){
-                $available['Turquoise'] = $available['Turquoise'] + 1;
-            }
-            if($result->category == "Garnet"){
-                $available['Garnet'] = $available['Garnet'] + 1;
-            }
-            if($result->category == "Jade"){
-                $available['Jade'] = $available['Jade'] + 1;
-            }
-            if($result->category == "Pearl"){
-                $available['Pearl'] = $available['Pearl'] + 1;
-            }
-            if($result->category == "Sapphire"){
-                $available['Sapphire'] = $available['Sapphire'] + 1;
-            }
-        }
-
-    
+                ->get();    
         
        return view('mainpage.AllRooms',compact('available','categories'));
     }

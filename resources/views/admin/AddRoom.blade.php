@@ -34,7 +34,7 @@
                         
                         <div class="col-md-6">
                             <label for="exampleInputEmail1">Category</label>
-                            <input type="text" name="catgeory" class="form-control" value="{{old('category')}}" required>
+                            <input type="text" name="category" class="form-control" value="{{old('category')}}" required>
                         </div>
                         <div class="col-md-6">
                             <label for="exampleInputEmail1">Capacity</label>

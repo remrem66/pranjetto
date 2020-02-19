@@ -50,7 +50,7 @@
               <li class="nav-item">
                 <a href="{{route('AddRoomView')}}" class="nav-link">
                   <i class="fas fa-plus nav-icon"></i>
-                  <p>Add Room</p>
+                  <p>Add Room Categories</p>
                 </a>
               </li>
               <li class="nav-item">
