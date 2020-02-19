@@ -66,7 +66,9 @@ class Online_Reservation_Tbl extends Model
 
         DB::table('online_reservation_tbl')
             ->where('reservation_id',$reservation_id)
-            ->delete();
+            ->update([
+                'reservation_status' => 5
+            ]);
     }
 
     public static function AdditionalAmenity($id,$total){

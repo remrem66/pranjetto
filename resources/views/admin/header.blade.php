@@ -23,8 +23,7 @@
   <!-- Daterange picker -->
   <link rel="stylesheet" href="{{asset('admin/plugins/daterangepicker/daterangepicker.css')}}">
    <!-- DataTables-->
-  <link rel="stylesheet" href="{{asset('admin/plugins/datatables-bs4/css/dataTables.bootstrap4.css')}}">
-  <link href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css" rel="stylesheet">
+  
   <!-- Toastr -->
   <link rel="stylesheet" href="{{asset('admin/jquery-ui/jquery-ui.min.css')}}">
   <link rel="stylesheet" href="{{asset('admin/jquery-ui/jquery-ui.structure.css')}}">
@@ -36,8 +35,10 @@
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
-  <link rel="stylesheet" href="{{asset('js/dataTables.bootstrap4.min.css')}}">
-  <link rel="stylesheet" href="{{asset('js/dataTables.min.css')}}">
+  <!-- <link rel="stylesheet" href="{{asset('js/dataTables.bootstrap4.min.css')}}">
+  <link rel="stylesheet" href="{{asset('js/dataTables.min.css')}}"> -->
+  <link rel="stylesheet" href="{{asset('admin/plugins/datatables-bs4/css/dataTables.bootstrap4.css')}}">
+  <link href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css" rel="stylesheet">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 

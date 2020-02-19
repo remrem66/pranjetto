@@ -136,7 +136,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{route('OnlineReservations')}}" class="nav-link">
+                <a href="{{route('OnlineReservations', 'all' )}}" class="nav-link">
                   <i class="fas fa-calendar-check nav-icon"></i>
                   <p>Online Reservations</p>
                 </a>

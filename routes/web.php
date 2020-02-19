@@ -32,7 +32,7 @@ Route::get('/AddRoom', 'AdminController@AddRoomView')->name('AddRoomView');
 Route::get('/EditRoom', 'AdminController@EditRoomView')->name('EditRoomView');
 Route::get('/RoomStatus', 'AdminController@RoomStatusView')->name('RoomStatusView');
 Route::get('/AmenityStatusView', 'AdminController@AmenityStatusView')->name('AmenityStatusView');
-Route::get('/OnlineReservations', 'AdminController@OnlineReservations')->name('OnlineReservations');
+Route::get('/OnlineReservations/{status_id}', 'AdminController@OnlineReservations')->name('OnlineReservations');
 Route::post('/PostRoom', 'AdminController@AddRoom')->name('AddRoom');
 Route::post('/EditRoom', 'AdminController@EditRoom')->name('EditRoom');
 Route::post('/UploadPictures', 'AdminController@UploadPictures')->name('UploadPictures');
@@ -115,6 +115,7 @@ Route::get('/reservation', 'HomeController@viewReservations')->name('reservation
 Route::get('/galleryview', 'HomeController@galleryview')->name('galleryview');
 Route::get('/MoreRooms', 'HomeController@MoreRooms')->name('MoreRooms');
 Route::get('/viewReservationDetails/{id}', 'HomeController@viewReservationDetails')->name('viewReservationDetails');
+Route::get('/cancelReservation/{id}', 'HomeController@cancelReservation')->name('cancelReservation');
 Route::post('/reservationUpload', 'HomeController@reservationUpload')->name('reservationUpload');
 
 

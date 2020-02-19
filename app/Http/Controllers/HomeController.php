@@ -997,6 +997,12 @@ class HomeController extends Controller
         return view('mainpage.reservationpreview', compact('userReservations'));
     }
 
+    public function cancelReservation($id)
+    {
+        Online_Reservation_Tbl::CancelReservation($id);
+        return redirect()->route('reservations');
+    }
+
     public function viewReservationDetails($id)
     {
         $userId = session('user_id');

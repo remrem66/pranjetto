@@ -67,12 +67,12 @@
                   <td>
                     @if($result->reservation_status == 0)
                     <button class="btn btn-info initialpay" id="{{$result->reservation_id}}-{{$result->total_price}}-{{$result->name}}">Confirm Payment</button>
-                    <button class="btn btn-danger CancelReservation" id="{{$result->reservation_id}}">Cancel</button>
+                    
                     @endif
                     @if($result->reservation_status == 1)
                     <button class="btn btn-info completionofblance" id="{{$result->reservation_id}}-{{$result->total_price - $result->amount_paid}}-{{$result->name}}" data-toggle="modal" data-target=".finalcheckoutmodal">Complete Balance</button>
                     <button class="btn btn-warning additionalamenity" id="{{$result->reservation_id}}-{{$result->total_price}}" data-toggle="modal" data-target=".addamenitymodal">Add Amenity</button>
-                    <button class="btn btn-danger CancelReservation" id="{{$result->reservation_id}}">Cancel</button>
+                    
                     @endif
                     @if($result->reservation_status == 2)
                     <button class="btn btn-info onlinestatuschange" id="{{$result->reservation_id}}-3">Check in</button>

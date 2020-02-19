@@ -30,18 +30,98 @@
             <div class="small-box bg-info">
               <div class="inner">
                 
-                <h4>Add Rooms</h4>
-                <a href="{{route('AddRoomView')}}">
+                <h4>Pending</h4>
+                <a href="{{route('OnlineReservations', '2' )}}">
                 <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                 
               </div>
               <div class="icon">
                 <i class="ion ion-plus"></i>
               </div>
-              </a>
+                </a>
             </div>
           </div>
         </div>
+
+        <div class="row">
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-success">
+              <div class="inner">
+                
+                <h4>Check-In</h4>
+                <a href="{{route('OnlineReservations', '3' )}}">
+                <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                
+              </div>
+              <div class="icon">
+                <i class="ion ion-plus"></i>
+              </div>
+                </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-danger">
+              <div class="inner">
+                
+                <h4>Check-Out</h4>
+                <a href="{{route('OnlineReservations', '4' )}}">
+                <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                
+              </div>
+              <div class="icon">
+                <i class="ion ion-plus"></i>
+              </div>
+                </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-warning">
+              <div class="inner">
+                
+                <h4>Expired</h4>
+                <a href="{{route('OnlineReservations', '5' )}}">
+                <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                
+              </div>
+              <div class="icon">
+                <i class="ion ion-plus"></i>
+              </div>
+                </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-info">
+              <div class="inner">
+                
+                <h4>Cancelled</h4>
+                <a href="{{route('OnlineReservations', '6' )}}">
+                <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                
+              </div>
+              <div class="icon">
+                <i class="ion ion-plus"></i>
+              </div>
+                </a>
+            </div>
+          </div>
+        </div>
+
+
+
+
       </div>
     </section>
   </div>

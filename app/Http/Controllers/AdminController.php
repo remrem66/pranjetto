@@ -60,8 +60,15 @@ class AdminController extends Controller
     }
 
     public function AdminDashboard(){
+        $noPayment = Online_Reservation_Tbl::where('reservation_status', 0)->get()->count();
+        $initialPayment = Online_Reservation_Tbl::where('reservation_status', 1)->get()->count();
+        $completeBalance = Online_Reservation_Tbl::where('reservation_status', 2)->get()->count();
+        $checkedIn = Online_Reservation_Tbl::where('reservation_status', 3)->get()->count();
+        $checkedOut = Online_Reservation_Tbl::where('reservation_status', 4)->get()->count();
+        $cancelled = Online_Reservation_Tbl::where('reservation_status', 5)->get()->count();
+        $expired = Online_Reservation_Tbl::where('reservation_status', 6)->get()->count();
 
-        return view('admin.dashboard');
+        return view('admin.dashboard', compact('noPayment', 'initialPayment', 'completeBalance', 'checkedIn', 'checkedOut', 'cancelled', 'expired'));
     }
 
     public function AddRoomView(){
@@ -222,13 +229,65 @@ class AdminController extends Controller
 
     }
 
-    public function OnlineReservations(){
+    public function OnlineReservations($id){
 
-        $data = DB::table('online_reservation_tbl')
-                    ->join('tbl_users','online_reservation_tbl.user_id','=','tbl_users.user_id')
-                    ->join('room_tbl','room_tbl.room_id','=','online_reservation_tbl.room_id')
-                    ->select('room_tbl.category','online_reservation_tbl.*','tbl_users.name')
-                    ->get();
+        if ($id == 'all' ) {
+            $data = DB::table('online_reservation_tbl')
+                ->join('tbl_users','online_reservation_tbl.user_id','=','tbl_users.user_id')
+                ->join('room_tbl','room_tbl.room_id','=','online_reservation_tbl.room_id')
+                ->select('room_tbl.category','online_reservation_tbl.*','tbl_users.name')
+                ->get();
+        } elseif ($id == 0) {
+            $data = DB::table('online_reservation_tbl')
+                ->join('tbl_users','online_reservation_tbl.user_id','=','tbl_users.user_id')
+                ->join('room_tbl','room_tbl.room_id','=','online_reservation_tbl.room_id')
+                ->where('online_reservation_tbl.reservation_status', 0)
+                ->select('room_tbl.category','online_reservation_tbl.*','tbl_users.name')
+                ->get();
+        } elseif ($id == 1) {
+            $data = DB::table('online_reservation_tbl')
+                ->join('tbl_users','online_reservation_tbl.user_id','=','tbl_users.user_id')
+                ->join('room_tbl','room_tbl.room_id','=','online_reservation_tbl.room_id')
+                ->where('online_reservation_tbl.reservation_status', 1)
+                ->select('room_tbl.category','online_reservation_tbl.*','tbl_users.name')
+                ->get();
+        } elseif ($id == 2) {
+            $data = DB::table('online_reservation_tbl')
+                ->join('tbl_users','online_reservation_tbl.user_id','=','tbl_users.user_id')
+                ->join('room_tbl','room_tbl.room_id','=','online_reservation_tbl.room_id')
+                ->where('online_reservation_tbl.reservation_status', 2)
+                ->select('room_tbl.category','online_reservation_tbl.*','tbl_users.name')
+                ->get();
+        } elseif ($id == 3) {
+            $data = DB::table('online_reservation_tbl')
+                ->join('tbl_users','online_reservation_tbl.user_id','=','tbl_users.user_id')
+                ->join('room_tbl','room_tbl.room_id','=','online_reservation_tbl.room_id')
+                ->where('online_reservation_tbl.reservation_status', 3)
+                ->select('room_tbl.category','online_reservation_tbl.*','tbl_users.name')
+                ->get();
+        } elseif ($id == 4) {
+            $data = DB::table('online_reservation_tbl')
+                ->join('tbl_users','online_reservation_tbl.user_id','=','tbl_users.user_id')
+                ->join('room_tbl','room_tbl.room_id','=','online_reservation_tbl.room_id')
+                ->where('online_reservation_tbl.reservation_status', 4)
+                ->select('room_tbl.category','online_reservation_tbl.*','tbl_users.name')
+                ->get();
+        } elseif ($id == 5) {
+            $data = DB::table('online_reservation_tbl')
+                ->join('tbl_users','online_reservation_tbl.user_id','=','tbl_users.user_id')
+                ->join('room_tbl','room_tbl.room_id','=','online_reservation_tbl.room_id')
+                ->where('online_reservation_tbl.reservation_status', 5)
+                ->select('room_tbl.category','online_reservation_tbl.*','tbl_users.name')
+                ->get();
+        } else {
+            $data = DB::table('online_reservation_tbl')
+                ->join('tbl_users','online_reservation_tbl.user_id','=','tbl_users.user_id')
+                ->join('room_tbl','room_tbl.room_id','=','online_reservation_tbl.room_id')
+                ->where('online_reservation_tbl.reservation_status', 6)
+                ->select('room_tbl.category','online_reservation_tbl.*','tbl_users.name')
+                ->get();
+        }
+       
         
         return view('admin.OnlineReservations',compact('data'));
     }
