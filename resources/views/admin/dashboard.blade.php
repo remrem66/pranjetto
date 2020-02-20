@@ -40,10 +40,8 @@
               </div>
                 </a>
             </div>
+            
           </div>
-        </div>
-
-        <div class="row">
           <div class="col-lg-3 col-6">
             <!-- small box -->
             <div class="small-box bg-success">
@@ -60,9 +58,6 @@
                 </a>
             </div>
           </div>
-        </div>
-
-        <div class="row">
           <div class="col-lg-3 col-6">
             <!-- small box -->
             <div class="small-box bg-danger">
@@ -79,9 +74,6 @@
                 </a>
             </div>
           </div>
-        </div>
-
-        <div class="row">
           <div class="col-lg-3 col-6">
             <!-- small box -->
             <div class="small-box bg-warning">
@@ -100,10 +92,15 @@
           </div>
         </div>
 
+
+        <div class="row">
+          
+        </div>
+
         <div class="row">
           <div class="col-lg-3 col-6">
             <!-- small box -->
-            <div class="small-box bg-info">
+            <div class="small-box bg-primary">
               <div class="inner">
                 
                 <h4>Cancelled</h4>
