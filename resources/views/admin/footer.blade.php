@@ -90,7 +90,7 @@ var sales =  $('#sales').DataTable({
         }
     ],
     ajax: {
-        url : "/getSales/0", dataSrc : ""
+        url : "getSales/0", dataSrc : ""
     },
     deferRender: true,
     aaSorting: []
@@ -99,6 +99,28 @@ var sales =  $('#sales').DataTable({
 $("#btnDaily").on('click', function() {
   sales.ajax.url("/getSales/0").load();
 });
+
+$("#search_sales_date").submit(function(e) {
+  e.preventDefault();
+  $.ajax({
+    url: "{{url('filter_sales')}}",
+    type: "get",
+    data: 'fromdate=' + $('#from_date').val() + '&todate=' + $('#to_date').val(),
+    success: function(data)
+      {
+        if(data == '' || data == null) {
+          $('#sales').dataTable().fnClearTable();
+        } else {
+          $('#sales').dataTable().fnClearTable();
+          $('#sales').dataTable().fnAddData(data);
+        }
+        
+      }
+  });
+  
+});
+
+
 
 $("#btnWeekly").on('click', function() {
   sales.ajax.url("/getSales/1").load();
@@ -912,6 +934,9 @@ Swal.fire({
   });
 
 });
+
+$( "#from_date" ).datepicker();
+$( "#to_date" ).datepicker();
 
 $('#quantity').change(function(e){
 

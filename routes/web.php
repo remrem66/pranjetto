@@ -49,6 +49,7 @@ Route::get('/UploadedReceipts', 'AdminController@UploadedReceipts')->name('Uploa
 
 Route::get('/SalesReports', 'AdminController@SalesReports')->name('SalesReports');
 Route::get('/getSales/{trigger}', 'AdminController@getSales');
+Route::get('/filter_sales', 'AdminController@filterSales');
 
 Route::get('/MainpageSetting', 'AdminController@MainpageSetting')->name('MainpageSetting');
 Route::post('/UploadPicturesForMainpage', 'AdminController@UploadPicturesForMainpage')->name('UploadPicturesForMainpage');

@@ -598,6 +598,15 @@ class AdminController extends Controller
         return view('admin.ViewAmenities',compact('data'));
     }
 
+    public function filterSales(Request $request)
+    {
+        $fromDate = date("Y-m-d", strtotime($request->fromdate));
+        $toDate = date("Y-m-d", strtotime($request->todate));
+        $sales = Sales_Tbl::whereBetween('date', [$fromDate, $toDate])->get()->toArray();
+        return $sales;
+        
+    }
+
     public function getSales($trigger = 0)
     {
         $data = [];
