@@ -44,7 +44,9 @@
                   <td>
                     <button class="btn btn-primary IncUpdateSlot" id="{{$result->room_id}}" >Increase Slot</button>
                     <button class="btn btn-warning ManUpdateSlot" id="{{$result->room_id}}" data-toggle="modal" data-target="#ManualInputSlot">Manually Input SLot</button>
+                    @if($result->slot > 0)
                     <button class="btn btn-danger DecUpdateSlot" id="{{$result->room_id}}">Decrease Slot</button>
+                    @endif
                    
                 </td>
                 </tr>
@@ -69,7 +71,7 @@
                         <div class="form-group row">
                               <label class="col-form-label col-md-6 col-sm-6 ">Slot: </label>
                               <div class="col-md-6 col-sm-6 ">
-                                  <input type="text" id="man_slot" class="form-control">
+                                  <input type="number" id="man_slot" class="form-control">
                                   <input type="hidden" id="man_room_id" class="form-control">
                               </div>
                           </div>
