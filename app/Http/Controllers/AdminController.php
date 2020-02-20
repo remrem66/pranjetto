@@ -14,6 +14,7 @@ use App\Gallery_Tbl;
 use App\Tbl_Users;
 use \App\Mail\CancelMail;
 use DB;
+use Validator;
 use Auth;
 use Redirect;
 date_default_timezone_set("Asia/Manila");
@@ -993,7 +994,22 @@ class AdminController extends Controller
 
     public function AddRoomWalkIn(Request $request){
 
-        $reservation_code = $this->IDGenerator();
+
+        $validator = Validator::make($request->all(),[
+            'customer_name' => 'required',
+            'email_address' => 'required|email',
+            'quantity' => 'required',
+            'contact_num' => 'required|regex:/(09)[0-9]{9}/',
+            'number_of_persons' => 'required',
+            'check_in' => 'required',
+            'check_out' => 'required',
+        ]);
+
+        if($validator->fails()){
+            return response()->json(['error'=>$validator->errors()->all()]);
+        }
+        else{
+            $reservation_code = $this->IDGenerator();
 
         if(empty($request['extra_mattress'])){
             $mattress = 0;
@@ -1018,6 +1034,9 @@ class AdminController extends Controller
 
         Room_Tbl::DeductSlot($request['room_id'],$request['quantity']);
         Walkin_Reservation_Tbl::AddRoomWalkIn($data);
+        }
+
+        
     }
 
     public function IDGenerator(){

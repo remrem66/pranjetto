@@ -472,6 +472,11 @@ $("#btnMonthly").on('click', function() {
 
       location.reload();
     });
+
+    $('#errorBooking').on('hidden.bs.modal',function(e){
+
+location.reload();
+});
     
 
      $('.onlinereschedmodal').on('hidden.bs.modal',function(e){
@@ -1089,7 +1094,18 @@ Swal.fire({
             processData: false,
             dataType: 'HTML',
             success: function(response){
-                Swal.fire({
+              if(response != ""){
+                    var obj = JSON.parse(response);
+               
+                    var x;
+                
+                    for(x = 0; x < obj.error.length; x++){
+                        $('#validation').append("<li>" + obj.error[x] + "</li>");
+                    }
+                    $('#errorBooking').modal('show');
+                }
+                else{
+                  Swal.fire({
                     title: "Successfuly Executed!",
                     icon: 'success', 
                     type: "success"
@@ -1097,6 +1113,8 @@ Swal.fire({
                 .then(function(){
                     location.reload();
                 });
+                }
+                
             }
         })
     }

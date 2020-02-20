@@ -136,6 +136,28 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade errorModal" id="errorBooking" tabindex="-1" role="dialog">
+                    <div class="modal-dialog " role="document">
+                        <div class="modal-content bg-danger">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Error Booking</h4>
+                                <button type="button" class="close dismisspatienterror" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="alert alert-danger alert-dismissible" role="alert">
+			                        <ul id="validation">
+
+                                    </ul>
+			                    </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default waves-effect dismissbookingerror" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
     </section>
   </div>
 
