@@ -38,7 +38,7 @@
                   <td>{{$result->no_of_persons}}</td>
                   <td>{{date("M-d-Y",strtotime($result->check_in))}} - {{date("M-d-Y",strtotime($result->check_out))}}</td>
                   <td>
-                    <button class="btn btn-warning online_resched" id="{{$result->reservation_id}}-{{$result->room_id}}" data-toggle="modal" data-target=".onlinereschedmodal">Change Schedule</button>
+                    <button class="btn btn-warning online_resched" id="{{$result->reservation_id}}-{{$result->room_id}}-{{date('m/d/Y',strtotime($result->check_in))}}" data-toggle="modal" data-target=".onlinereschedmodal">Change Schedule</button>
                 </td>
                 </tr>
                 @endforeach

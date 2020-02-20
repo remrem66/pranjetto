@@ -1429,7 +1429,9 @@ $('.online_resched').click(function(e){
     data = data.split("-");
     var reservation_id = data[0];
     var room_id = data[1];
+    var checkindate = new Date(data[2]);
 
+    
     $.ajax({
         url: '{{route("disableddates")}}',
         type: 'GET',
@@ -1442,7 +1444,7 @@ $('.online_resched').click(function(e){
               var array = response;
                     
                 $('#re_checkin').datepicker({
-                      minDate: new Date(),
+                      minDate: checkindate,
                       beforeShowDay: function(date){
                           var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
                           return [ array.indexOf(string) == -1 ]
