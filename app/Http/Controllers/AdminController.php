@@ -247,6 +247,7 @@ class AdminController extends Controller
                 ->join('room_tbl','room_tbl.room_id','=','online_reservation_tbl.room_id')
                 ->select('room_tbl.category','online_reservation_tbl.*','tbl_users.name')
                 ->get();
+            $title="Reservations";
         } elseif ($id == 0) {
             $data = DB::table('online_reservation_tbl')
                 ->join('tbl_users','online_reservation_tbl.user_id','=','tbl_users.user_id')
@@ -254,6 +255,7 @@ class AdminController extends Controller
                 ->where('online_reservation_tbl.reservation_status', 0)
                 ->select('room_tbl.category','online_reservation_tbl.*','tbl_users.name')
                 ->get();
+            $title="Reservations";
         } elseif ($id == 1) {
             $data = DB::table('online_reservation_tbl')
                 ->join('tbl_users','online_reservation_tbl.user_id','=','tbl_users.user_id')
@@ -261,6 +263,7 @@ class AdminController extends Controller
                 ->where('online_reservation_tbl.reservation_status', 1)
                 ->select('room_tbl.category','online_reservation_tbl.*','tbl_users.name')
                 ->get();
+            $title="Reservations";
         } elseif ($id == 2) {
             $data = DB::table('online_reservation_tbl')
                 ->join('tbl_users','online_reservation_tbl.user_id','=','tbl_users.user_id')
@@ -268,6 +271,7 @@ class AdminController extends Controller
                 ->where('online_reservation_tbl.reservation_status', 2)
                 ->select('room_tbl.category','online_reservation_tbl.*','tbl_users.name')
                 ->get();
+            $title="Pending";
         } elseif ($id == 3) {
             $data = DB::table('online_reservation_tbl')
                 ->join('tbl_users','online_reservation_tbl.user_id','=','tbl_users.user_id')
@@ -275,6 +279,7 @@ class AdminController extends Controller
                 ->where('online_reservation_tbl.reservation_status', 3)
                 ->select('room_tbl.category','online_reservation_tbl.*','tbl_users.name')
                 ->get();
+            $title="Check in";
         } elseif ($id == 4) {
             $data = DB::table('online_reservation_tbl')
                 ->join('tbl_users','online_reservation_tbl.user_id','=','tbl_users.user_id')
@@ -282,6 +287,7 @@ class AdminController extends Controller
                 ->where('online_reservation_tbl.reservation_status', 4)
                 ->select('room_tbl.category','online_reservation_tbl.*','tbl_users.name')
                 ->get();
+                $title="Check Out";
         } elseif ($id == 5) {
             $data = DB::table('online_reservation_tbl')
                 ->join('tbl_users','online_reservation_tbl.user_id','=','tbl_users.user_id')
@@ -289,6 +295,7 @@ class AdminController extends Controller
                 ->where('online_reservation_tbl.reservation_status', 5)
                 ->select('room_tbl.category','online_reservation_tbl.*','tbl_users.name')
                 ->get();
+            $title="Cancelled";
         } else {
             $data = DB::table('online_reservation_tbl')
                 ->join('tbl_users','online_reservation_tbl.user_id','=','tbl_users.user_id')
@@ -296,10 +303,11 @@ class AdminController extends Controller
                 ->where('online_reservation_tbl.reservation_status', 6)
                 ->select('room_tbl.category','online_reservation_tbl.*','tbl_users.name')
                 ->get();
+            $title="Expired";
         }
        
         
-        return view('admin.OnlineReservations',compact('data'));
+        return view('admin.OnlineReservations',compact('data', 'title'));
     }
 
     public function ConfirmInitial(Request $request){
