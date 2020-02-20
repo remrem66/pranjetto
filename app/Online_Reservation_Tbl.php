@@ -71,6 +71,15 @@ class Online_Reservation_Tbl extends Model
             ]);
     }
 
+    public static function ExpireReservation($reservation_id){
+
+        DB::table('online_reservation_tbl')
+            ->where('reservation_id',$reservation_id)
+            ->update([
+                'reservation_status' => 6
+            ]);
+    }
+
     public static function AdditionalAmenity($id,$total){
 
         DB::table('online_reservation_tbl')

@@ -61,15 +61,17 @@ class AdminController extends Controller
     }
 
     public function AdminDashboard(){
-        $noPayment = Online_Reservation_Tbl::where('reservation_status', 0)->get()->count();
-        $initialPayment = Online_Reservation_Tbl::where('reservation_status', 1)->get()->count();
-        $completeBalance = Online_Reservation_Tbl::where('reservation_status', 2)->get()->count();
-        $checkedIn = Online_Reservation_Tbl::where('reservation_status', 3)->get()->count();
-        $checkedOut = Online_Reservation_Tbl::where('reservation_status', 4)->get()->count();
-        $cancelled = Online_Reservation_Tbl::where('reservation_status', 5)->get()->count();
-        $expired = Online_Reservation_Tbl::where('reservation_status', 6)->get()->count();
+        $dateToday = date('Y-m-d');
+        $date3Days = date('Y-m-d', strtotime($dateToday. ' + 3 days'));
+        $reservations = Online_Reservation_Tbl::whereBetween('check_in' , [$dateToday, $date3Days])->get();
+        if(!empty($reservations)) {
+            foreach ($reservations as $key => $value) {
+                Online_Reservation_Tbl::ExpireReservation($value->reservation_id);
+            }
+        }
+        
 
-        return view('admin.dashboard', compact('noPayment', 'initialPayment', 'completeBalance', 'checkedIn', 'checkedOut', 'cancelled', 'expired'));
+        return view('admin.dashboard');
     }
 
     public function AddRoomView(){
@@ -231,7 +233,14 @@ class AdminController extends Controller
     }
 
     public function OnlineReservations($id){
-
+        $dateToday = date('Y-m-d');
+        $date3Days = date('Y-m-d', strtotime($dateToday. ' + 3 days'));
+        $reservations = Online_Reservation_Tbl::whereBetween('check_in' , [$dateToday, $date3Days])->get();
+        if(!empty($reservations)) {
+            foreach ($reservations as $key => $value) {
+                Online_Reservation_Tbl::ExpireReservation($value->reservation_id);
+            }
+        }
         if ($id == 'all' ) {
             $data = DB::table('online_reservation_tbl')
                 ->join('tbl_users','online_reservation_tbl.user_id','=','tbl_users.user_id')

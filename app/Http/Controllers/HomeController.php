@@ -1208,5 +1208,11 @@ $details[0]['code'] = $reservation_code;
 
         return view('mainpage.gallery',compact('data'));
     }
+
+    public function cancelReservation($id)
+    {
+        Online_Reservation_Tbl::CancelReservation($id);
+        return redirect()->route('reservations');
+    }
     
 }

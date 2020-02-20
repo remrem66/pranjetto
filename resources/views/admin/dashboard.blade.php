@@ -80,7 +80,7 @@
               <div class="inner">
                 
                 <h4>Expired</h4>
-                <a href="{{route('OnlineReservations', '5' )}}">
+                <a href="{{route('OnlineReservations', '6' )}}">
                 <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                 
               </div>
@@ -104,7 +104,7 @@
               <div class="inner">
                 
                 <h4>Cancelled</h4>
-                <a href="{{route('OnlineReservations', '6' )}}">
+                <a href="{{route('OnlineReservations', '5' )}}">
                 <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                 
               </div>
