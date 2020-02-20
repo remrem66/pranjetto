@@ -40,6 +40,7 @@
                 <tbody>
                 @foreach($data as $result)
                 <tr>
+                  @if($result->reservation_status == 0 || $result->reservation_status == 1)
                   <td>{{$result->reservation_code}}</td>
                   <td>{{$result->category}}</td>
                   <td>{{$result->name}}</td>
@@ -84,6 +85,7 @@
                     @endif
                     
                 </td>
+                @endif
                 </tr>
                 @endforeach
                 </tbody>
