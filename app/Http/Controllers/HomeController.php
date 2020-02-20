@@ -976,13 +976,12 @@ class HomeController extends Controller
             }
 
         $categories = DB::table('room_tbl')
-                ->whereNotIn('room_id',$ids)
                 ->where('status',1)
                 ->where('slot','>',0)
                 ->select('*')
                 ->get();    
         
-       return view('mainpage.AllRooms',compact('available','categories'));
+       return view('mainpage.AllRooms',compact('categories'));
     }
 
     public function viewReservations()
@@ -995,12 +994,6 @@ class HomeController extends Controller
         }
 
         return view('mainpage.reservationpreview', compact('userReservations'));
-    }
-
-    public function cancelReservation($id)
-    {
-        Online_Reservation_Tbl::CancelReservation($id);
-        return redirect()->route('reservations');
     }
 
     public function viewReservationDetails($id)
@@ -1114,7 +1107,7 @@ class HomeController extends Controller
             }
 
             $data = DB::table('room_tbl')
-                    ->whereNotIn('room_id',$ids)
+                    ->where('slot','>',0)
                     ->select('*')
                     ->get();
             
