@@ -37,6 +37,7 @@
                 <tbody>
                 @foreach($userReservations as $result)
                 <tr>
+                @if ($result->reservation_status == 0 || $result->resevation_status == 1 || $result->resevation_status == 2 || $result->resevation_status == 3 )
                   <td>{{$result->reservation_code}}</td>
                   <td>{{$result->user_details->name}}</td>
                   <td>{{$result->user_details->email}}</td>
@@ -47,6 +48,8 @@
                   <td><a href="{{route('viewReservationDetails',$result->reservation_id)}}"><button type="button" class=" btn btn-primary">View</button></a>
                   @if ($result->reservation_status == 0 || $result->resevation_status == 1 )
                   <a href="{{route('cancelReservation',$result->reservation_id)}}" onclick="return confirm('Are you sure you want to cancel this reservation?')"><button type="button" class=" btn btn-danger">Cancel</button></a></td>
+                  @endif
+
                   @endif
                 </tr>
                 @endforeach
