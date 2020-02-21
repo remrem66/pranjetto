@@ -33,6 +33,7 @@
                 <tbody>
                 @foreach($data as $result)
                 <tr>
+                @if($result->reservation_status == 0 || $result->reservation_status == 1)
                   <td>{{$result->room_name}} </td>
                   <td>{{$result->name}}</td>
                   <td>{{$result->no_of_persons}}</td>
@@ -40,6 +41,7 @@
                   <td>
                     <button class="btn btn-warning online_resched" id="{{$result->reservation_id}}-{{$result->room_id}}-{{date('m/d/Y',strtotime($result->check_in))}}" data-toggle="modal" data-target=".onlinereschedmodal">Change Schedule</button>
                 </td>
+                @endif
                 </tr>
                 @endforeach
                 </tbody>
@@ -97,6 +99,7 @@
                 <tbody>
                 @foreach($data1 as $result1)
                 <tr>
+                @if($result->reservation_status == 0 || $result->reservation_status == 1)
                   <td>{{$result1->room_name}} </td>
                   <td>{{$result1->customer_name}}</td>
                   <td>{{$result1->no_of_persons}}</td>
@@ -104,6 +107,7 @@
                   <td>
                     <button class="btn btn-info walkin_resched" id="{{$result1->walkin_id}}-{{$result1->room_id}}" data-toggle="modal" data-target=".walkinreschedmodal">Change Schedule</button>
                   </td>
+                  @endif
                 </tr>
                 @endforeach
                 </tbody>

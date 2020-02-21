@@ -1166,13 +1166,11 @@ class AdminController extends Controller
                     ->join('tbl_users','online_reservation_tbl.user_id','=','tbl_users.user_id')
                     ->join('room_tbl','room_tbl.room_id','=','online_reservation_tbl.room_id')
                     ->select('room_tbl.room_name','online_reservation_tbl.*','tbl_users.name')
-                    ->where('online_reservation_tbl.reservation_status','!=',2)
                     ->get();
 
         $data1 = DB::table('walkin_reservation_tbl')
                     ->join('room_tbl','room_tbl.room_id','=','walkin_reservation_tbl.room_id')
                     ->select('room_tbl.room_name','walkin_reservation_tbl.*')
-                    ->where('walkin_reservation_tbl.reservation_status','!=',2)
                     ->get();
         
         return view('admin.Reschedule',compact('data','data1'));
