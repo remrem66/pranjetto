@@ -1154,9 +1154,10 @@ $('#Sbmtadditional').click(function(e){
   var reservation_id = $('#reservation_id').val();
   var total_price = $('#price').val();
           
-  var amenity = $('#amenities_total').val();
+  var amenity_id = $('#amenities').val();
+  var amenity_qty = $('#amenities_qty').val();
   
-  if(amenity < 0){
+  if(amenity_qty < 0){
     alert("Please input a valid amount");
   }
   else{
@@ -1175,7 +1176,8 @@ $('#Sbmtadditional').click(function(e){
             type: 'GET',
             data: {
               reservation_id: reservation_id,
-              amenity: amenity,
+              amenity_id: amenity_id,
+              amenity_qty: amenity_qty,
               total_price: total_price
             },
             dataType: 'HTML',

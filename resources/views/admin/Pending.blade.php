@@ -126,10 +126,20 @@
                         <button type="button" class="close closeModal" data-dismiss="modal"><span aria-hidden="true">×</span></button>
                     </div>
                     <div class="modal-body">
-                          <div class="form-group row">
+                    <div class="form-group row">
                               <label class="col-form-label col-md-6 col-sm-6 ">Amenities</label>
                               <div class="col-md-6 col-sm-6 ">
-                                  <input type="text" id="amenities_total" class="form-control">
+                              <select id="amenities" class="form-control" required>
+                                @foreach($amenity as $amen)
+                                <option value="{{$amen->amenity_id}}"> {{$amen->amenity_name}} </option>
+                                @endforeach
+                            </select>
+                              </div>
+                          </div>
+                          <div class="form-group row">
+                              <label class="col-form-label col-md-6 col-sm-6 ">Quantity</label>
+                              <div class="col-md-6 col-sm-6 ">
+                                  <input type="number" id="amenities_qty" class="form-control" min="1">
                               </div>
                           </div>
                     </div>

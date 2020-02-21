@@ -55,8 +55,22 @@ body {
                         <tr>
                             <td class="col-md-9"><em>{{$data->category}}</em></h4></td>
                             <td class="col-md-1" style="text-align: center"> {{$data->quantity}} </td>
-                            <td class="col-md-1 text-center">₱{{$data->total_price}}</td>
-                            <td class="col-md-1 text-center">₱{{$data->total_price}}</td>
+                            <td class="col-md-1 text-center">₱{{$data->quantity * $data->twentyfourhr_price}}</td>
+                            <td class="col-md-1 text-center">₱{{$data->quantity * $data->twentyfourhr_price}}</td>
+                            @if(!empty($addons))
+                                @foreach($addons as $add)
+                                <tr>
+                            <td>   </td>
+                            <td>   </td>
+                            
+                            
+                        </tr>
+                                <td class="col-md-9"><em>{{$add->amenity_name}}</em></h4></td>
+                                <td class="col-md-1" style="text-align: center"> {{$add->quantity}} </td>
+                                <td class="col-md-1 text-center">₱{{$add->quantity * $add->price}}</td>
+                                <td class="col-md-1 text-center">₱{{$add->quantity * $add->price}}</td>
+                                @endforeach
+                            @endif
                         </tr>
             
                         <tr>

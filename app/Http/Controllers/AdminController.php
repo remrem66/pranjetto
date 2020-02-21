@@ -12,6 +12,7 @@ use App\Walkin_Reservation_Tbl;
 use App\Room_Mainpage_Tbl;
 use App\Gallery_Tbl;
 use App\Tbl_Users;
+use App\addons_tbl;
 use \App\Mail\CancelMail;
 use DB;
 use Validator;
@@ -258,8 +259,12 @@ class AdminController extends Controller
                 ->select('room_tbl.category','online_reservation_tbl.*','tbl_users.name')
                 ->get();
             $title="Pending";
+
+        $amenity = DB::table('amenity_tbl')
+                    ->select('*')
+                    ->get();
         
-        return view('admin.Pending',compact('data', 'title'));
+        return view('admin.Pending',compact('data', 'title','amenity'));
     }
 
     public function CheckinReservations($id){
@@ -1081,9 +1086,18 @@ class AdminController extends Controller
 
     public function AddAdditional(Request $request){
 
-        $total = $request->total_price + $request->amenity;
+        $amenity_price = DB::table('amenity_tbl')
+                        ->where('amenity_id',$request->amenity_id)
+                        ->select('*')
+                        ->first();
+        
+        $amenity_price = $amenity_price->price * $request->amenity_qty;
+        
+
+        $total = $request->total_price + $amenity_price;
 
         Online_Reservation_Tbl::AdditionalAmenity($request->reservation_id,$total);
+        addons_tbl::AddOns($request->reservation_id,$request->amenity_id,$request->amenity_qty);
     }
 
     public function AddAdditionalwalkin(Request $request){
@@ -1400,12 +1414,17 @@ class AdminController extends Controller
 
         $data = DB::table('online_reservation_tbl')
                 ->join('room_tbl','room_tbl.room_id','=','online_reservation_tbl.room_id')
-                ->select('room_tbl.category','online_reservation_tbl.*')
+                ->select('room_tbl.category','room_tbl.twentyfourhr_price','online_reservation_tbl.*')
                 ->where('online_reservation_tbl.reservation_id',$id)
                 ->first();
 
+        $addons = DB::table('addons_tbl')
+                    ->join('amenity_tbl','addons_tbl.amenity_id','=','amenity_tbl.amenity_id')
+                    ->select('amenity_tbl.*','addons_tbl.*')
+                    ->where('addons_tbl.reservation_id',$id)
+                    ->get();
         
-        return view('admin.receipt',compact('data'));
+        return view('admin.receipt',compact('data','addons'));
     }
 
 }
