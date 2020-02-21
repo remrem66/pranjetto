@@ -66,7 +66,7 @@
                     </td>
                   <td>
                     
-                  <button class="btn btn-info onlinestatuschange" id="{{$result->reservation_id}}-4">Check out</button>
+                  <button class="btn btn-info receipt" id="{{$result->reservation_id}}-4">Check out</button>
                 </td>
                 
                 </tr>

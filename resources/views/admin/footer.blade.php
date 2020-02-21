@@ -1680,10 +1680,10 @@ $('.onlinestatuschange').click(function(e){
                 success: function(response){
 
 
-                  var redir = '{{route("print_test", ":id")}}';
-                  redir = redir.replace(':id',reservation_id);
+                  // var redir = '{{route("print_test", ":id")}}';
+                  // redir = redir.replace(':id',reservation_id);
 
-                  window.open(redir);
+                  // window.open(redir);
                   
                   Swal.fire({
                     title: "Success!",
@@ -1699,6 +1699,51 @@ $('.onlinestatuschange').click(function(e){
               })
             } 
           })  
+})
+
+$('.receipt').click(function(e){
+
+var data = $(this).attr("id");
+data = data.split("-");
+var reservation_id = data[0];
+var status = data[1];
+
+Swal.fire({
+          title: 'Are you sure?',
+          text: "You want to do this action?",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes!'
+        })
+          .then((result) => {
+          if (result.value) {
+            $.ajax({
+              url: '{{route("OnlineStatusChange")}}',
+              type: 'GET',
+              data: {
+                reservation_id: reservation_id,
+                status: status
+              },
+              dataType: 'HTML',
+              success: function(response){
+
+
+                var redir = '{{route("print_test", ":id")}}';
+                redir = redir.replace(':id',reservation_id);
+
+                window.open(redir);
+                
+              
+                    location.reload();
+              
+
+                
+              }
+            })
+          } 
+        })  
 })
 
 $('.Savetogallery').click(function(e){
