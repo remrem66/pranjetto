@@ -31,7 +31,7 @@
                   <p><strong class="color-black">Reservation Code:</strong> {{$data->reservation_code}}</p> 
                 </div>  
                 <div class="col-lg-6">
-                  <p><strong class="color-black">Room Name:</strong> {{$data->room_details->room_name}}</p> 
+                  <p><strong class="color-black">Room Name:</strong> {{$data->room_details->category}}</p> 
                   <p><strong class="color-black">Room Num:</strong> {{$data->room_details->room_num}}</p>  
                 </div>
                 <div class="col-lg-6">

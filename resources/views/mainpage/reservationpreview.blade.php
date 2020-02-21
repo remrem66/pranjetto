@@ -41,7 +41,7 @@
                   <td>{{$result->user_details->name}}</td>
                   <td>{{$result->user_details->email}}</td>
                   <td>{{$result->user_details->contact_num}}</td>
-                  <td>{{$result->room_details->room_name}}</td>
+                  <td>{{$result->room_details->category}}</td>
                   <td>{{$result->no_of_persons}}</td>
                   <td>{{$result->total_price}}</td>
                   <td><a href="{{route('viewReservationDetails',$result->reservation_id)}}"><button type="button" class=" btn btn-primary">View</button></a>
