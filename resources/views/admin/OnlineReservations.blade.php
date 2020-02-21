@@ -40,7 +40,7 @@
                 <tbody>
                 @foreach($data as $result)
                 <tr>
-                  @if($result->reservation_status == 0 || $result->reservation_status == 1)
+                  @if($result->reservation_status == 0)
                   <td>{{$result->reservation_code}}</td>
                   <td>{{$result->category}}</td>
                   <td>{{$result->name}}</td>
@@ -71,11 +71,7 @@
                     <button class="btn btn-info initialpay" id="{{$result->reservation_id}}-{{$result->total_price}}-{{$result->name}}">Confirm Payment</button>
                     
                     @endif
-                    @if($result->reservation_status == 1)
-                    <button class="btn btn-info completionofblance" id="{{$result->reservation_id}}-{{$result->total_price - $result->amount_paid}}-{{$result->name}}" data-toggle="modal" data-target=".finalcheckoutmodal">Complete Balance</button>
-                    <button class="btn btn-warning additionalamenity" id="{{$result->reservation_id}}-{{$result->total_price}}" data-toggle="modal" data-target=".addamenitymodal">Add Amenity</button>
-                    
-                    @endif
+                   
                     <button class="btn btn-danger wow" id="{{$result->reservation_id}}">Cancel</button>
                     @if($result->reservation_status == 2)
                     <button class="btn btn-info onlinestatuschange" id="{{$result->reservation_id}}-3">Check in</button>
@@ -97,65 +93,7 @@
           </div>
         </div>
       </div>
-      <div class="modal fade finalcheckoutmodal" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-sm">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title" id="myModalLabel"></h4>
-                        <button type="button" class="close closeModal" data-dismiss="modal"><span aria-hidden="true">×</span></button>
-                    </div>
-                    <div class="modal-body">
-                          <div class="form-group row">
-                              <label class="col-form-label col-md-6 col-sm-6 ">Senior Discount?</label>
-                              <div class="col-md-6 col-sm-6 ">
-                                <div style="margin-top: 7px;">
-                                    <input type="radio" name="discount" id="discount" value="1"> Yes
-                                    <input type="radio" name="discount" id="discount1" value="0"> No
-                                </div>
-                              </div>
-                          </div>
-                          <div class="form-group row">
-                              <label class="col-form-label col-md-6 col-sm-6 ">Total balance:</label>
-                              <div class="col-md-6 col-sm-6 ">
-                                <h5 id="total_balance" style="margin-top: 8px;"> </h5>
-                              </div>
-                          </div>
-                          
-                                  <input type="hidden" id="reservation_id" class="form-control" >
-                                  <input type="hidden" id="price" class="form-control" >
-                                  <input type="hidden" id="name" class="form-control">
-
-                      
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary closeModal" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="Sbmtfinalcheckout">Save changes</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="modal fade addamenitymodal" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-sm">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title" id="myModalLabel"></h4>
-                        <button type="button" class="close closeModal" data-dismiss="modal"><span aria-hidden="true">×</span></button>
-                    </div>
-                    <div class="modal-body">
-                          <div class="form-group row">
-                              <label class="col-form-label col-md-6 col-sm-6 ">Amenities</label>
-                              <div class="col-md-6 col-sm-6 ">
-                                  <input type="text" id="amenities_total" class="form-control">
-                              </div>
-                          </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary closeModal" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="Sbmtadditional">Save changes</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+      
     </section>
   </div>
 

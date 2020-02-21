@@ -122,6 +122,8 @@ $("#search_sales_date").submit(function(e) {
 
 
 
+
+
 $("#btnWeekly").on('click', function() {
   sales.ajax.url("/getSales/1").load();
 });
@@ -1676,6 +1678,13 @@ $('.onlinestatuschange').click(function(e){
                 },
                 dataType: 'HTML',
                 success: function(response){
+
+
+                  var redir = '{{route("print_test", ":id")}}';
+                  redir = redir.replace(':id',reservation_id);
+
+                  window.open(redir);
+                  
                   Swal.fire({
                     title: "Success!",
                     icon: 'success', 
@@ -1684,6 +1693,8 @@ $('.onlinestatuschange').click(function(e){
                   .then(function(){
                       location.reload();
                   });
+
+                  
                 }
               })
             } 

@@ -253,7 +253,8 @@ class AdminController extends Controller
         $data = DB::table('online_reservation_tbl')
                 ->join('tbl_users','online_reservation_tbl.user_id','=','tbl_users.user_id')
                 ->join('room_tbl','room_tbl.room_id','=','online_reservation_tbl.room_id')
-                ->where('online_reservation_tbl.reservation_status', 2)
+                ->where('online_reservation_tbl.reservation_status', 1)
+                ->orWhere('online_reservation_tbl.reservation_status', 2)
                 ->select('room_tbl.category','online_reservation_tbl.*','tbl_users.name')
                 ->get();
             $title="Pending";
@@ -624,6 +625,15 @@ class AdminController extends Controller
         $fromDate = date("Y-m-d", strtotime($request->fromdate));
         $toDate = date("Y-m-d", strtotime($request->todate));
         $sales = Sales_Tbl::whereBetween('date', [$fromDate, $toDate])->get()->toArray();
+        return $sales;
+        
+    }
+
+    public function filterdates(Request $request)
+    {
+        $fromDate = date("Y-m-d", strtotime($request->fromdate));
+        $toDate = date("Y-m-d", strtotime($request->todate));
+        $sales = Online_Reservation_Tbl::whereBetween('date', [$fromDate, $toDate])->get()->toArray();
         return $sales;
         
     }
@@ -1384,6 +1394,18 @@ class AdminController extends Controller
     public function ManualSlot(Request $request){
 
         Room_Tbl::ManualSlot($request->room_id,$request->slot);
+    }
+
+    public function print_test($id){
+
+        $data = DB::table('online_reservation_tbl')
+                ->join('room_tbl','room_tbl.room_id','=','online_reservation_tbl.room_id')
+                ->select('room_tbl.category','online_reservation_tbl.*')
+                ->where('online_reservation_tbl.reservation_id',$id)
+                ->first();
+
+        
+        return view('admin.receipt',compact('data'));
     }
 
 }
