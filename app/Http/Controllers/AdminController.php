@@ -61,14 +61,14 @@ class AdminController extends Controller
     }
 
     public function AdminDashboard(){
-        $dateToday = date('Y-m-d');
-        $date3Days = date('Y-m-d', strtotime($dateToday. ' + 3 days'));
-        $reservations = Online_Reservation_Tbl::whereBetween('check_in' , [$dateToday, $date3Days])->get();
-        if(!empty($reservations)) {
-            foreach ($reservations as $key => $value) {
-                Online_Reservation_Tbl::ExpireReservation($value->reservation_id);
-            }
-        }
+        // $dateToday = date('Y-m-d');
+        // $date3Days = date('Y-m-d', strtotime($dateToday. ' + 3 days'));
+        // $reservations = Online_Reservation_Tbl::whereBetween('check_in' , [$dateToday, $date3Days])->get();
+        // if(!empty($reservations)) {
+        //     foreach ($reservations as $key => $value) {
+        //         Online_Reservation_Tbl::ExpireReservation($value->reservation_id);
+        //     }
+        // }
         
 
         return view('admin.dashboard');
