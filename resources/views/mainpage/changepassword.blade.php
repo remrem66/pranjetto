@@ -74,4 +74,4 @@
 	</div>
 	</form>
 
-@include('mainpage,footer')
+@include('mainpage.footer')
