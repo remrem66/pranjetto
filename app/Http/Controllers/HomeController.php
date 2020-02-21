@@ -987,7 +987,7 @@ class HomeController extends Controller
     public function viewReservations()
     {
         $userId = session('user_id');
-        $userReservations = Online_Reservation_Tbl::where('user_id', $userId)->where('reservation_status',0)->get();
+        $userReservations = Online_Reservation_Tbl::where('user_id', $userId)->get();
         foreach ($userReservations as $key => $value) {
             $value->room_details = Room_Tbl::where('room_id', $value->room_id)->first();
             $value->user_details = Tbl_Users::where('user_id', $value->user_id)->first();

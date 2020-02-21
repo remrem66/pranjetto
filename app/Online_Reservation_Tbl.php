@@ -36,7 +36,8 @@ class Online_Reservation_Tbl extends Model
                 'reservation_code' => $data['reservation_code'],
                 'check_in' => $data['check_in'],
                 'check_out' => $data['check_out'],
-                'total_price' => $data['total_price']
+                'total_price' => $data['total_price'],
+                'reservation_status' => 0
             ]);
     }
 

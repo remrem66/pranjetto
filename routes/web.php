@@ -32,7 +32,7 @@ Route::get('/AddRoom', 'AdminController@AddRoomView')->name('AddRoomView');
 Route::get('/EditRoom', 'AdminController@EditRoomView')->name('EditRoomView');
 Route::get('/RoomStatus', 'AdminController@RoomStatusView')->name('RoomStatusView');
 Route::get('/AmenityStatusView', 'AdminController@AmenityStatusView')->name('AmenityStatusView');
-Route::get('/OnlineReservations/{status_id}', 'AdminController@OnlineReservations')->name('OnlineReservations');
+Route::get('/OnlineReservations', 'AdminController@OnlineReservations')->name('OnlineReservations');
 Route::get('/PendingReservations/{status_id}', 'AdminController@PendingReservations')->name('PendingReservations');
 Route::get('/CheckinReservations/{status_id}', 'AdminController@CheckinReservations')->name('CheckinReservations');
 Route::get('/CheckoutReservations/{status_id}', 'AdminController@CheckoutReservations')->name('CheckoutReservations');
