@@ -31,7 +31,7 @@
               <div class="inner">
                 
                 <h4>Pending</h4>
-                <a href="{{route('OnlineReservations', '2' )}}">
+                <a href="{{route('PendingReservations', '2' )}}">
                 <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                 
               </div>
@@ -48,7 +48,7 @@
               <div class="inner">
                 
                 <h4>Check-In</h4>
-                <a href="{{route('OnlineReservations', '3' )}}">
+                <a href="{{route('CheckinReservations', '3' )}}">
                 <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                 
               </div>
@@ -64,7 +64,7 @@
               <div class="inner">
                 
                 <h4>Check-Out</h4>
-                <a href="{{route('OnlineReservations', '4' )}}">
+                <a href="{{route('CheckoutReservations', '4' )}}">
                 <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                 
               </div>
@@ -80,7 +80,7 @@
               <div class="inner">
                 
                 <h4>Expired</h4>
-                <a href="{{route('OnlineReservations', '6' )}}">
+                <a href="{{route('ExpiredReservations', '6' )}}">
                 <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                 
               </div>
@@ -104,7 +104,7 @@
               <div class="inner">
                 
                 <h4>Cancelled</h4>
-                <a href="{{route('OnlineReservations', '5' )}}">
+                <a href="{{route('CancelledReservations', '5' )}}">
                 <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
                 
               </div>

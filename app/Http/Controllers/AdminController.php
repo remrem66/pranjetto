@@ -310,6 +310,71 @@ class AdminController extends Controller
         return view('admin.OnlineReservations',compact('data', 'title'));
     }
 
+    public function PendingReservations($id){
+
+        $data = DB::table('online_reservation_tbl')
+                ->join('tbl_users','online_reservation_tbl.user_id','=','tbl_users.user_id')
+                ->join('room_tbl','room_tbl.room_id','=','online_reservation_tbl.room_id')
+                ->where('online_reservation_tbl.reservation_status', 2)
+                ->select('room_tbl.category','online_reservation_tbl.*','tbl_users.name')
+                ->get();
+            $title="Pending";
+        
+        return view('admin.Pending',compact('data', 'title'));
+    }
+
+    public function CheckinReservations($id){
+
+        $data = DB::table('online_reservation_tbl')
+                ->join('tbl_users','online_reservation_tbl.user_id','=','tbl_users.user_id')
+                ->join('room_tbl','room_tbl.room_id','=','online_reservation_tbl.room_id')
+                ->where('online_reservation_tbl.reservation_status', 3)
+                ->select('room_tbl.category','online_reservation_tbl.*','tbl_users.name')
+                ->get();
+            $title="Check in";
+        
+        return view('admin.Checkin',compact('data', 'title'));
+    }
+
+    public function CheckoutReservations($id){
+
+        $data = DB::table('online_reservation_tbl')
+                ->join('tbl_users','online_reservation_tbl.user_id','=','tbl_users.user_id')
+                ->join('room_tbl','room_tbl.room_id','=','online_reservation_tbl.room_id')
+                ->where('online_reservation_tbl.reservation_status', 4)
+                ->select('room_tbl.category','online_reservation_tbl.*','tbl_users.name')
+                ->get();
+            $title="Check out";
+        
+        return view('admin.Checkout',compact('data', 'title'));
+    }
+
+    public function CancelledReservations($id){
+
+        $data = DB::table('online_reservation_tbl')
+                ->join('tbl_users','online_reservation_tbl.user_id','=','tbl_users.user_id')
+                ->join('room_tbl','room_tbl.room_id','=','online_reservation_tbl.room_id')
+                ->where('online_reservation_tbl.reservation_status', 5)
+                ->select('room_tbl.category','online_reservation_tbl.*','tbl_users.name')
+                ->get();
+            $title="Cancelled";
+        
+        return view('admin.Cancelled',compact('data', 'title'));
+    }
+
+    public function ExpiredReservations($id){
+
+        $data = DB::table('online_reservation_tbl')
+                ->join('tbl_users','online_reservation_tbl.user_id','=','tbl_users.user_id')
+                ->join('room_tbl','room_tbl.room_id','=','online_reservation_tbl.room_id')
+                ->where('online_reservation_tbl.reservation_status', 6)
+                ->select('room_tbl.category','online_reservation_tbl.*','tbl_users.name')
+                ->get();
+            $title="Expired";
+        
+        return view('admin.Expired',compact('data', 'title'));
+    }
+
     public function ConfirmInitial(Request $request){
 
         $reservation_id = $request->reservation_id;
