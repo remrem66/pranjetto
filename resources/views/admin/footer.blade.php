@@ -597,7 +597,7 @@ location.reload();
       }
     })
 
-    $('.CancelReservation').click(function(e){
+    $('.wow').click(function(e){
 
       var reservation_id = $(this).attr("id");
 

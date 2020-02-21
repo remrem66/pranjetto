@@ -66,6 +66,7 @@
                     @endif
                     </td>
                   <td>
+                    
                     @if($result->reservation_status == 0)
                     <button class="btn btn-info initialpay" id="{{$result->reservation_id}}-{{$result->total_price}}-{{$result->name}}">Confirm Payment</button>
                     
@@ -75,6 +76,7 @@
                     <button class="btn btn-warning additionalamenity" id="{{$result->reservation_id}}-{{$result->total_price}}" data-toggle="modal" data-target=".addamenitymodal">Add Amenity</button>
                     
                     @endif
+                    <button class="btn btn-danger wow" id="{{$result->reservation_id}}">Cancel</button>
                     @if($result->reservation_status == 2)
                     <button class="btn btn-info onlinestatuschange" id="{{$result->reservation_id}}-3">Check in</button>
                     

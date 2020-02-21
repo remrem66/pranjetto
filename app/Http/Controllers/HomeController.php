@@ -528,7 +528,9 @@ class HomeController extends Controller
 
         $request->validate([
             'password' => 'required|min:8',
-            
+            'email' => 'email|required|unique:tbl_users,email',
+            'fname' => 'required',
+            'lname' => 'required'
         ]);
 
         if($request['password'] != $request['confirm_pass']){
