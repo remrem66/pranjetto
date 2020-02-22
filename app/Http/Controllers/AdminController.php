@@ -1417,7 +1417,9 @@ class AdminController extends Controller
                 ->select('room_tbl.category','room_tbl.twentyfourhr_price','online_reservation_tbl.*')
                 ->where('online_reservation_tbl.reservation_id',$id)
                 ->first();
-
+        
+        Room_Tbl::IncreaseSlot($data->room_id,$data->quantity);
+        
         $addons = DB::table('addons_tbl')
                     ->join('amenity_tbl','addons_tbl.amenity_id','=','amenity_tbl.amenity_id')
                     ->select('amenity_tbl.*','addons_tbl.*')
